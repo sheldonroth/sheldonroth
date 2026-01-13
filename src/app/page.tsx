@@ -163,25 +163,38 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {featuredWorks.map((work) => (
-              <Link key={work.id} href={`/shop/${work.title.toLowerCase().replace(/ /g, '-')}`} className="group">
-                <div className="relative aspect-[4/5] overflow-hidden mb-4">
-                  <Image
-                    src={work.image}
-                    alt={work.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  />
-                </div>
-                <h3 className="text-sm font-light tracking-wide mb-1 group-hover:text-[#88744a] transition-colors">
-                  {work.title}
-                </h3>
-                <p className="text-xs text-[#77776d] mb-1">{work.edition}</p>
-                <p className="text-sm font-medium">{work.price}</p>
-              </Link>
-            ))}
+          {/* Horizontal scrollable carousel on mobile, grid on larger screens */}
+          <div className="relative">
+            <div className="flex lg:grid lg:grid-cols-4 gap-6 lg:gap-8 overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory scrollbar-hide pb-4 lg:pb-0 -mx-6 px-6 lg:mx-0 lg:px-0">
+              {featuredWorks.map((work) => (
+                <Link
+                  key={work.id}
+                  href={`/shop/${work.title.toLowerCase().replace(/ /g, '-')}`}
+                  className="group flex-shrink-0 w-[280px] sm:w-[320px] lg:w-auto snap-start"
+                >
+                  <div className="relative aspect-[4/5] overflow-hidden mb-4">
+                    <Image
+                      src={work.image}
+                      alt={work.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 640px) 280px, (max-width: 1024px) 320px, 25vw"
+                    />
+                  </div>
+                  <h3 className="text-sm font-light tracking-wide mb-1 group-hover:text-[#88744a] transition-colors">
+                    {work.title}
+                  </h3>
+                  <p className="text-xs text-[#77776d] mb-1">{work.edition}</p>
+                  <p className="text-sm font-medium">{work.price}</p>
+                </Link>
+              ))}
+            </div>
+            {/* Scroll hint for mobile */}
+            <div className="flex lg:hidden justify-center mt-4 gap-1">
+              {featuredWorks.map((_, index) => (
+                <div key={index} className="w-1.5 h-1.5 rounded-full bg-[#88744a]/30" />
+              ))}
+            </div>
           </div>
         </div>
       </section>

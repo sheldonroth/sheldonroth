@@ -180,3 +180,13 @@ h1, h2, h3, h4, h5, h6 {
   height: 1px;
   background: var(--accent);
 }
+
+/* Hide scrollbar for horizontal scroll carousels */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
