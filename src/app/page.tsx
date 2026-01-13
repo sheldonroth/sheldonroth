@@ -1,119 +1,61 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { getCollections, getFeaturedProducts, getImageUrl, formatPrice } from '@/lib/payload';
 
-const featuredCollections = [
-  {
-    id: 1,
-    title: 'Wildlife',
-    image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=800&q=80',
-    href: '/collections/wildlife',
-  },
-  {
-    id: 2,
-    title: 'Landscapes',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
-    href: '/collections/landscapes',
-  },
-  {
-    id: 3,
-    title: 'Architecture',
-    image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80',
-    href: '/collections/architecture',
-  },
-  {
-    id: 4,
-    title: 'Abstract',
-    image: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=800&q=80',
-    href: '/collections/abstract',
-  },
-  {
-    id: 5,
-    title: 'Seascapes',
-    image: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=800&q=80',
-    href: '/collections/seascapes',
-  },
-  {
-    id: 6,
-    title: 'Black & White',
-    image: 'https://images.unsplash.com/photo-1494500764479-0c8f2919a3d8?w=800&q=80',
-    href: '/collections/black-and-white',
-  },
+// Fallback data when CMS has no content yet
+const fallbackCollections = [
+  { id: '1', title: 'Wildlife', slug: 'wildlife', image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=800&q=80' },
+  { id: '2', title: 'Landscapes', slug: 'landscapes', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80' },
+  { id: '3', title: 'Architecture', slug: 'architecture', image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80' },
+  { id: '4', title: 'Abstract', slug: 'abstract', image: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=800&q=80' },
+  { id: '5', title: 'Seascapes', slug: 'seascapes', image: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=800&q=80' },
+  { id: '6', title: 'Black & White', slug: 'black-and-white', image: 'https://images.unsplash.com/photo-1494500764479-0c8f2919a3d8?w=800&q=80' },
 ];
 
-const featuredWorks = [
-  {
-    id: 1,
-    title: 'Gemsbok in the Mist',
-    price: '$2,500',
-    edition: 'Limited Edition of 150',
-    image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&q=80',
-  },
-  {
-    id: 2,
-    title: 'Reflection Pool',
-    price: '$3,200',
-    edition: 'Limited Edition of 100',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',
-  },
-  {
-    id: 3,
-    title: 'Urban Symmetry',
-    price: '$2,800',
-    edition: 'Limited Edition of 125',
-    image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80',
-  },
-  {
-    id: 4,
-    title: 'Golden Hour',
-    price: '$2,200',
-    edition: 'Limited Edition of 175',
-    image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&q=80',
-  },
-  {
-    id: 5,
-    title: 'Ocean Dreams',
-    price: '$3,800',
-    edition: 'Limited Edition of 75',
-    image: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=600&q=80',
-  },
-  {
-    id: 6,
-    title: 'Desert Solitude',
-    price: '$2,900',
-    edition: 'Limited Edition of 100',
-    image: 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=600&q=80',
-  },
-  {
-    id: 7,
-    title: 'Northern Lights',
-    price: '$4,500',
-    edition: 'Limited Edition of 50',
-    image: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=600&q=80',
-  },
-  {
-    id: 8,
-    title: 'Misty Forest',
-    price: '$2,600',
-    edition: 'Limited Edition of 150',
-    image: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&q=80',
-  },
-  {
-    id: 9,
-    title: 'City Lights',
-    price: '$3,100',
-    edition: 'Limited Edition of 100',
-    image: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?w=600&q=80',
-  },
-  {
-    id: 10,
-    title: 'Elephant Crossing',
-    price: '$3,500',
-    edition: 'Limited Edition of 75',
-    image: 'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?w=600&q=80',
-  },
+const fallbackWorks = [
+  { id: '1', title: 'Gemsbok in the Mist', slug: 'gemsbok-in-the-mist', price: 2500, edition: { type: 'limited', total: 150 }, image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&q=80' },
+  { id: '2', title: 'Reflection Pool', slug: 'reflection-pool', price: 3200, edition: { type: 'limited', total: 100 }, image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80' },
+  { id: '3', title: 'Urban Symmetry', slug: 'urban-symmetry', price: 2800, edition: { type: 'limited', total: 125 }, image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80' },
+  { id: '4', title: 'Golden Hour', slug: 'golden-hour', price: 2200, edition: { type: 'limited', total: 175 }, image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&q=80' },
 ];
 
-export default function Home() {
+export default async function Home() {
+  // Fetch from CMS with fallback
+  let collections = fallbackCollections;
+  let featuredWorks = fallbackWorks;
+
+  try {
+    const cmsCollections = await getCollections();
+    if (cmsCollections.length > 0) {
+      collections = cmsCollections.map((col) => ({
+        id: String(col.id),
+        title: col.title as string,
+        slug: col.slug as string,
+        image: getImageUrl(col.featuredImage),
+      }));
+    }
+  } catch (e) {
+    console.log('Using fallback collections', e);
+  }
+
+  try {
+    const cmsProducts = await getFeaturedProducts(10);
+    if (cmsProducts.length > 0) {
+      featuredWorks = cmsProducts.map((prod) => ({
+        id: String(prod.id),
+        title: prod.title as string,
+        slug: prod.slug as string,
+        price: (prod.sizes?.[0]?.price as number) || 2500,
+        edition: (prod.edition as { type: string; total: number }) || { type: 'limited', total: 100 },
+        image: getImageUrl(prod.images?.[0]?.image),
+      }));
+    }
+  } catch (e) {
+    console.log('Using fallback products', e);
+  }
+
+  const heroWork = featuredWorks[0] || fallbackWorks[0];
+
   return (
     <>
       {/* Hero Section */}
@@ -121,8 +63,8 @@ export default function Home() {
         {/* Background Image */}
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1516426122078-c23e76319801?w=1920&q=90"
-            alt="Featured artwork - Wildlife photography"
+            src={heroWork.image.replace('w=600', 'w=1920')}
+            alt={`Featured artwork - ${heroWork.title}`}
             fill
             className="object-cover animate-scale-in"
             priority
@@ -140,13 +82,15 @@ export default function Home() {
                 FEATURED WORK
               </span>
               <h1 className="text-white text-4xl md:text-5xl lg:text-6xl font-light tracking-wide mb-6">
-                Gemsbok in the Mist
+                {heroWork.title}
               </h1>
               <p className="text-white/70 text-sm tracking-wider mb-8 max-w-md">
-                Limited Edition of 150 | Museum-Quality Acrylic Print
+                {heroWork.edition.type === 'limited'
+                  ? `Limited Edition of ${heroWork.edition.total}`
+                  : 'Open Edition'} | Museum-Quality Acrylic Print
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/shop/gemsbok-in-the-mist" className="btn-primary bg-white text-[#1a1a1a] hover:bg-[#88744a] hover:text-white">
+                <Link href={`/shop/${heroWork.slug}`} className="btn-primary bg-white text-[#1a1a1a] hover:bg-[#88744a] hover:text-white">
                   View Artwork
                 </Link>
                 <Link href="/collections" className="btn-secondary border-white text-white hover:bg-white hover:text-[#1a1a1a]">
@@ -192,10 +136,10 @@ export default function Home() {
           {/* Horizontal scrollable carousel */}
           <div className="relative">
             <div className="flex gap-4 lg:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 -mx-6 px-6 lg:mx-0 lg:px-0">
-              {featuredCollections.map((collection) => (
+              {collections.map((collection) => (
                 <Link
                   key={collection.id}
-                  href={collection.href}
+                  href={`/collections/${collection.slug}`}
                   className="group relative flex-shrink-0 w-[280px] sm:w-[320px] lg:w-[350px] aspect-[3/4] overflow-hidden snap-start"
                 >
                   <Image
@@ -216,7 +160,7 @@ export default function Home() {
             </div>
             {/* Scroll hint for mobile */}
             <div className="flex justify-center mt-4 gap-1 lg:hidden">
-              {featuredCollections.map((_, index) => (
+              {collections.map((_, index) => (
                 <div key={index} className="w-1.5 h-1.5 rounded-full bg-[#88744a]/30" />
               ))}
             </div>
@@ -246,7 +190,7 @@ export default function Home() {
               {featuredWorks.map((work) => (
                 <Link
                   key={work.id}
-                  href={`/shop/${work.title.toLowerCase().replace(/ /g, '-')}`}
+                  href={`/shop/${work.slug}`}
                   className="group flex-shrink-0 w-[280px] sm:w-[320px] lg:w-auto snap-start"
                 >
                   <div className="relative aspect-[4/5] overflow-hidden mb-4">
@@ -261,8 +205,12 @@ export default function Home() {
                   <h3 className="text-sm font-light tracking-wide mb-1 group-hover:text-[#88744a] transition-colors">
                     {work.title}
                   </h3>
-                  <p className="text-xs text-[#77776d] mb-1">{work.edition}</p>
-                  <p className="text-sm font-medium">{work.price}</p>
+                  <p className="text-xs text-[#77776d] mb-1">
+                    {work.edition.type === 'limited'
+                      ? `Limited Edition of ${work.edition.total}`
+                      : 'Open Edition'}
+                  </p>
+                  <p className="text-sm font-medium">{formatPrice(work.price)}</p>
                 </Link>
               ))}
             </div>

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "^3.70.0",
+    "@payloadcms/db-postgres": "^3.70.0",
     "@payloadcms/next": "^3.70.0",
     "@payloadcms/plugin-cloud": "^3.0.2",
     "@payloadcms/richtext-lexical": "^3.70.0",
