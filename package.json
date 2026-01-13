@@ -9,10 +9,17 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@payloadcms/db-mongodb": "^3.70.0",
+    "@payloadcms/next": "^3.70.0",
+    "@payloadcms/plugin-cloud": "^3.0.2",
+    "@payloadcms/richtext-lexical": "^3.70.0",
     "@stripe/stripe-js": "^8.6.1",
     "next": "16.1.1",
+    "payload": "^3.70.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "sass": "^1.97.2",
+    "sharp": "^0.34.5",
     "stripe": "^20.1.2"
   },
   "devDependencies": {
