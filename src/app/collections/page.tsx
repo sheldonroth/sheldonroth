@@ -34,7 +34,7 @@ const collections = [
     id: 5,
     title: 'Black & White',
     description: 'Timeless monochrome compositions',
-    image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1494500764479-0c8f2919a3d8?w=800&q=80',
     count: 21,
   },
   {
@@ -43,6 +43,27 @@ const collections = [
     description: 'A perspective from above',
     image: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80',
     count: 12,
+  },
+  {
+    id: 7,
+    title: 'Seascapes',
+    description: 'The power and serenity of the ocean',
+    image: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=800&q=80',
+    count: 18,
+  },
+  {
+    id: 8,
+    title: 'Desert',
+    description: 'Minimalist beauty of arid landscapes',
+    image: 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&q=80',
+    count: 14,
+  },
+  {
+    id: 9,
+    title: 'Night Sky',
+    description: 'Stars, auroras, and celestial wonders',
+    image: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=800&q=80',
+    count: 16,
   },
 ];
 
@@ -65,35 +86,43 @@ export default function CollectionsPage() {
         </div>
       </section>
 
-      {/* Collections Grid */}
+      {/* Collections Grid - Scrollable on mobile */}
       <section className="pb-20 lg:pb-32 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {collections.map((collection) => (
-              <Link
-                key={collection.id}
-                href={`/collections/${collection.title.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
-                className="group"
-              >
-                <div className="relative aspect-[4/5] overflow-hidden mb-6">
-                  <Image
-                    src={collection.image}
-                    alt={collection.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300" />
-                  <div className="absolute bottom-6 left-6 right-6">
-                    <span className="text-white/70 text-xs tracking-[0.2em]">{collection.count} WORKS</span>
+          <div className="relative">
+            <div className="flex lg:grid lg:grid-cols-3 gap-6 lg:gap-8 overflow-x-auto lg:overflow-x-visible snap-x snap-mandatory scrollbar-hide pb-4 lg:pb-0 -mx-6 px-6 lg:mx-0 lg:px-0">
+              {collections.map((collection) => (
+                <Link
+                  key={collection.id}
+                  href={`/collections/${collection.title.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
+                  className="group flex-shrink-0 w-[280px] sm:w-[320px] lg:w-auto snap-start"
+                >
+                  <div className="relative aspect-[4/5] overflow-hidden mb-6">
+                    <Image
+                      src={collection.image}
+                      alt={collection.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 640px) 280px, (max-width: 1024px) 320px, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300" />
+                    <div className="absolute bottom-6 left-6 right-6">
+                      <span className="text-white/70 text-xs tracking-[0.2em]">{collection.count} WORKS</span>
+                    </div>
                   </div>
-                </div>
-                <h2 className="text-xl font-light tracking-wide mb-2 group-hover:text-[#88744a] transition-colors">
-                  {collection.title}
-                </h2>
-                <p className="text-sm text-[#77776d]">{collection.description}</p>
-              </Link>
-            ))}
+                  <h2 className="text-xl font-light tracking-wide mb-2 group-hover:text-[#88744a] transition-colors">
+                    {collection.title}
+                  </h2>
+                  <p className="text-sm text-[#77776d]">{collection.description}</p>
+                </Link>
+              ))}
+            </div>
+            {/* Scroll hint for mobile */}
+            <div className="flex justify-center mt-4 gap-1 lg:hidden">
+              {collections.map((_, index) => (
+                <div key={index} className="w-1.5 h-1.5 rounded-full bg-[#88744a]/30" />
+              ))}
+            </div>
           </div>
         </div>
       </section>

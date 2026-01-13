@@ -20,6 +20,24 @@ const featuredCollections = [
     image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80',
     href: '/collections/architecture',
   },
+  {
+    id: 4,
+    title: 'Abstract',
+    image: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=800&q=80',
+    href: '/collections/abstract',
+  },
+  {
+    id: 5,
+    title: 'Seascapes',
+    image: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=800&q=80',
+    href: '/collections/seascapes',
+  },
+  {
+    id: 6,
+    title: 'Black & White',
+    image: 'https://images.unsplash.com/photo-1494500764479-0c8f2919a3d8?w=800&q=80',
+    href: '/collections/black-and-white',
+  },
 ];
 
 const featuredWorks = [
@@ -50,6 +68,48 @@ const featuredWorks = [
     price: '$2,200',
     edition: 'Limited Edition of 175',
     image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&q=80',
+  },
+  {
+    id: 5,
+    title: 'Ocean Dreams',
+    price: '$3,800',
+    edition: 'Limited Edition of 75',
+    image: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=600&q=80',
+  },
+  {
+    id: 6,
+    title: 'Desert Solitude',
+    price: '$2,900',
+    edition: 'Limited Edition of 100',
+    image: 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=600&q=80',
+  },
+  {
+    id: 7,
+    title: 'Northern Lights',
+    price: '$4,500',
+    edition: 'Limited Edition of 50',
+    image: 'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=600&q=80',
+  },
+  {
+    id: 8,
+    title: 'Misty Forest',
+    price: '$2,600',
+    edition: 'Limited Edition of 150',
+    image: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&q=80',
+  },
+  {
+    id: 9,
+    title: 'City Lights',
+    price: '$3,100',
+    edition: 'Limited Edition of 100',
+    image: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?w=600&q=80',
+  },
+  {
+    id: 10,
+    title: 'Elephant Crossing',
+    price: '$3,500',
+    edition: 'Limited Edition of 75',
+    image: 'https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?w=600&q=80',
   },
 ];
 
@@ -116,33 +176,50 @@ export default function Home() {
       {/* Collections Section */}
       <section className="py-20 lg:py-32 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-light tracking-wide mb-4">Collections</h2>
-            <div className="w-12 h-px bg-[#88744a] mx-auto" />
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-4">
+            <div className="text-center md:text-left w-full md:w-auto">
+              <h2 className="text-3xl lg:text-4xl font-light tracking-wide mb-4">Collections</h2>
+              <div className="w-12 h-px bg-[#88744a] mx-auto md:mx-0" />
+            </div>
+            <Link
+              href="/collections"
+              className="hidden md:block text-xs tracking-[0.2em] text-[#88744a] hover:text-[#1a1a1a] transition-colors"
+            >
+              VIEW ALL COLLECTIONS
+            </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            {featuredCollections.map((collection) => (
-              <Link
-                key={collection.id}
-                href={collection.href}
-                className="group relative aspect-[3/4] overflow-hidden"
-              >
-                <Image
-                  src={collection.image}
-                  alt={collection.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors duration-300" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <h3 className="text-white text-xl lg:text-2xl tracking-[0.2em] font-light">
-                    {collection.title.toUpperCase()}
-                  </h3>
-                </div>
-              </Link>
-            ))}
+          {/* Horizontal scrollable carousel */}
+          <div className="relative">
+            <div className="flex gap-4 lg:gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 -mx-6 px-6 lg:mx-0 lg:px-0">
+              {featuredCollections.map((collection) => (
+                <Link
+                  key={collection.id}
+                  href={collection.href}
+                  className="group relative flex-shrink-0 w-[280px] sm:w-[320px] lg:w-[350px] aspect-[3/4] overflow-hidden snap-start"
+                >
+                  <Image
+                    src={collection.image}
+                    alt={collection.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 640px) 280px, (max-width: 1024px) 320px, 350px"
+                  />
+                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors duration-300" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <h3 className="text-white text-xl lg:text-2xl tracking-[0.2em] font-light">
+                      {collection.title.toUpperCase()}
+                    </h3>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            {/* Scroll hint for mobile */}
+            <div className="flex justify-center mt-4 gap-1 lg:hidden">
+              {featuredCollections.map((_, index) => (
+                <div key={index} className="w-1.5 h-1.5 rounded-full bg-[#88744a]/30" />
+              ))}
+            </div>
           </div>
         </div>
       </section>
