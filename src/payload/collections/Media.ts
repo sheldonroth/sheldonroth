@@ -12,26 +12,6 @@ export const Media: CollectionConfig = {
   upload: {
     staticDir: 'media',
     mimeTypes: ['image/*'],
-    imageSizes: [
-      {
-        name: 'thumbnail',
-        width: 400,
-        height: 500,
-        position: 'centre',
-      },
-      {
-        name: 'card',
-        width: 600,
-        height: 750,
-        position: 'centre',
-      },
-      {
-        name: 'hero',
-        width: 1920,
-        height: 1080,
-        position: 'centre',
-      },
-    ],
   },
   fields: [
     {
