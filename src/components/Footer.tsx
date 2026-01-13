@@ -42,16 +42,38 @@ export default function Footer() {
           <div>
             <h4 className="text-xs tracking-[0.2em] mb-6">INFORMATION</h4>
             <ul className="space-y-3">
-              {['About the Artist', 'Shipping & Returns', 'Care Instructions', 'FAQ'].map((item) => (
-                <li key={item}>
-                  <Link
-                    href={`/${item.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-')}`}
-                    className="text-sm text-white/60 font-light hover:text-white transition-colors"
-                  >
-                    {item}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link
+                  href="/artist"
+                  className="text-sm text-white/60 font-light hover:text-white transition-colors"
+                >
+                  About the Artist
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/shipping-returns"
+                  className="text-sm text-white/60 font-light hover:text-white transition-colors"
+                >
+                  Shipping &amp; Returns
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/care-instructions"
+                  className="text-sm text-white/60 font-light hover:text-white transition-colors"
+                >
+                  Care Instructions
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/faq"
+                  className="text-sm text-white/60 font-light hover:text-white transition-colors"
+                >
+                  FAQ
+                </Link>
+              </li>
             </ul>
           </div>
 
