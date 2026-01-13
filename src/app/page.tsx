@@ -31,7 +31,7 @@ export default async function Home() {
         id: String(col.id),
         title: col.title as string,
         slug: col.slug as string,
-        image: getImageUrl(col.featuredImage),
+        image: getImageUrl(col.image),
       }));
     }
   } catch (e) {
