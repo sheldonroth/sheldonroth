@@ -6,9 +6,8 @@ export async function GET() {
   try {
     const payload = await getPayloadClient()
 
-    // Access the db adapter
-    // @ts-expect-error - accessing internal db
-    const db = payload.db.drizzle
+    // Access the db adapter - payload.db has the drizzle instance
+    const db = (payload.db as { drizzle: { execute: (sql: unknown) => Promise<unknown> } }).drizzle
 
     // Run the migration to make image_id nullable
     await db.execute(sql`
