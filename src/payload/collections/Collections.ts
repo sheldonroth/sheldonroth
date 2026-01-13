@@ -60,5 +60,15 @@ export const Collections: CollectionConfig = {
         description: 'Lower numbers appear first',
       },
     },
+    {
+      name: 'status',
+      type: 'select',
+      options: [
+        { label: 'Draft', value: 'draft' },
+        { label: 'Published', value: 'published' },
+      ],
+      defaultValue: 'draft',
+      required: true,
+    },
   ],
 }

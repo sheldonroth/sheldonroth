@@ -211,6 +211,7 @@ export interface Collection {
    * Lower numbers appear first
    */
   order?: number | null;
+  status: 'draft' | 'published';
   updatedAt: string;
   createdAt: string;
 }
@@ -441,6 +442,7 @@ export interface CollectionsSelect<T extends boolean = true> {
   image?: T;
   featured?: T;
   order?: T;
+  status?: T;
   updatedAt?: T;
   createdAt?: T;
 }
