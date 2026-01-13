@@ -31,7 +31,7 @@ export default async function CollectionsPage() {
         title: col.title as string,
         slug: col.slug as string,
         description: (col.description as string) || '',
-        image: getImageUrl(col.featuredImage),
+        image: getImageUrl(col.image),
         count: 0, // Will be populated when products are linked
       }));
     }
