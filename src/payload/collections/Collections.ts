@@ -39,7 +39,7 @@ export const Collections: CollectionConfig = {
       name: 'image',
       type: 'upload',
       relationTo: 'media',
-      required: true,
+      required: false,
       label: 'Collection Image',
     },
     {
