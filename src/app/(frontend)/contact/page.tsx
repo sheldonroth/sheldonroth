@@ -218,7 +218,7 @@ export default function ContactPage() {
             <div className="border-b border-[#e5e5e5] pb-8">
               <h3 className="text-sm tracking-wide font-medium mb-3">What printing methods do you use?</h3>
               <p className="text-sm text-[#77776d] leading-relaxed">
-                All limited edition prints are produced using museum-quality acrylic face mounting or archival pigment printing on fine art paper, depending on the piece. Each method is chosen to best complement the artwork.
+                All limited edition prints are produced exclusively using TruLife® acrylic face mounting with anti-reflective coating on Fujiflex crystal archive prints. This museum-quality process delivers unparalleled depth, clarity, and longevity that will last for generations.
               </p>
             </div>
 
@@ -232,7 +232,7 @@ export default function ContactPage() {
             <div className="border-b border-[#e5e5e5] pb-8">
               <h3 className="text-sm tracking-wide font-medium mb-3">What is included with each purchase?</h3>
               <p className="text-sm text-[#77776d] leading-relaxed">
-                Each limited edition print includes a hand-signed certificate of authenticity, detailed care instructions, and is professionally packaged for safe delivery.
+                Each limited edition print includes a hand-signed certificate of authenticity, aluminum backing with French cleat mounting system, detailed care instructions, and professional packaging with full insurance for safe delivery.
               </p>
             </div>
 
