@@ -4,19 +4,19 @@ import { getCollections, getFeaturedProducts, getImageUrl, formatPrice } from '@
 
 // Fallback data when CMS has no content yet
 const fallbackCollections = [
-  { id: '1', title: 'Wildlife', slug: 'wildlife', image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=800&q=80' },
-  { id: '2', title: 'Landscapes', slug: 'landscapes', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80' },
-  { id: '3', title: 'Architecture', slug: 'architecture', image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80' },
-  { id: '4', title: 'Abstract', slug: 'abstract', image: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=800&q=80' },
-  { id: '5', title: 'Seascapes', slug: 'seascapes', image: 'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=800&q=80' },
-  { id: '6', title: 'Black & White', slug: 'black-and-white', image: 'https://images.unsplash.com/photo-1494500764479-0c8f2919a3d8?w=800&q=80' },
+  { id: '1', title: 'Wildlife', slug: 'wildlife', image: 'https://awuvex5gqiu0dqk6.public.blob.vercel-storage.com/media/gemsbok-in-mist-vGgtQRwpJDQQ9ZWVaVRWTNpt3EZNGy.jpg' },
+  { id: '2', title: 'Landscapes', slug: 'landscapes', image: 'https://awuvex5gqiu0dqk6.public.blob.vercel-storage.com/media/reflection-pool-JWGbfU97jVKRQinQJBPAVnanyfjMQJ.jpg' },
+  { id: '3', title: 'Architecture', slug: 'architecture', image: 'https://awuvex5gqiu0dqk6.public.blob.vercel-storage.com/media/sydney-opera-AG05UTxSQenoxlAG3S3568BHuQlJPy.jpg' },
+  { id: '4', title: 'Nature', slug: 'nature', image: 'https://awuvex5gqiu0dqk6.public.blob.vercel-storage.com/media/tree-LoRbPxepQmqiO1dA1IaiiN94qpLIlX.jpg' },
+  { id: '5', title: 'Southwest', slug: 'southwest', image: 'https://awuvex5gqiu0dqk6.public.blob.vercel-storage.com/media/antelope-canyon-asZxz5DmCd8ygz2HtyuNbrOa75GfDh.jpg' },
+  { id: '6', title: 'Black & White', slug: 'black-and-white', image: 'https://awuvex5gqiu0dqk6.public.blob.vercel-storage.com/media/burj-khalifa-yr4KCWjhey6EJ2AL60CvLsUYCdK15Y.jpg' },
 ];
 
 const fallbackWorks = [
-  { id: '1', title: 'Gemsbok in the Mist', slug: 'gemsbok-in-the-mist', price: 2500, edition: { type: 'limited', total: 150 }, image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=600&q=80' },
-  { id: '2', title: 'Reflection Pool', slug: 'reflection-pool', price: 3200, edition: { type: 'limited', total: 100 }, image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80' },
-  { id: '3', title: 'Urban Symmetry', slug: 'urban-symmetry', price: 2800, edition: { type: 'limited', total: 125 }, image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80' },
-  { id: '4', title: 'Golden Hour', slug: 'golden-hour', price: 2200, edition: { type: 'limited', total: 175 }, image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&q=80' },
+  { id: '1', title: 'Gemsbok in the Mist', slug: 'gemsbok-in-the-mist', price: 2800, edition: { type: 'limited', total: 150 }, image: 'https://awuvex5gqiu0dqk6.public.blob.vercel-storage.com/media/gemsbok-in-mist-vGgtQRwpJDQQ9ZWVaVRWTNpt3EZNGy.jpg' },
+  { id: '2', title: 'Reflection Pool', slug: 'reflection-pool', price: 2800, edition: { type: 'limited', total: 100 }, image: 'https://awuvex5gqiu0dqk6.public.blob.vercel-storage.com/media/reflection-pool-JWGbfU97jVKRQinQJBPAVnanyfjMQJ.jpg' },
+  { id: '3', title: 'Antelope Canyon', slug: 'antelope-canyon', price: 2800, edition: { type: 'limited', total: 125 }, image: 'https://awuvex5gqiu0dqk6.public.blob.vercel-storage.com/media/antelope-canyon-asZxz5DmCd8ygz2HtyuNbrOa75GfDh.jpg' },
+  { id: '4', title: 'Burj Khalifa', slug: 'burj-khalifa', price: 2800, edition: { type: 'limited', total: 175 }, image: 'https://awuvex5gqiu0dqk6.public.blob.vercel-storage.com/media/burj-khalifa-yr4KCWjhey6EJ2AL60CvLsUYCdK15Y.jpg' },
 ];
 
 export default async function Home() {
