@@ -2,6 +2,16 @@ import type { NextConfig } from "next";
 import { withPayload } from "@payloadcms/next/withPayload";
 
 const nextConfig: NextConfig = {
+  // Optimize barrel imports for common libraries (prevents 200-800ms cold start penalty)
+  experimental: {
+    optimizePackageImports: [
+      'lucide-react',
+      '@radix-ui/react-icons',
+      '@heroicons/react',
+      'date-fns',
+      'lodash',
+    ],
+  },
   images: {
     remotePatterns: [
       {
