@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useCart } from '@/context/CartContext';
 
 interface ProductData {
   title: string;
@@ -22,14 +23,26 @@ export default function ProductClient({ product }: { product: ProductData }) {
   const [selectedSize, setSelectedSize] = useState(0);
   const [selectedImage, setSelectedImage] = useState(0);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [showAddedMessage, setShowAddedMessage] = useState(false);
+  const { addItem } = useCart();
 
   const handleAddToCart = async () => {
     setIsAddingToCart(true);
-    // Simulate adding to cart
-    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    addItem({
+      productSlug: product.slug,
+      title: product.title,
+      size: product.sizes[selectedSize].name,
+      dimensions: product.sizes[selectedSize].dimensions,
+      price: product.sizes[selectedSize].price,
+      image: product.images[0] || '',
+      edition: `${product.edition} of ${product.editionTotal}`,
+    });
+
+    await new Promise((resolve) => setTimeout(resolve, 300));
     setIsAddingToCart(false);
-    // In production, this would add to cart state/context
-    alert('Added to cart!');
+    setShowAddedMessage(true);
+    setTimeout(() => setShowAddedMessage(false), 2000);
   };
 
   const handleBuyNow = async () => {
@@ -175,9 +188,9 @@ export default function ProductClient({ product }: { product: ProductData }) {
                 <button
                   onClick={handleAddToCart}
                   disabled={isAddingToCart}
-                  className="btn-secondary flex-1 disabled:opacity-50"
+                  className={`btn-secondary flex-1 disabled:opacity-50 transition-all ${showAddedMessage ? 'bg-green-50 border-green-500 text-green-700' : ''}`}
                 >
-                  {isAddingToCart ? 'Adding...' : 'Add to Cart'}
+                  {isAddingToCart ? 'Adding...' : showAddedMessage ? '✓ Added to Cart' : 'Add to Cart'}
                 </button>
                 <button onClick={handleBuyNow} className="btn-primary flex-1">
                   Buy Now
