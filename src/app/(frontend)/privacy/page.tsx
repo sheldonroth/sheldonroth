@@ -1,3 +1,4 @@
+import Link from 'next/link';
 export const metadata = {
   title: 'Privacy Policy | Sheldon Roth Fine Art',
   description: 'Privacy policy for Sheldon Roth Fine Art website.',
@@ -68,10 +69,8 @@ export default function PrivacyPage() {
               <p>
                 You have the right to access, correct, or delete your personal information.
                 You may also opt out of marketing communications at any time. To exercise
-                these rights, please contact us at{' '}
-                <a href="mailto:hello@sheldonroth.com" className="text-accent hover:underline">
-                  hello@sheldonroth.com
-                </a>.
+                these rights, please contact the studio through the{' '}
+                <Link href="/contact" className="text-accent hover:underline">Inquire page</Link>.
               </p>
             </div>
 
@@ -96,10 +95,8 @@ export default function PrivacyPage() {
             <div>
               <h2 className="text-xl font-light text-foreground mb-4">Contact Us</h2>
               <p>
-                If you have questions about this privacy policy, please contact us at{' '}
-                <a href="mailto:hello@sheldonroth.com" className="text-accent hover:underline">
-                  hello@sheldonroth.com
-                </a>.
+                If you have questions about this privacy policy, please contact the studio through the{' '}
+                <Link href="/contact" className="text-accent hover:underline">Inquire page</Link>.
               </p>
             </div>
           </div>

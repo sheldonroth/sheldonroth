@@ -1,3 +1,4 @@
+import Link from 'next/link';
 export const metadata = {
   title: 'Terms of Service | Sheldon Roth Fine Art',
   description: 'Terms of service for Sheldon Roth Fine Art website.',
@@ -102,10 +103,8 @@ export default function TermsPage() {
             <div>
               <h2 className="text-xl font-light text-foreground mb-4">Contact</h2>
               <p>
-                For questions about these Terms of Service, please contact us at{' '}
-                <a href="mailto:hello@sheldonroth.com" className="text-accent hover:underline">
-                  hello@sheldonroth.com
-                </a>.
+                For questions about these Terms of Service, please contact the studio through the{' '}
+                <Link href="/contact" className="text-accent hover:underline">Inquire page</Link>.
               </p>
             </div>
           </div>

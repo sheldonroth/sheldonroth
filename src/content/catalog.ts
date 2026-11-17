@@ -635,6 +635,5 @@ export function formatPrice(price: number) {
 export const SITE = {
   name: 'Sheldon Roth',
   title: 'Sheldon Roth Fine Art',
-  email: 'sheldon@sheldonroth.com',
   url: 'https://sheldonroth.com',
 };

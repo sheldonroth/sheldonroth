@@ -91,10 +91,8 @@ export default function ShippingReturnsPage() {
               </p>
               <p>
                 <strong className="text-foreground">Return Process:</strong> To initiate a
-                return, please contact us at{' '}
-                <a href="mailto:hello@sheldonroth.com" className="text-accent hover:underline">
-                  hello@sheldonroth.com
-                </a>{' '}
+                return, please contact the studio through the{' '}
+                <Link href="/contact" className="text-accent hover:underline">Inquire page</Link>{' '}
                 with your order number and reason for return.
               </p>
             </div>

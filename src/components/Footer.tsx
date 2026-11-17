@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { collections, SITE } from '@/content/catalog';
+import { collections } from '@/content/catalog';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -10,7 +10,7 @@ export default function Footer() {
           <div>
             <p className="lk-wordmark mb-5"><span className="font-semibold">Sheldon Roth</span> <small>Fine Art</small></p>
             <p className="text-[14px] leading-[17.86px] text-white">Limited edition fine art photography, hand-signed and numbered by the artist.</p>
-            <a href={`mailto:${SITE.email}`} className="lk-footer-link mt-4 block break-all underline-offset-4 hover:underline">{SITE.email}</a>
+            <Link href="/contact" className="lk-footer-link mt-4 block underline-offset-4 hover:underline">Inquire</Link>
           </div>
           <div>
             <h4 className="lk-footer-h mb-4">Shop by Gallery</h4>
