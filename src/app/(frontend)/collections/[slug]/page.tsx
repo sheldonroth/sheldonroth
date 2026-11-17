@@ -2,8 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import Reveal from '@/components/Reveal';
-import WorkCard from '@/components/WorkCard';
+import CollectionBanner from '@/components/CollectionBanner';
+import GalleryGrid from '@/components/GalleryGrid';
+import GallerySidebar from '@/components/GallerySidebar';
 import { collections, getCollection, getImage, getWorksInCollection } from '@/content/catalog';
 
 export const dynamicParams = false;
@@ -33,14 +34,10 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
 
   return (
     <>
-      {/* Wide banner under the header, then a centred title + intro, as on lik.com collection pages */}
-      <section className="pt-[70px] lg:pt-[166px]">
-        <div className="relative h-[220px] w-full overflow-hidden md:h-[360px] lg:h-[420px]">
-          <Image quality={90} src={getImage(collection.cover).src} alt={`${collection.title} gallery`} fill priority sizes="100vw" className="object-cover" />
-        </div>
-      </section>
+      {/* Wide inset banner, centred title + intro, then the collection list and grey-mat grid, as on lik.com */}
+      <CollectionBanner src={getImage(collection.cover).src} alt={`${collection.title} gallery`} />
 
-      <header className="lk-container pb-12 pt-12 text-center lg:pb-16 lg:pt-16">
+      <header className="lk-container pb-16 pt-14 text-center">
         <p className="lk-small">
           <Link href="/" className="hover:underline">Home</Link> / <Link href="/collections" className="hover:underline">Galleries</Link> / {collection.title}
         </p>
@@ -49,15 +46,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
         <p className="lk-card-edition mt-6">{items.length} {items.length === 1 ? 'Work' : 'Works'}</p>
       </header>
 
-      <section className="lk-container pb-20 lg:pb-[100px]">
-        <div className="grid grid-cols-1 gap-x-10 gap-y-16 border-t border-line pt-14 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((w, i) => (
-            <Reveal key={w.slug} delay={(i % 3) * 100}>
-              <WorkCard work={w} />
-            </Reveal>
-          ))}
-        </div>
-      </section>
+      <GalleryGrid works={items} aside={<GallerySidebar active={collection.slug} />} />
 
       <Link href={`/collections/${next.slug}`} className="group relative block h-[360px] overflow-hidden md:h-[420px]">
         <Image quality={90} src={getImage(next.cover).src} alt={`${next.title} gallery`} fill sizes="100vw" className="zoom-img object-cover" />

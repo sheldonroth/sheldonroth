@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import PageHeader from '@/components/PageHeader';
 import GalleryGrid from '@/components/GalleryGrid';
+import GallerySidebar from '@/components/GallerySidebar';
 import { getBestSellers } from '@/content/catalog';
 
 export const metadata: Metadata = {
@@ -16,7 +17,7 @@ export default function BestSellersPage() {
         title="Best Sellers"
         intro="The works collectors return to again and again. Editions are limited — once they are gone, they are retired."
       />
-      <GalleryGrid works={getBestSellers()} />
+      <GalleryGrid works={getBestSellers()} aside={<GallerySidebar active="best-sellers" />} />
     </>
   );
 }

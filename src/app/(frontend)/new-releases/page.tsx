@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import PageHeader from '@/components/PageHeader';
 import GalleryGrid from '@/components/GalleryGrid';
+import GallerySidebar from '@/components/GallerySidebar';
 import { getNewReleases } from '@/content/catalog';
 
 export const metadata: Metadata = {
@@ -16,7 +17,7 @@ export default function NewReleasesPage() {
         title="New Releases"
         intro="The newest additions to the collection — each one a limited edition, signed and numbered by the artist."
       />
-      <GalleryGrid works={getNewReleases()} />
+      <GalleryGrid works={getNewReleases()} aside={<GallerySidebar active="new-releases" />} />
     </>
   );
 }

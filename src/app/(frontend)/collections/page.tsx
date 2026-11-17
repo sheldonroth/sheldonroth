@@ -18,20 +18,21 @@ export default function CollectionsPage() {
         title="Explore the Collections"
         intro="Five bodies of work, each a journey — the high peaks and their glaciers, the lakes and forests of the high country, fleeting light, the colour of water and wide open horizons."
       />
-      <section className="lk-container pb-20 lg:pb-[100px]">
-        <div className="grid grid-cols-1 gap-x-10 gap-y-16 md:grid-cols-3">
+      <section className="lk-container pb-20 lg:pb-[120px]">
+        <div className="grid grid-cols-1 gap-[34px] sm:grid-cols-2 lg:grid-cols-3">
           {collections.map((c, i) => {
             const count = getWorksInCollection(c.slug).length;
+            const img = getImage(c.cover);
             return (
-              <Reveal key={c.slug} delay={i * 100}>
-                <Link href={`/collections/${c.slug}`} className="group block text-center">
-                  <div className="relative aspect-[4/5] overflow-hidden bg-surface">
-                    <Image src={getImage(c.cover).src} alt={`${c.title} gallery`} fill quality={85} sizes="(max-width: 768px) 100vw, 33vw" priority={i === 0} className="zoom-img object-cover" />
+              <Reveal key={c.slug} delay={(i % 3) * 100}>
+                {/* lik.com collection card: #efefef mat, photograph contained inside, small caps title + link */}
+                <Link href={`/collections/${c.slug}`} className="group block bg-[#efefef] px-[7%] pb-8 pt-[9%] text-center transition-colors duration-300 hover:bg-[#e8e8e7]">
+                  <div className="relative flex aspect-[325/199] items-center justify-center">
+                    <Image src={img.src} alt={`${c.title} gallery`} width={img.width} height={img.height} quality={85} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px" priority={i < 3} className="zoom-img h-auto max-h-full w-auto max-w-full object-contain shadow-[0_3px_10px_rgba(0,0,0,0.22)]" />
                   </div>
-                  <h2 className="lk-related-title mt-6">{c.title}</h2>
-                  <p className="lk-card-edition mt-2">{count} {count === 1 ? 'Work' : 'Works'}</p>
-                  <p className="lk-body mx-auto mt-3 max-w-sm">{c.description}</p>
-                  <span className="lk-btn lk-btn-gold mt-6">View Gallery</span>
+                  <h2 className="lk-card-title mt-8">{c.title}</h2>
+                  <p className="lk-card-edition mt-3">{count} {count === 1 ? 'Work' : 'Works'}</p>
+                  <span className="lk-cta-link mt-4 text-accent-dark">Explore Collection</span>
                 </Link>
               </Reveal>
             );
