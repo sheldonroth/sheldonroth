@@ -29,8 +29,8 @@ const chapters = [
 
 export default function ArtistPage() {
   const hero = getImage('mountain-majesty');
-  const portrait = getImage('white-birch');
-  const wide = getImage('migration');
+  const portrait = getImage('aspen-cascade');
+  const wide = getImage('pacific-edge');
   return (
     <>
       <section className="relative h-[100svh] min-h-[560px] w-full overflow-hidden">
@@ -62,8 +62,8 @@ export default function ArtistPage() {
               </p>
               <p>
                 Through his lens, he captures moments that transcend the ordinary, transforming fleeting instants into
-                timeless works of art. His photographs span continents: the reefs and islands of the tropics, the
-                golden plains of Africa, and the architecture of the world’s great cities.
+                timeless works of art. His photographs span the reefs and islands of the tropics, restless
+                coastlines and the high peaks, forests and alpine water of the mountains.
               </p>
               <p>
                 Today he works from Buena Vista, Colorado, surrounded by the high peaks of the Sawatch Range. Every
@@ -72,7 +72,7 @@ export default function ArtistPage() {
             </div>
           </Reveal>
           <Reveal delay={150} className="relative aspect-[4/5] overflow-hidden">
-            <Image src={portrait.src} alt="White Birch by Sheldon Roth" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+            <Image src={portrait.src} alt="Aspen Cascade by Sheldon Roth" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
           </Reveal>
         </div>
       </section>

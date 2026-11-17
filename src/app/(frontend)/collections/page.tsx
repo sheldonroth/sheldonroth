@@ -16,7 +16,7 @@ export default function CollectionsPage() {
       <PageHeader
         eyebrow="The Galleries"
         title="Explore the Collections"
-        intro="Six bodies of work, each a journey — from the reefs and islands of the tropics to the plains of Africa and the skylines of the world’s great cities."
+        intro="Three bodies of work, each a journey — the reefs and islands of the tropics, the high country of the mountains, and the clarity and power of the ocean."
       />
       <section className="pb-28 lg:pb-40">
         <div className="mx-auto max-w-[1600px] space-y-6 px-6 lg:space-y-8 lg:px-10">

@@ -28,7 +28,7 @@ export default function Home() {
   const newReleases = getNewReleases();
   const bestSellers = getBestSellers().slice(0, 6);
   const panorama = getWork('pacific-edge')!;
-  const artistImage = getImage('solitude');
+  const artistImage = getImage('still-water');
   const inquireImage = getImage('island-paradise');
   const [featuredCollection, ...otherCollections] = collections;
 
@@ -144,7 +144,7 @@ export default function Home() {
       <section className="bg-surface">
         <div className="mx-auto grid max-w-[1600px] grid-cols-1 lg:grid-cols-2">
           <div className="relative aspect-[4/5] lg:aspect-auto lg:min-h-[760px]">
-            <Image src={artistImage.src} alt="Solitude by Sheldon Roth" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+            <Image src={artistImage.src} alt="Still Water by Sheldon Roth" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
           </div>
           <div className="flex items-center px-6 py-20 sm:px-12 lg:px-20 lg:py-28">
             <Reveal>
@@ -157,9 +157,9 @@ export default function Home() {
                 opportunity to share a moment of wonder.”
               </blockquote>
               <p className="mt-10 max-w-lg leading-relaxed text-foreground/65">
-                From the reefs and islands of the tropics to the savannas of Africa and the skylines of the world’s
-                great cities, Sheldon travels to find light that lasts only a moment — then spends the time it takes
-                to hold onto it.
+                From the reefs and islands of the tropics to the high peaks, aspen forests and still alpine
+                water, Sheldon travels to find light that lasts only a moment — then spends the time it takes to
+                hold onto it.
               </p>
               <Link href="/artist" className="btn btn-outline mt-12">
                 Read His Story
