@@ -8,8 +8,8 @@ const faqs = [
     category: 'Prints & Quality',
     questions: [
       {
-        q: 'What type of paper do you use for prints?',
-        a: 'All prints are produced on museum-quality archival paper using giclée printing technology. We use Hahnemühle Photo Rag or similar premium papers that are acid-free and designed to last for generations without fading or yellowing.',
+        q: 'How are the prints made?',
+        a: 'Each limited edition is an archival chromogenic print, face-mounted to museum-grade acrylic with an aluminium backing and a floating French-cleat hanging system. The result has remarkable depth, clarity and longevity.',
       },
       {
         q: 'What sizes are available?',
@@ -84,15 +84,15 @@ export default function FAQPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafaf8]">
+    <div className="min-h-screen bg-background">
       {/* Hero */}
       <section className="pt-32 pb-16 px-6 lg:px-12">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-xs tracking-[0.3em] text-[#88744a] mb-4">SUPPORT</p>
-          <h1 className="text-4xl md:text-5xl font-light text-[#1a1a1a] mb-6">
+          <p className="text-xs tracking-[0.3em] text-accent mb-4">SUPPORT</p>
+          <h1 className="font-display text-4xl md:text-5xl  text-foreground mb-6">
             Frequently Asked Questions
           </h1>
-          <p className="text-lg text-[#77776d] font-light max-w-2xl mx-auto">
+          <p className="text-lg text-foreground/65 font-light max-w-2xl mx-auto">
             Find answers to common questions about our prints, ordering, and more.
           </p>
         </div>
@@ -103,7 +103,7 @@ export default function FAQPage() {
         <div className="max-w-3xl mx-auto">
           {faqs.map((category, catIndex) => (
             <div key={catIndex} className="mb-12">
-              <h2 className="text-xl font-light text-[#1a1a1a] mb-6 pb-2 border-b border-[#e5e5e5]">
+              <h2 className="text-xl font-light text-foreground mb-6 pb-2 border-b border-line">
                 {category.category}
               </h2>
               <div className="space-y-4">
@@ -111,18 +111,18 @@ export default function FAQPage() {
                   const itemId = `${catIndex}-${qIndex}`;
                   const isOpen = openItems.includes(itemId);
                   return (
-                    <div key={qIndex} className="border-b border-[#e5e5e5] last:border-0">
+                    <div key={qIndex} className="border-b border-line last:border-0">
                       <button
                         onClick={() => toggleItem(itemId)}
                         className="w-full py-4 flex justify-between items-start text-left"
                       >
-                        <span className="text-[#1a1a1a] font-light pr-8">{faq.q}</span>
-                        <span className="text-[#88744a] text-xl flex-shrink-0">
+                        <span className="text-foreground font-light pr-8">{faq.q}</span>
+                        <span className="text-accent text-xl flex-shrink-0">
                           {isOpen ? '−' : '+'}
                         </span>
                       </button>
                       {isOpen && (
-                        <div className="pb-4 text-[#77776d] font-light leading-relaxed">
+                        <div className="pb-4 text-foreground/65 font-light leading-relaxed">
                           {faq.a}
                         </div>
                       )}
@@ -134,8 +134,8 @@ export default function FAQPage() {
           ))}
 
           {/* CTA */}
-          <div className="text-center pt-8 border-t border-[#e5e5e5]">
-            <p className="text-[#77776d] font-light mb-6">
+          <div className="text-center pt-8 border-t border-line">
+            <p className="text-foreground/65 font-light mb-6">
               Can&apos;t find what you&apos;re looking for?
             </p>
             <Link href="/contact" className="btn-primary">

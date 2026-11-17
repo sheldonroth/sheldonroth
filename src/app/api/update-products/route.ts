@@ -11,7 +11,7 @@ const NEW_SIZES = [
 
 // Acrylic face mount details
 const NEW_DETAILS = [
-  { detail: 'TruLife® acrylic face mount with anti-reflective coating' },
+  { detail: 'acrylic face mount with anti-reflective coating' },
   { detail: 'Fujiflex crystal archive print for ultimate clarity' },
   { detail: 'Aluminum backing with French cleat mounting system' },
   { detail: 'Limited edition of 50 worldwide' },

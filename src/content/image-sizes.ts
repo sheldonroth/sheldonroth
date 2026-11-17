@@ -1,0 +1,21 @@
+// Generated from public/works by scripts — width/height for next/image
+export const imageSizes: Record<string, { width: number; height: number }> = {
+  'bark-patterns': { width: 1707, height: 2560 },
+  'city-lights': { width: 2560, height: 1707 },
+  'coral-symphony': { width: 2560, height: 1707 },
+  'density': { width: 1707, height: 2560 },
+  'empire': { width: 1707, height: 2560 },
+  'golden-mane': { width: 2560, height: 1707 },
+  'island-paradise': { width: 2560, height: 1707 },
+  'king-of-the-savanna': { width: 2560, height: 1707 },
+  'light-dance': { width: 2560, height: 1707 },
+  'migration': { width: 2560, height: 1707 },
+  'mountain-majesty': { width: 2560, height: 1865 },
+  'pacific-edge': { width: 3200, height: 1309 },
+  'shipwreck-at-dawn': { width: 2560, height: 1779 },
+  'solitude': { width: 1707, height: 2560 },
+  'tropical-sunset': { width: 1707, height: 2560 },
+  'turquoise-depths': { width: 2560, height: 1707 },
+  'urban-rainbow': { width: 2560, height: 1790 },
+  'white-birch': { width: 1707, height: 2560 },
+};

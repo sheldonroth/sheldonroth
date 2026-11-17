@@ -1,143 +1,146 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
+import Wordmark from './Wordmark';
+
+const leftLinks = [
+  { href: '/collections', label: 'Galleries' },
+  { href: '/new-releases', label: 'New Releases' },
+  { href: '/shop', label: 'Limited Editions' },
+];
+
+const rightLinks = [
+  { href: '/best-sellers', label: 'Best Sellers' },
+  { href: '/artist', label: 'The Artist' },
+  { href: '/contact', label: 'Inquire' },
+];
 
 export default function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const { totalItems } = useCart();
-  const isHome = pathname === '/';
+  const [scrolled, setScrolled] = useState(false);
+  // The menu is tied to the path it was opened on, so navigating closes it.
+  const [openOn, setOpenOn] = useState<string | null>(null);
+  const open = openOn === pathname;
+  const setOpen = (fn: (v: boolean) => boolean) => setOpenOn(fn(open) ? pathname : null);
+
+  // Pages whose first section is a full-bleed image get a transparent header.
+  const overlay = pathname === '/' || pathname === '/artist' || pathname.startsWith('/collections/');
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/artist', label: 'Artist' },
-    { href: '/collections', label: 'Collections' },
-    { href: '/shop', label: 'Shop' },
-    { href: '/contact', label: 'Contact' },
-  ];
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [open]);
 
-  const textColor = isHome && !isScrolled ? 'text-white' : 'text-[#1a1a1a]';
-  const bgColor = isScrolled ? 'bg-white/95 backdrop-blur-md shadow-sm' : 'bg-transparent';
+  const solid = scrolled || !overlay || open;
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${bgColor}`}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="flex items-center justify-between h-20 lg:h-24">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-3">
-              <div className={`border ${isHome && !isScrolled ? 'border-white' : 'border-[#1a1a1a]'} px-2 py-1`}>
-                <span className={`text-xs font-light tracking-[0.2em] ${textColor}`}>ROTH</span>
-              </div>
-              <div className="flex flex-col">
-                <span className={`text-[10px] tracking-[0.3em] font-light ${textColor}`}>FINE</span>
-                <span className={`text-[10px] tracking-[0.3em] font-light ${textColor}`}>ART</span>
-              </div>
-            </Link>
-
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-10">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`text-xs tracking-[0.2em] font-light transition-colors duration-300 hover:opacity-70 ${
-                    pathname === link.href ? 'opacity-100' : 'opacity-80'
-                  } ${textColor}`}
-                >
-                  {link.label.toUpperCase()}
-                </Link>
-              ))}
-            </div>
-
-            {/* Cart Icon */}
-            <div className="hidden lg:flex items-center gap-6">
-              <Link href="/cart" className={`relative ${textColor}`}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1}
-                  stroke="currentColor"
-                  className="w-5 h-5"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
-                  />
-                </svg>
-                {totalItems > 0 && (
-                  <span className="absolute -top-1 -right-2 text-[10px] font-medium bg-[#88744a] text-white w-4 h-4 rounded-full flex items-center justify-center">
-                    {totalItems}
-                  </span>
-                )}
-              </Link>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`lg:hidden ${textColor}`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                {isMobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
-                )}
-              </svg>
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Mobile Menu */}
-      <div
-        className={`fixed inset-0 z-40 bg-white transition-transform duration-500 lg:hidden ${
-          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+          solid
+            ? 'bg-[#0a0a0a]/92 backdrop-blur-md border-b border-line'
+            : 'bg-gradient-to-b from-black/60 to-transparent border-b border-transparent'
         }`}
       >
-        <div className="flex flex-col items-center justify-center h-full gap-8">
-          {navLinks.map((link) => (
+        <div className="mx-auto grid h-[72px] max-w-[1600px] grid-cols-[1fr_auto_1fr] items-center px-5 lg:h-[92px] lg:px-10">
+          {/* Left */}
+          <nav className="hidden items-center gap-8 xl:gap-10 lg:flex" aria-label="Primary">
+            {leftLinks.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                aria-current={isActive(l.href) ? 'page' : undefined}
+                className="eyebrow link-line text-foreground/85 hover:text-foreground"
+              >
+                {l.label}
+              </Link>
+            ))}
+          </nav>
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="-ml-2 flex h-11 w-11 items-center justify-center lg:hidden"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+          >
+            <span className="relative block h-3 w-6">
+              <span className={`absolute left-0 block h-px w-6 bg-foreground transition-all duration-300 ${open ? 'top-1.5 rotate-45' : 'top-0'}`} />
+              <span className={`absolute left-0 top-1.5 block h-px w-6 bg-foreground transition-opacity duration-300 ${open ? 'opacity-0' : ''}`} />
+              <span className={`absolute left-0 block h-px w-6 bg-foreground transition-all duration-300 ${open ? 'top-1.5 -rotate-45' : 'top-3'}`} />
+            </span>
+          </button>
+
+          {/* Center */}
+          <div className="justify-self-center">
+            <Wordmark />
+          </div>
+
+          {/* Right */}
+          <div className="flex items-center justify-end gap-8 xl:gap-10">
+            <nav className="hidden items-center gap-8 xl:gap-10 lg:flex" aria-label="Secondary">
+              {rightLinks.map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  aria-current={isActive(l.href) ? 'page' : undefined}
+                  className="eyebrow link-line text-foreground/85 hover:text-foreground"
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
+            <Link href="/cart" className="relative -mr-2 flex h-11 w-11 items-center justify-center text-foreground/85 hover:text-foreground" aria-label={`Cart, ${totalItems} items`}>
+              <svg className="h-[19px] w-[19px]" fill="none" stroke="currentColor" strokeWidth={1.2} viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 7h12l-1 13H7L6 7zm3 0V5a3 3 0 016 0v2" />
+              </svg>
+              {totalItems > 0 && (
+                <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[9px] font-medium text-black">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile menu */}
+      <div
+        className={`fixed inset-0 z-40 bg-[#0a0a0a] transition-opacity duration-500 lg:hidden ${
+          open ? 'opacity-100' : 'pointer-events-none opacity-0'
+        }`}
+        aria-hidden={!open}
+      >
+        <nav className="flex h-full flex-col justify-center gap-7 px-8 pt-16" aria-label="Mobile">
+          {[...leftLinks, ...rightLinks].map((l, i) => (
             <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={`text-lg tracking-[0.3em] font-light transition-colors duration-300 ${
-                pathname === link.href ? 'text-[#88744a]' : 'text-[#1a1a1a]'
-              }`}
+              key={l.href}
+              href={l.href}
+              tabIndex={open ? 0 : -1}
+              className={`font-display text-4xl text-foreground transition-all duration-700 ${open ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
+              style={{ transitionDelay: open ? `${120 + i * 60}ms` : '0ms' }}
             >
-              {link.label.toUpperCase()}
+              {l.label}
             </Link>
           ))}
-          <Link
-            href="/cart"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="text-lg tracking-[0.3em] font-light text-[#1a1a1a] mt-4"
-          >
-            CART ({totalItems})
-          </Link>
-        </div>
+          <div className="mt-8 h-px w-16 bg-accent" />
+          <a href="mailto:sheldon@sheldonroth.com" tabIndex={open ? 0 : -1} className="eyebrow text-muted">
+            sheldon@sheldonroth.com
+          </a>
+        </nav>
       </div>
     </>
   );

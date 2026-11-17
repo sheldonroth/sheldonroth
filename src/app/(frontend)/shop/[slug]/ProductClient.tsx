@@ -1,267 +1,222 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
+import { formatPrice } from '@/content/catalog';
 
 interface ProductData {
-  title: string;
   slug: string;
+  title: string;
   description: string;
-  category: string;
-  categorySlug: string;
-  edition: string;
-  editionTotal: number;
-  editionSold: number;
-  images: string[];
+  editionSize: number;
+  collectionTitle: string;
+  collectionSlug: string;
+  image: { src: string; width: number; height: number };
   sizes: { name: string; price: number; dimensions: string }[];
   details: string[];
 }
 
-export default function ProductClient({ product }: { product: ProductData }) {
-  const [selectedSize, setSelectedSize] = useState(0);
-  const [selectedImage, setSelectedImage] = useState(0);
-  const [isAddingToCart, setIsAddingToCart] = useState(false);
-  const [showAddedMessage, setShowAddedMessage] = useState(false);
+export default function ProductClient({ work }: { work: ProductData }) {
+  const [selected, setSelected] = useState(0);
+  const [added, setAdded] = useState(false);
+  const [checkingOut, setCheckingOut] = useState(false);
+  const [lightbox, setLightbox] = useState(false);
   const { addItem } = useCart();
+  const size = work.sizes[selected];
+  const portrait = work.image.height > work.image.width;
 
-  const handleAddToCart = async () => {
-    setIsAddingToCart(true);
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setLightbox(false);
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [lightbox]);
 
+  const handleAdd = () => {
     addItem({
-      productSlug: product.slug,
-      title: product.title,
-      size: product.sizes[selectedSize].name,
-      dimensions: product.sizes[selectedSize].dimensions,
-      price: product.sizes[selectedSize].price,
-      image: product.images[0] || '',
-      edition: `${product.edition} of ${product.editionTotal}`,
+      productSlug: work.slug,
+      title: work.title,
+      size: size.name,
+      dimensions: size.dimensions,
+      price: size.price,
+      image: work.image.src,
+      edition: `Limited Edition of ${work.editionSize}`,
     });
-
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    setIsAddingToCart(false);
-    setShowAddedMessage(true);
-    setTimeout(() => setShowAddedMessage(false), 2000);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 2400);
   };
 
   const handleBuyNow = async () => {
+    setCheckingOut(true);
     try {
-      const response = await fetch('/api/checkout', {
+      const res = await fetch('/api/checkout', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           items: [
             {
-              name: `${product.title} - ${product.sizes[selectedSize].name}`,
-              price: product.sizes[selectedSize].price,
+              name: `${work.title} — ${size.name}`,
+              price: size.price,
               quantity: 1,
-              image: product.images[0],
-              description: `${product.sizes[selectedSize].dimensions} | ${product.edition} of ${product.editionTotal}`,
+              image: new URL(work.image.src, window.location.origin).toString(),
+              description: `${size.dimensions} · Limited Edition of ${work.editionSize}`,
             },
           ],
         }),
       });
-
-      const { url } = await response.json();
-      if (url) {
-        window.location.href = url;
+      const data = await res.json().catch(() => ({}));
+      if (data.url) {
+        window.location.href = data.url;
+        return;
       }
-    } catch (error) {
-      console.error('Checkout error:', error);
-      alert('Failed to initiate checkout. Please try again.');
+      window.location.href = `/contact?work=${work.slug}&size=${encodeURIComponent(size.name)}`;
+    } catch {
+      window.location.href = `/contact?work=${work.slug}&size=${encodeURIComponent(size.name)}`;
+    } finally {
+      setCheckingOut(false);
     }
   };
 
   return (
     <>
-      <section className="pt-24 lg:pt-32 pb-20 lg:pb-32 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          {/* Breadcrumb */}
-          <nav className="mb-8">
-            <ol className="flex items-center gap-2 text-xs tracking-wide">
-              <li>
-                <Link href="/shop" className="text-[#77776d] hover:text-[#1a1a1a] transition-colors">
-                  Shop
-                </Link>
-              </li>
-              <li className="text-[#77776d]">/</li>
-              <li>
-                <Link href={`/collections/${product.categorySlug}`} className="text-[#77776d] hover:text-[#1a1a1a] transition-colors">
-                  {product.category}
-                </Link>
-              </li>
-              <li className="text-[#77776d]">/</li>
-              <li className="text-[#1a1a1a]">{product.title}</li>
-            </ol>
-          </nav>
+      {/* Stage */}
+      <section className="bg-black pt-[72px] lg:pt-[92px]">
+        <button
+          type="button"
+          onClick={() => setLightbox(true)}
+          className="group relative mx-auto flex w-full max-w-[1800px] cursor-zoom-in items-center justify-center px-0 py-6 sm:px-6 lg:py-12"
+          aria-label={`View ${work.title} full screen`}
+        >
+          <Image
+            src={work.image.src}
+            alt={`${work.title} — limited edition photograph by Sheldon Roth`}
+            width={work.image.width}
+            height={work.image.height}
+            priority
+            sizes="(max-width: 1800px) 100vw, 1800px"
+            className={`h-auto w-auto object-contain shadow-[0_30px_80px_rgba(0,0,0,0.6)] ${portrait ? 'max-h-[82vh]' : 'max-h-[78vh]'}`}
+            style={{ maxWidth: '100%' }}
+          />
+          <span className="eyebrow absolute bottom-10 right-10 hidden bg-black/50 px-4 py-2 text-white/80 opacity-0 backdrop-blur transition-opacity group-hover:opacity-100 md:block">
+            Full Screen ⤢
+          </span>
+        </button>
+      </section>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-            {/* Images */}
-            <div>
-              <div className="relative aspect-[4/5] mb-4 overflow-hidden bg-[#f8f8f6]">
-                {product.images.length > 0 && (
-                  <Image
-                    src={product.images[selectedImage]}
-                    alt={product.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    priority
-                  />
-                )}
-              </div>
-              {product.images.length > 1 && (
-                <div className="grid grid-cols-4 gap-2">
-                  {product.images.map((image, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setSelectedImage(index)}
-                      className={`relative aspect-square overflow-hidden ${
-                        selectedImage === index ? 'ring-2 ring-[#88744a]' : ''
-                      }`}
-                    >
-                      <Image
-                        src={image}
-                        alt={`${product.title} view ${index + 1}`}
-                        fill
-                        className="object-cover"
-                        sizes="10vw"
-                      />
-                    </button>
-                  ))}
-                </div>
-              )}
+      {/* Details */}
+      <section className="py-16 lg:py-24">
+        <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-16 px-6 lg:grid-cols-[1.1fr_1fr] lg:gap-24 lg:px-10">
+          <div>
+            <nav className="eyebrow text-muted" aria-label="Breadcrumb">
+              <Link href="/collections" className="hover:text-foreground">Galleries</Link>
+              <span className="mx-3">/</span>
+              <Link href={`/collections/${work.collectionSlug}`} className="hover:text-foreground">{work.collectionTitle}</Link>
+            </nav>
+            <h1 className="font-display mt-6 text-5xl leading-[1.02] text-foreground md:text-6xl lg:text-7xl">{work.title}</h1>
+            <p className="eyebrow mt-6 text-accent">Limited Edition of {work.editionSize}</p>
+            <div className="mt-6 h-px w-14 bg-accent/60" />
+            <p className="font-display mt-8 max-w-xl text-2xl italic leading-relaxed text-foreground/80">{work.description}</p>
+
+            <div className="mt-14">
+              <h2 className="eyebrow mb-6 text-foreground">The Gallery Presentation</h2>
+              <ul className="space-y-4">
+                {work.details.map((d) => (
+                  <li key={d} className="flex gap-4 text-sm leading-relaxed text-foreground/65">
+                    <span className="mt-2 h-px w-4 shrink-0 bg-accent" />
+                    {d}
+                  </li>
+                ))}
+              </ul>
             </div>
+          </div>
 
-            {/* Product Info */}
-            <div>
-              <span className="text-xs tracking-[0.3em] text-[#88744a] mb-2 block">
-                {product.category.toUpperCase()}
-              </span>
-              <h1 className="text-3xl lg:text-4xl font-light tracking-wide mb-4">{product.title}</h1>
-
-              {/* Edition Info */}
-              <div className="flex items-center gap-4 mb-6">
-                <span className="text-sm text-[#77776d]">
-                  {product.edition} of {product.editionTotal}
-                </span>
-                <span className="text-xs px-2 py-1 bg-[#f8f8f6] text-[#77776d]">
-                  {product.editionTotal - product.editionSold} Available
-                </span>
+          <div className="lg:pt-14">
+            <div className="border border-line bg-surface p-7 sm:p-10 lg:sticky lg:top-32">
+              <h2 className="eyebrow text-foreground">Select a Size</h2>
+              <div className="mt-6 space-y-3" role="radiogroup" aria-label="Print size">
+                {work.sizes.map((s, i) => (
+                  <button
+                    key={s.name}
+                    type="button"
+                    role="radio"
+                    aria-checked={i === selected}
+                    onClick={() => setSelected(i)}
+                    className={`flex w-full items-center justify-between border px-5 py-4 text-left transition-colors ${
+                      i === selected ? 'border-accent bg-accent/10' : 'border-line hover:border-foreground/40'
+                    }`}
+                  >
+                    <span>
+                      <span className="block font-display text-xl text-foreground">{s.name}</span>
+                      <span className="text-xs tracking-wider text-muted">{s.dimensions}</span>
+                    </span>
+                    <span className="text-sm tracking-wider text-foreground/85">{formatPrice(s.price)}</span>
+                  </button>
+                ))}
               </div>
 
-              {/* Price */}
-              <p className="text-2xl font-light mb-8">
-                ${product.sizes[selectedSize].price.toLocaleString()}
-              </p>
-
-              {/* Description */}
-              <p className="text-[#77776d] leading-relaxed mb-8">{product.description}</p>
-
-              {/* Size Selection */}
-              <div className="mb-8">
-                <h3 className="text-xs tracking-[0.2em] mb-4">SELECT SIZE</h3>
-                <div className="grid grid-cols-3 gap-3">
-                  {product.sizes.map((size, index) => (
-                    <button
-                      key={size.name}
-                      onClick={() => setSelectedSize(index)}
-                      className={`p-4 border transition-all ${
-                        selectedSize === index
-                          ? 'border-[#88744a] bg-[#f8f8f6]'
-                          : 'border-[#e5e5e5] hover:border-[#88744a]'
-                      }`}
-                    >
-                      <span className="block text-xs tracking-wide font-medium mb-1">{size.name}</span>
-                      <span className="block text-xs text-[#77776d]">{size.dimensions}</span>
-                      <span className="block text-sm mt-2">${size.price.toLocaleString()}</span>
-                    </button>
-                  ))}
-                </div>
+              <div className="mt-8 flex items-baseline justify-between border-t border-line pt-6">
+                <span className="eyebrow text-muted">Price</span>
+                <span className="font-display text-3xl text-foreground">{formatPrice(size.price)}</span>
               </div>
 
-              {/* Add to Cart / Buy Now */}
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <button
-                  onClick={handleAddToCart}
-                  disabled={isAddingToCart}
-                  className={`btn-secondary flex-1 disabled:opacity-50 transition-all ${showAddedMessage ? 'bg-green-50 border-green-500 text-green-700' : ''}`}
-                >
-                  {isAddingToCart ? 'Adding...' : showAddedMessage ? '✓ Added to Cart' : 'Add to Cart'}
-                </button>
-                <button onClick={handleBuyNow} className="btn-primary flex-1">
-                  Buy Now
-                </button>
+              <div className="mt-8 grid gap-3">
+                <Link href={`/contact?work=${work.slug}&size=${encodeURIComponent(size.name)}`} className="btn btn-gold w-full">
+                  Inquire About This Piece
+                </Link>
+                <div className="grid grid-cols-2 gap-3">
+                  <button type="button" onClick={handleAdd} className="btn btn-outline w-full px-3">
+                    {added ? 'Added ✓' : 'Add to Cart'}
+                  </button>
+                  <button type="button" onClick={handleBuyNow} disabled={checkingOut} className="btn btn-light w-full px-3">
+                    {checkingOut ? 'One Moment…' : 'Buy Now'}
+                  </button>
+                </div>
               </div>
-
-              {/* Details */}
-              {product.details.length > 0 && (
-                <div className="border-t border-[#e5e5e5] pt-8">
-                  <h3 className="text-xs tracking-[0.2em] mb-4">INCLUDED WITH PURCHASE</h3>
-                  <ul className="space-y-2">
-                    {product.details.map((detail, index) => (
-                      <li key={index} className="flex items-start gap-3 text-sm text-[#77776d]">
-                        <svg className="w-4 h-4 text-[#88744a] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        {detail}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Shipping Info */}
-              <div className="border-t border-[#e5e5e5] pt-8 mt-8">
-                <div className="flex items-center gap-3 mb-4">
-                  <svg className="w-5 h-5 text-[#88744a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                  </svg>
-                  <span className="text-sm">Free worldwide shipping</span>
-                </div>
-                <p className="text-xs text-[#77776d]">
-                  Estimated delivery: 2-4 weeks (custom made to order)
+              {added && (
+                <p className="mt-4 text-center text-xs text-muted">
+                  Added to your cart. <Link href="/cart" className="text-accent-light underline">View cart</Link>
                 </p>
-              </div>
+              )}
+              <p className="mt-6 text-center text-xs leading-relaxed text-muted">
+                Complimentary shipping. Each piece is made to order, signed and numbered by the artist.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Trust Badges */}
-      <section className="py-12 bg-[#f8f8f6]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <svg className="w-8 h-8 mx-auto mb-2 text-[#88744a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-              <p className="text-xs tracking-wide">Authenticity Guaranteed</p>
-            </div>
-            <div>
-              <svg className="w-8 h-8 mx-auto mb-2 text-[#88744a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-              </svg>
-              <p className="text-xs tracking-wide">Secure Payment</p>
-            </div>
-            <div>
-              <svg className="w-8 h-8 mx-auto mb-2 text-[#88744a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-              </svg>
-              <p className="text-xs tracking-wide">Insured Shipping</p>
-            </div>
-            <div>
-              <svg className="w-8 h-8 mx-auto mb-2 text-[#88744a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-              <p className="text-xs tracking-wide">30-Day Returns</p>
-            </div>
-          </div>
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/97 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${work.title} full screen`}
+          onClick={() => setLightbox(false)}
+        >
+          <Image
+            src={work.image.src}
+            alt={work.title}
+            width={work.image.width}
+            height={work.image.height}
+            sizes="100vw"
+            quality={85}
+            className="h-auto max-h-[94vh] w-auto max-w-full object-contain"
+          />
+          <button
+            type="button"
+            className="eyebrow absolute right-5 top-5 px-3 py-2 text-white/80 hover:text-white"
+            onClick={() => setLightbox(false)}
+          >
+            Close ✕
+          </button>
         </div>
-      </section>
+      )}
     </>
   );
 }
