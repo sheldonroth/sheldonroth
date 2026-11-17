@@ -84,7 +84,9 @@ export async function notify(id: number, r: InquiryRecord): Promise<string | nul
         headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ from, to: [to], reply_to: r.email, subject, text }),
       });
-      return res.ok ? null : `resend ${res.status}`;
+      if (res.ok) return null;
+      const detail = await res.json().then((j: { message?: string }) => j?.message ?? '').catch(() => '');
+      return `resend ${res.status}${detail ? `: ${String(detail).slice(0, 200)}` : ''}`;
     }
     if (process.env.MAILGUN_API_KEY && process.env.MAILGUN_DOMAIN) {
       const base = process.env.MAILGUN_API_BASE || 'https://api.mailgun.net';
