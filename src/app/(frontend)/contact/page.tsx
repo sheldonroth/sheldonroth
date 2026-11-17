@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  const side = getImage('tropical-sunset');
+  const side = getImage('rhododendron-valley');
   return (
     <>
       <PageHeader
@@ -23,7 +23,7 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
           <div className="order-2 lg:order-1">
             <div className="relative hidden aspect-[4/5] overflow-hidden lg:block">
-              <Image src={side.src} alt="Tropical Sunset by Sheldon Roth" fill quality={85} sizes="40vw" className="object-cover" />
+              <Image src={side.src} alt="Rhododendron Valley by Sheldon Roth" fill quality={85} sizes="40vw" className="object-cover" />
             </div>
             <div className="mt-10">
               <h2 className="lk-edition-label">Email</h2>

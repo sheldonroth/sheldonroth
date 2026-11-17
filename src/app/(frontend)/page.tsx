@@ -17,9 +17,9 @@ export default function Home() {
 
   const newReleases = getNewReleases();
   const bestSellers = getBestSellers().slice(0, 6);
-  const panorama = getWork('pacific-edge')!;
+  const panorama = getWork('roof-of-the-world')!;
   const panoImg = getImage(panorama.slug);
-  const artistImage = getImage('still-water');
+  const artistImage = getImage('sentinel');
 
   return (
     <>
@@ -80,12 +80,12 @@ export default function Home() {
             <p className="lk-eyebrow">Shop by Gallery</p>
             <h2 className="lk-h2 mt-6">The Galleries</h2>
           </div>
-          <div className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-3">
+          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
             {collections.map((c) => {
               const img = getImage(c.cover);
               return (
                 <Link key={c.slug} href={`/collections/${c.slug}`} className="group relative block aspect-[4/5] overflow-hidden bg-black">
-                  <Image quality={85} src={img.src} alt={`${c.title} gallery`} fill sizes="(max-width: 768px) 100vw, 33vw" className="zoom-img object-cover" />
+                  <Image quality={85} src={img.src} alt={`${c.title} gallery`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw" className="zoom-img object-cover" />
                   <div className="lk-scrim absolute inset-0" />
                   <div className="absolute inset-x-0 bottom-0 p-8 text-center text-white">
                     <h3 className="lk-h2-sm">{c.title}</h3>
@@ -102,14 +102,14 @@ export default function Home() {
       <section className="bg-surface">
         <div className="lk-container grid grid-cols-1 items-center gap-10 py-[60px] md:grid-cols-2 lg:gap-20 lg:py-[120px]">
           <div className="relative aspect-[4/5] overflow-hidden md:aspect-[4/5]">
-            <Image quality={85} src={artistImage.src} alt="Still Water by Sheldon Roth" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+            <Image quality={85} src={artistImage.src} alt="Sentinel by Sheldon Roth" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
           </div>
           <Reveal>
             <p className="lk-eyebrow">The Artist</p>
             <h2 className="lk-h2 mt-6">Sheldon Roth</h2>
             <p className="lk-body mt-6">
-              Sheldon Roth photographs the landscapes of the American West and the far-flung coastlines of the tropics, waiting for the
-              rare moments when light transforms a scene.
+              Sheldon Roth photographs high peaks, wild water and far horizons, waiting for the rare moments when light
+              transforms a scene.
             </p>
             <p className="lk-body mt-4">
               His limited editions are printed to museum standards and released in small numbers, so each one remains a rare and

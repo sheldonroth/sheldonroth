@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     template: '%s | Sheldon Roth Fine Art',
   },
   description:
-    'Limited edition fine art photography by Sheldon Roth — landscapes, seascapes, wildlife and architecture, hand-signed and numbered.',
+    'Limited edition fine art photography by Sheldon Roth — mountains, glaciers, water and wild landscapes, hand-signed and numbered.',
   keywords: [
     'Sheldon Roth',
     'fine art photography',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://sheldonroth.com',
     siteName: 'Sheldon Roth Fine Art',
-    images: [{ url: '/works/coral-symphony.jpg', width: 2560, height: 1707 }],
+    images: [{ url: '/works/sunstar-valley.jpg', width: 3840, height: 2897 }],
   },
   twitter: { card: 'summary_large_image' },
 };

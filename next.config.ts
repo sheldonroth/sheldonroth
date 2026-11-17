@@ -12,6 +12,14 @@ const nextConfig: NextConfig = {
       'lodash',
     ],
   },
+  async redirects() {
+    const removed = ['tropical-sunset', 'aspen-cascade', 'crystal-lagoon', 'shipwreck-at-dawn', 'mountain-majesty', 'still-water'];
+    return [
+      { source: '/collections/tropics', destination: '/collections/water', permanent: true },
+      { source: '/collections/ocean-coast', destination: '/collections/water', permanent: true },
+      ...removed.map((slug) => ({ source: `/shop/${slug}`, destination: '/shop', permanent: true })),
+    ];
+  },
   images: {
     // Full-res photography: allow up to 4K widths and higher JPEG/WebP quality than the default 75.
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 2560, 3840],

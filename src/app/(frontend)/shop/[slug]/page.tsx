@@ -42,7 +42,7 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
   const collection = getCollection(work.collection)!;
   const image = getImage(work.slug);
   const related = getWorksInCollection(work.collection).filter((w) => w.slug !== work.slug);
-  const more = related.length >= 3 ? related.slice(0, 3) : [...related, ...works.filter((w) => w.collection !== work.collection && !related.includes(w))].slice(0, 3);
+  const more = related.length >= 3 ? related.slice(0, 3) : [...related, ...works.filter((w) => w.collection !== work.collection && !w.webOnly && !related.includes(w))].slice(0, 3);
 
   const index = works.findIndex((w) => w.slug === work.slug);
   const prev = works[(index - 1 + works.length) % works.length];

@@ -6,7 +6,7 @@ import type { Work } from '@/content/catalog';
 
 export default function GalleryGrid({ works, filters }: { works: Work[]; filters?: { slug: string; title: string }[] }) {
   const [active, setActive] = useState<string>('all');
-  const shown = useMemo(() => (active === 'all' ? works : works.filter((w) => w.collection === active)), [active, works]);
+  const shown = useMemo(() => (active === 'all' ? works : works.filter((w) => w.collection === active && !w.webOnly)), [active, works]);
 
   return (
     <section className="lk-container pb-20 lg:pb-[100px]">

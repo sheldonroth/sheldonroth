@@ -28,13 +28,13 @@ const chapters = [
 ];
 
 export default function ArtistPage() {
-  const hero = getImage('mountain-majesty');
-  const portrait = getImage('aspen-cascade');
-  const wide = getImage('pacific-edge');
+  const hero = getImage('frozen-symphony');
+  const portrait = getImage('alpine-bloom');
+  const wide = getImage('snow-range');
   return (
     <>
       <section className="relative h-[560px] w-full overflow-hidden bg-black md:h-[630px]">
-        <Image src={hero.src} alt="Mountain Majesty by Sheldon Roth" fill priority quality={90} sizes="100vw" className="object-cover" />
+        <Image src={hero.src} alt="Frozen Symphony by Sheldon Roth" fill priority quality={90} sizes="100vw" className="object-cover" />
         <div className="lk-scrim absolute inset-0" />
         <div className="absolute inset-x-0 bottom-0 px-5 pb-[70px] text-center text-white md:pb-[90px]">
           <p className="lk-hero-eyebrow fade-up">The Artist</p>
@@ -55,8 +55,8 @@ export default function ArtistPage() {
               </p>
               <p className="lk-body">
                 Through his lens, he captures moments that transcend the ordinary, transforming fleeting instants into timeless works of
-                art. His photographs span the reefs and islands of the tropics, restless coastlines and the high peaks, forests and alpine
-                water of the mountains.
+                art. His photographs span towering peaks and glacier ice, turquoise alpine lakes and wildflower basins, reefs and restless
+                coastlines, golden savanna and wind-written dunes.
               </p>
               <p className="lk-body">
                 Based in the American West, he releases every image as a limited edition — printed large, face-mounted to acrylic and
@@ -65,7 +65,7 @@ export default function ArtistPage() {
             </div>
           </Reveal>
           <Reveal delay={150} className="relative aspect-[4/5] overflow-hidden">
-            <Image src={portrait.src} alt="Aspen Cascade by Sheldon Roth" fill quality={85} sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+            <Image src={portrait.src} alt="Alpine Bloom by Sheldon Roth" fill quality={85} sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
           </Reveal>
         </div>
       </section>
