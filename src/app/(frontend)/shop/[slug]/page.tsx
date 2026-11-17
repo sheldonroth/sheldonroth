@@ -2,16 +2,14 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Reveal from '@/components/Reveal';
-import Image from 'next/image';
+import WorkCard from '@/components/WorkCard';
 import ProductClient from './ProductClient';
 import {
   getCollection,
   getImage,
   getWork,
   getWorksInCollection,
-  formatPrice,
   PRINT_DETAILS,
-  PRINT_SIZES,
   sizesFor,
   works,
 } from '@/content/catalog';
@@ -42,7 +40,7 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
   const collection = getCollection(work.collection)!;
   const image = getImage(work.slug);
   const related = getWorksInCollection(work.collection).filter((w) => w.slug !== work.slug);
-  const more = related.length >= 3 ? related.slice(0, 3) : [...related, ...works.filter((w) => w.collection !== work.collection && !w.webOnly && !related.includes(w))].slice(0, 3);
+  const more = related.length >= 4 ? related.slice(0, 4) : [...related, ...works.filter((w) => w.collection !== work.collection && !w.webOnly && !related.includes(w))].slice(0, 4);
 
   const index = works.findIndex((w) => w.slug === work.slug);
   const prev = works[(index - 1 + works.length) % works.length];
@@ -64,22 +62,20 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
         }}
       />
 
-      <section className="lk-section">
+      {/* lik.com: grey band, "You Might Also Like" heading left with a gallery link right, four dark mats */}
+      <section className="bg-[#edecec] py-14 lg:py-20">
         <div className="lk-container">
-          <Reveal className="mb-14 text-center">
-            <h2 className="text-[30px] font-light leading-[1.1] tracking-[0.02em] text-[#222] md:text-[45px]">You May Also Like</h2>
-          </Reveal>
-          <div className="grid grid-cols-1 gap-x-10 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <p className="lk-edition-label">You Might Also Like</p>
+              <h2 className="mt-3 text-[30px] font-light leading-[1.1] tracking-[0.03em] text-accent md:text-[45px]">Explore more from this gallery</h2>
+            </div>
+            <Link href={`/collections/${collection.slug}`} className="lk-btn lk-btn-gold shrink-0">Shop the Gallery</Link>
+          </div>
+          <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {more.map((w, i) => (
               <Reveal key={w.slug} delay={i * 100}>
-                <Link href={`/shop/${w.slug}`} className="group block text-center">
-                  <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden">
-                    <Image quality={85} src={getImage(w.slug).src} alt={`${w.title} by Sheldon Roth`} width={getImage(w.slug).width} height={getImage(w.slug).height} sizes="(max-width: 640px) 100vw, 33vw" className="zoom-img h-auto max-h-full w-auto max-w-full object-contain" />
-                  </div>
-                  <h3 className="lk-related-title mt-6">{w.title}</h3>
-                  <p className="lk-related-edition mt-3">Limited Edition of {w.editionSize}</p>
-                  <p className="mt-3 text-[18px] leading-[27px] text-accent-dark">From {formatPrice(PRINT_SIZES[0].price)}</p>
-                </Link>
+                <WorkCard work={w} tone="dark" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px" />
               </Reveal>
             ))}
           </div>

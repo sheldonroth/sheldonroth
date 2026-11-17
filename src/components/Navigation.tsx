@@ -40,13 +40,15 @@ export default function Navigation() {
   }, [open]);
 
   const light = overlay && !scrolled && !open; // white text over photo
+  // Product pages open on lik.com's grey band, so the header shares that grey until the page scrolls.
+  const tint = pathname.startsWith('/shop/') && !scrolled && !open;
   const compact = scrolled;
 
   return (
     <>
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-          light ? 'bg-transparent text-white' : 'bg-white text-[#222]'
+          light ? 'bg-transparent text-white' : tint ? 'bg-[#edecec] text-[#222]' : 'bg-white text-[#222]'
         } ${compact ? 'shadow-[0_1px_0_rgba(0,0,0,0.08)]' : ''}`}
       >
         {light && <div className="lk-scrim-top pointer-events-none absolute inset-0 -z-10 h-[180%]" />}
