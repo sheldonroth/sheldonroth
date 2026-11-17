@@ -578,6 +578,42 @@ export const works: Work[] = [
     editionSize: 50,
     webOnly: true,
   },
+  {
+    slug: "ember-sky",
+    title: "Ember Sky",
+    collection: "light-sky",
+    description:
+      "Clouds catch fire above a darkening ridge as the last light of evening sweeps across the sky.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "horizon-burn",
+    title: "Horizon Burn",
+    collection: "light-sky",
+    description:
+      "A band of molten gold burns along the horizon as twilight deepens over calm water.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "last-light",
+    title: "Last Light",
+    collection: "light-sky",
+    description:
+      "Layered ridgelines dissolve into haze beneath a sky fading from gold to rose.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "terraced-meadow",
+    title: "Terraced Meadow",
+    collection: "mountain-forest",
+    description:
+      "Ancient terraced fields glow green beneath towering snow peaks in clear morning light.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {

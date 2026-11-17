@@ -57,4 +57,8 @@ export const imageSizes: Record<string, { width: number; height: number }> = {
   "wild-water": { width: 3840, height: 2783 },
   "wildflower-basin": { width: 3840, height: 2561 },
   "wind-script": { width: 3840, height: 2560 },
+  "ember-sky": { width: 3840, height: 1920 },
+  "horizon-burn": { width: 3840, height: 1920 },
+  "last-light": { width: 3840, height: 1920 },
+  "terraced-meadow": { width: 3840, height: 2400 },
 };
