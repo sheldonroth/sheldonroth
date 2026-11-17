@@ -614,6 +614,51 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "gilded-sky",
+    title: "Gilded Sky",
+    collection: "light-sky",
+    description:
+      "The sky erupts in gold as the sun slips beneath a line of silhouetted trees.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "rose-summit",
+    title: "Rose Summit",
+    collection: "light-sky",
+    description:
+      "A great summit turns rose and copper in the soft afterglow of a high-country dusk.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "golden-tide",
+    title: "Golden Tide",
+    collection: "light-sky",
+    description:
+      "The setting sun lays a path of gold across the sea toward a rugged, wave-washed shore.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "morning-mist",
+    title: "Morning Mist",
+    collection: "light-sky",
+    description:
+      "Sunrise sets drifting mist aglow over still water, a lone tree standing at the shore.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "storm-light",
+    title: "Storm Light",
+    collection: "peaks-ice",
+    description:
+      "Snow-dusted peaks break through parting storm clouds above a quiet valley.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {

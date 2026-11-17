@@ -61,4 +61,9 @@ export const imageSizes: Record<string, { width: number; height: number }> = {
   "horizon-burn": { width: 3840, height: 1920 },
   "last-light": { width: 3840, height: 1920 },
   "terraced-meadow": { width: 3840, height: 2400 },
+  "gilded-sky": { width: 2560, height: 3840 },
+  "rose-summit": { width: 3840, height: 2194 },
+  "golden-tide": { width: 3840, height: 2560 },
+  "morning-mist": { width: 3840, height: 2560 },
+  "storm-light": { width: 3840, height: 1600 },
 };
