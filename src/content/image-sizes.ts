@@ -66,4 +66,7 @@ export const imageSizes: Record<string, { width: number; height: number }> = {
   "golden-tide": { width: 3840, height: 2560 },
   "morning-mist": { width: 3840, height: 2560 },
   "storm-light": { width: 3840, height: 1600 },
+  "canyon-song": { width: 3840, height: 2561 },
+  "secret-grotto": { width: 3840, height: 2561 },
+  "golden-grove": { width: 3840, height: 2880 },
 };

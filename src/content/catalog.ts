@@ -659,6 +659,33 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "canyon-song",
+    title: "Canyon Song",
+    collection: "water",
+    description:
+      "Turquoise water spills over mossy boulders between towering walls of layered stone.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "secret-grotto",
+    title: "Secret Grotto",
+    collection: "water",
+    description:
+      "A ribbon of falling water glows green beneath a stone arch deep inside a hidden canyon.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "golden-grove",
+    title: "Golden Grove",
+    collection: "mountain-forest",
+    description:
+      "Pale trunks rise through a blaze of autumn gold in a quiet mountain grove.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {
