@@ -61,7 +61,7 @@ export default function Home() {
       </section>
 
       {/* Feature panorama */}
-      <section className="relative h-[480px] overflow-hidden md:h-[600px]">
+      <section className="lk-hero-h relative overflow-hidden lg:mx-10">
         <Image quality={90} src={panoImg.src} alt={`${panorama.title} by Sheldon Roth`} fill sizes="100vw" className="object-cover" />
         <div className="lk-scrim absolute inset-0" />
         <div className="absolute inset-x-0 bottom-0 px-5 pb-16 text-center text-white md:pb-20">

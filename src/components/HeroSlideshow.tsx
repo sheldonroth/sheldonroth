@@ -16,7 +16,7 @@ export interface HeroSlide {
 const INTERVAL = 7000;
 
 /**
- * Hero carousel matched to lik.com: 630px tall, centred copy (15px/700/0.14em eyebrow, 48px/300/0.04em title,
+ * Hero carousel matched to lik.com: 70vh tall (630px at 1440x900), centred copy (15px/700/0.14em eyebrow, 48px/300/0.04em title,
  * 12px/700 underlined CTA) on the measured bottom-up scrim linear-gradient(to top, .6, .3, 0).
  */
 export default function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
@@ -34,7 +34,7 @@ export default function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
 
   return (
     <section
-      className="relative h-[560px] w-full overflow-hidden bg-black md:h-[630px]"
+      className="lk-hero-h relative w-full overflow-hidden bg-black"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       aria-roledescription="carousel"

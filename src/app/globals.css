@@ -51,9 +51,16 @@ body {
 
 /* ---------- Layout rhythm (Lik: 1200px container, 100px section padding) ---------- */
 .lk-container { width: 100%; max-width: 1240px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
-.lk-container-wide { width: 100%; max-width: 1440px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+.lk-container-wide { width: 100%; max-width: 1240px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+/* lik.com widens its container from 1200px to 1280px on large desktops */
+@media (min-width: 1800px) { .lk-container, .lk-container-wide { max-width: 1320px; } }
 .lk-section { padding-top: 60px; padding-bottom: 60px; }
-@media (min-width: 1024px) { .lk-section { padding-top: 100px; padding-bottom: 100px; } }
+/* Lik section padding grows with the viewport: 100px at 1440, 190px at 2560 */
+@media (min-width: 1024px) { .lk-section { padding-top: clamp(100px, 7.4vw, 190px); padding-bottom: clamp(100px, 7.4vw, 190px); } }
+
+/* Lik heroes are 70% of the viewport height at every width (630px at 1440x900, 1008px at 2560x1440) */
+.lk-hero-h { height: 70vh; min-height: 480px; max-height: 1200px; }
+.lk-hero-h { height: 70svh; }
 
 /* ---------- Typography ---------- */
 .lk-nav { font-size: 16px; line-height: 16px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }

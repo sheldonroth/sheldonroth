@@ -51,7 +51,7 @@ export default function Navigation() {
       >
         {light && <div className="lk-scrim-top pointer-events-none absolute inset-0 -z-10 h-[180%]" />}
         <div
-          className={`mx-auto flex max-w-[1600px] items-center justify-between px-5 transition-all duration-300 lg:px-20 ${
+          className={`flex w-full items-center justify-between px-5 transition-all duration-300 lg:px-20 ${
             compact ? 'h-[70px] lg:h-[66px]' : 'h-[70px] lg:h-[166px]'
           }`}
         >

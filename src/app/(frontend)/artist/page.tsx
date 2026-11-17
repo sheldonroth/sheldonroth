@@ -33,7 +33,7 @@ export default function ArtistPage() {
   const wide = getImage('snow-range');
   return (
     <>
-      <section className="relative h-[560px] w-full overflow-hidden bg-black md:h-[630px]">
+      <section className="lk-hero-h relative w-full overflow-hidden bg-black">
         <Image src={hero.src} alt="Frozen Symphony by Sheldon Roth" fill priority quality={90} sizes="100vw" className="object-cover" />
         <div className="lk-scrim absolute inset-0" />
         <div className="absolute inset-x-0 bottom-0 px-5 pb-[70px] text-center text-white md:pb-[90px]">
