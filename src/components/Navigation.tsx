@@ -6,14 +6,10 @@ import { usePathname } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import Wordmark from './Wordmark';
 
-const leftLinks = [
-  { href: '/collections', label: 'Galleries' },
+const links = [
+  { href: '/shop', label: 'The Work' },
+  { href: '/collections', label: 'The Galleries' },
   { href: '/new-releases', label: 'New Releases' },
-  { href: '/shop', label: 'Limited Editions' },
-];
-
-const rightLinks = [
-  { href: '/best-sellers', label: 'Best Sellers' },
   { href: '/artist', label: 'The Artist' },
   { href: '/contact', label: 'Inquire' },
 ];
@@ -25,10 +21,9 @@ export default function Navigation() {
   // The menu is tied to the path it was opened on, so navigating closes it.
   const [openOn, setOpenOn] = useState<string | null>(null);
   const open = openOn === pathname;
-  const setOpen = (fn: (v: boolean) => boolean) => setOpenOn(fn(open) ? pathname : null);
 
-  // Pages whose first section is a full-bleed image get a transparent header.
-  const overlay = pathname === '/' || pathname === '/artist' || pathname.startsWith('/collections/');
+  // Only the home and artist pages start with a full-bleed photo under the header (as on lik.com).
+  const overlay = pathname === '/' || pathname === '/artist';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -44,102 +39,75 @@ export default function Navigation() {
     };
   }, [open]);
 
-  const solid = scrolled || !overlay || open;
-  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+  const light = overlay && !scrolled && !open; // white text over photo
+  const compact = scrolled;
 
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-          solid
-            ? 'bg-[#0a0a0a]/92 backdrop-blur-md border-b border-line'
-            : 'bg-gradient-to-b from-black/60 to-transparent border-b border-transparent'
-        }`}
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+          light ? 'bg-transparent text-white' : 'bg-white text-[#222]'
+        } ${compact ? 'shadow-[0_1px_0_rgba(0,0,0,0.08)]' : ''}`}
       >
-        <div className="mx-auto grid h-[72px] max-w-[1600px] grid-cols-[1fr_auto_1fr] items-center px-5 lg:h-[92px] lg:px-10">
-          {/* Left */}
-          <nav className="hidden items-center gap-8 xl:gap-10 lg:flex" aria-label="Primary">
-            {leftLinks.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                aria-current={isActive(l.href) ? 'page' : undefined}
-                className="eyebrow link-line text-foreground/85 hover:text-foreground"
-              >
-                {l.label}
-              </Link>
-            ))}
+        {light && <div className="lk-scrim-top pointer-events-none absolute inset-0 -z-10 h-[180%]" />}
+        <div
+          className={`mx-auto flex max-w-[1600px] items-center justify-between px-5 transition-all duration-300 lg:px-20 ${
+            compact ? 'h-[70px] lg:h-[66px]' : 'h-[70px] lg:h-[166px]'
+          }`}
+        >
+          <Wordmark />
+
+          <nav className="hidden lg:block" aria-label="Primary">
+            <ul className="flex items-center">
+              {links.map((l) => {
+                const active = pathname === l.href || pathname.startsWith(`${l.href}/`);
+                return (
+                  <li key={l.href}>
+                    <Link
+                      href={l.href}
+                      aria-current={active ? 'page' : undefined}
+                      className={`lk-nav block p-5 transition-opacity hover:opacity-70 ${active ? 'underline underline-offset-8' : ''}`}
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
           </nav>
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            className="-ml-2 flex h-11 w-11 items-center justify-center lg:hidden"
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            aria-expanded={open}
-          >
-            <span className="relative block h-3 w-6">
-              <span className={`absolute left-0 block h-px w-6 bg-foreground transition-all duration-300 ${open ? 'top-1.5 rotate-45' : 'top-0'}`} />
-              <span className={`absolute left-0 top-1.5 block h-px w-6 bg-foreground transition-opacity duration-300 ${open ? 'opacity-0' : ''}`} />
-              <span className={`absolute left-0 block h-px w-6 bg-foreground transition-all duration-300 ${open ? 'top-1.5 -rotate-45' : 'top-3'}`} />
-            </span>
-          </button>
 
-          {/* Center */}
-          <div className="justify-self-center">
-            <Wordmark />
-          </div>
-
-          {/* Right */}
-          <div className="flex items-center justify-end gap-8 xl:gap-10">
-            <nav className="hidden items-center gap-8 xl:gap-10 lg:flex" aria-label="Secondary">
-              {rightLinks.map((l) => (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  aria-current={isActive(l.href) ? 'page' : undefined}
-                  className="eyebrow link-line text-foreground/85 hover:text-foreground"
-                >
-                  {l.label}
-                </Link>
-              ))}
-            </nav>
-            <Link href="/cart" className="relative -mr-2 flex h-11 w-11 items-center justify-center text-foreground/85 hover:text-foreground" aria-label={`Cart, ${totalItems} items`}>
-              <svg className="h-[19px] w-[19px]" fill="none" stroke="currentColor" strokeWidth={1.2} viewBox="0 0 24 24" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 7h12l-1 13H7L6 7zm3 0V5a3 3 0 016 0v2" />
+          <div className="flex items-center gap-2">
+            <Link href="/cart" className="relative flex h-11 items-center gap-1.5 px-2 hover:opacity-70" aria-label={`Cart, ${totalItems} items`}>
+              <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 18a2 2 0 100 4 2 2 0 000-4zm10 0a2 2 0 100 4 2 2 0 000-4zM5.2 4l.4 2H21l-2.2 8.2a1 1 0 01-1 .8H8.1l.4 2H19v2H7.7a1 1 0 01-1-.8L4 4H1V2h3.8a1 1 0 01.4 2z" />
               </svg>
-              {totalItems > 0 && (
-                <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-accent px-1 text-[9px] font-medium text-black">
-                  {totalItems}
-                </span>
-              )}
+              <span className="text-[13px] font-bold">{totalItems}</span>
             </Link>
+            <button
+              type="button"
+              onClick={() => setOpenOn(open ? null : pathname)}
+              className="flex h-11 w-11 items-center justify-center lg:hidden"
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              aria-expanded={open}
+            >
+              <span className="relative block h-3.5 w-6">
+                <span className={`absolute left-0 block h-[2px] w-6 bg-current transition-all ${open ? 'top-1.5 rotate-45' : 'top-0'}`} />
+                <span className={`absolute left-0 top-1.5 block h-[2px] w-6 bg-current transition-opacity ${open ? 'opacity-0' : ''}`} />
+                <span className={`absolute left-0 block h-[2px] w-6 bg-current transition-all ${open ? 'top-1.5 -rotate-45' : 'top-3'}`} />
+              </span>
+            </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile menu */}
-      <div
-        className={`fixed inset-0 z-40 bg-[#0a0a0a] transition-opacity duration-500 lg:hidden ${
-          open ? 'opacity-100' : 'pointer-events-none opacity-0'
-        }`}
-        aria-hidden={!open}
-      >
-        <nav className="flex h-full flex-col justify-center gap-7 px-8 pt-16" aria-label="Mobile">
-          {[...leftLinks, ...rightLinks].map((l, i) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              tabIndex={open ? 0 : -1}
-              className={`font-display text-4xl text-foreground transition-all duration-700 ${open ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
-              style={{ transitionDelay: open ? `${120 + i * 60}ms` : '0ms' }}
-            >
+      <div className={`fixed inset-0 z-40 bg-white pt-[70px] transition-opacity duration-300 lg:hidden ${open ? 'opacity-100' : 'pointer-events-none opacity-0'}`} aria-hidden={!open}>
+        <nav className="lk-container flex flex-col pt-8" aria-label="Mobile">
+          {links.map((l) => (
+            <Link key={l.href} href={l.href} tabIndex={open ? 0 : -1} className="lk-nav border-b border-line py-5 text-[#222]">
               {l.label}
             </Link>
           ))}
-          <div className="mt-8 h-px w-16 bg-accent" />
-          <a href="mailto:sheldon@sheldonroth.com" tabIndex={open ? 0 : -1} className="eyebrow text-muted">
-            sheldon@sheldonroth.com
-          </a>
+          <Link href="/best-sellers" tabIndex={open ? 0 : -1} className="lk-nav border-b border-line py-5 text-[#222]">Best Sellers</Link>
         </nav>
       </div>
     </>

@@ -92,7 +92,7 @@ export default function FAQPage() {
           <h1 className="font-display text-4xl md:text-5xl  text-foreground mb-6">
             Frequently Asked Questions
           </h1>
-          <p className="text-lg text-foreground/65 font-light max-w-2xl mx-auto">
+          <p className="text-lg text-muted font-light max-w-2xl mx-auto">
             Find answers to common questions about our prints, ordering, and more.
           </p>
         </div>
@@ -122,7 +122,7 @@ export default function FAQPage() {
                         </span>
                       </button>
                       {isOpen && (
-                        <div className="pb-4 text-foreground/65 font-light leading-relaxed">
+                        <div className="pb-4 text-muted font-light leading-relaxed">
                           {faq.a}
                         </div>
                       )}
@@ -135,10 +135,10 @@ export default function FAQPage() {
 
           {/* CTA */}
           <div className="text-center pt-8 border-t border-line">
-            <p className="text-foreground/65 font-light mb-6">
+            <p className="text-muted font-light mb-6">
               Can&apos;t find what you&apos;re looking for?
             </p>
-            <Link href="/contact" className="btn-primary">
+            <Link href="/contact" className="lk-btn lk-btn-solid">
               Contact Us
             </Link>
           </div>

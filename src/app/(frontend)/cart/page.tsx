@@ -43,10 +43,10 @@ export default function CartPage() {
         <div className="max-w-4xl mx-auto px-6 lg:px-12 text-center">
           <h1 className="font-display text-3xl lg:text-4xl  tracking-wide mb-6">Your Cart</h1>
           <div className="w-12 h-px bg-accent mx-auto mb-8" />
-          <p className="text-foreground/65 mb-8">Your cart is empty</p>
+          <p className="text-muted mb-8">Your cart is empty</p>
           <Link
             href="/shop"
-            className="inline-block px-8 py-3 btn btn-light"
+            className="inline-block px-8 py-3 lk-btn lk-btn-gold"
           >
             CONTINUE SHOPPING
           </Link>
@@ -69,7 +69,7 @@ export default function CartPage() {
                 {/* Image */}
                 <div className="relative w-32 h-40 flex-shrink-0 bg-surface">
                   {item.image && (
-                    <Image
+                    <Image quality={85}
                       src={item.image}
                       alt={item.title}
                       fill
@@ -82,8 +82,8 @@ export default function CartPage() {
                 {/* Details */}
                 <div className="flex-1">
                   <h3 className="text-lg font-light mb-1">{item.title}</h3>
-                  <p className="text-sm text-foreground/65 mb-1">{item.size} - {item.dimensions}</p>
-                  <p className="text-xs text-foreground/65 mb-3">{item.edition}</p>
+                  <p className="text-sm text-muted mb-1">{item.size} - {item.dimensions}</p>
+                  <p className="text-xs text-muted mb-3">{item.edition}</p>
                   <p className="text-lg font-light">${item.price.toLocaleString()}</p>
 
                   {/* Quantity & Remove */}
@@ -107,7 +107,7 @@ export default function CartPage() {
                     </div>
                     <button
                       onClick={() => removeItem(item.id)}
-                      className="text-xs text-foreground/65 hover:text-foreground transition-colors underline"
+                      className="text-xs text-muted hover:text-foreground transition-colors underline"
                     >
                       Remove
                     </button>
@@ -118,7 +118,7 @@ export default function CartPage() {
 
             <button
               onClick={clearCart}
-              className="text-xs text-foreground/65 hover:text-foreground transition-colors underline"
+              className="text-xs text-muted hover:text-foreground transition-colors underline"
             >
               Clear Cart
             </button>
@@ -131,11 +131,11 @@ export default function CartPage() {
 
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-sm">
-                  <span className="text-foreground/65">Subtotal</span>
+                  <span className="text-muted">Subtotal</span>
                   <span>${totalPrice.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-foreground/65">Shipping</span>
+                  <span className="text-muted">Shipping</span>
                   <span className="text-accent">Complimentary</span>
                 </div>
               </div>
@@ -149,21 +149,21 @@ export default function CartPage() {
 
               <button
                 onClick={handleCheckout}
-                className="w-full py-4 btn btn-light"
+                className="w-full py-4 lk-btn lk-btn-gold"
               >
                 PROCEED TO CHECKOUT
               </button>
 
               <Link
                 href="/shop"
-                className="block text-center text-xs text-foreground/65 hover:text-foreground transition-colors mt-4"
+                className="block text-center text-xs text-muted hover:text-foreground transition-colors mt-4"
               >
                 Continue Shopping
               </Link>
             </div>
 
             {/* Trust Badges */}
-            <div className="mt-6 space-y-3 text-xs text-foreground/65">
+            <div className="mt-6 space-y-3 text-xs text-muted">
               <div className="flex items-center gap-2">
                 <svg className="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />

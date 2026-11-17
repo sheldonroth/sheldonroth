@@ -13,6 +13,12 @@ const nextConfig: NextConfig = {
     ],
   },
   images: {
+    // Full-res photography: allow up to 4K widths and higher JPEG/WebP quality than the default 75.
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 2560, 3840],
+    imageSizes: [32, 64, 128, 256, 384, 512],
+    qualities: [75, 85, 90],
+    formats: ['image/webp'],
+    minimumCacheTTL: 31536000,
     remotePatterns: [
       {
         protocol: 'https',

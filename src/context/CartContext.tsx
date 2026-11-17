@@ -30,17 +30,19 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isHydrated, setIsHydrated] = useState(false);
 
-  // Load cart from localStorage on mount
+  // Load cart from localStorage after mount (deferred so the first client render matches the server).
   useEffect(() => {
-    const savedCart = localStorage.getItem('sheldonroth-cart');
-    if (savedCart) {
-      try {
-        setItems(JSON.parse(savedCart));
-      } catch (e) {
-        console.error('Failed to parse cart:', e);
+    queueMicrotask(() => {
+      const savedCart = localStorage.getItem('sheldonroth-cart');
+      if (savedCart) {
+        try {
+          setItems(JSON.parse(savedCart));
+        } catch (e) {
+          console.error('Failed to parse cart:', e);
+        }
       }
-    }
-    setIsHydrated(true);
+      setIsHydrated(true);
+    });
   }, []);
 
   // Save cart to localStorage on change

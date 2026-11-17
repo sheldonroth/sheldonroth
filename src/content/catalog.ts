@@ -225,6 +225,5 @@ export const SITE = {
   name: 'Sheldon Roth',
   title: 'Sheldon Roth Fine Art',
   email: 'sheldon@sheldonroth.com',
-  location: 'Buena Vista, Colorado',
   url: 'https://sheldonroth.com',
 };

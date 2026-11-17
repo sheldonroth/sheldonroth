@@ -7,7 +7,7 @@ import { collections, getImage, getWorksInCollection } from '@/content/catalog';
 
 export const metadata: Metadata = {
   title: 'Galleries',
-  description: 'Explore the fine art photography galleries of Sheldon Roth — landscape, seascape, wildlife, architecture, nature and abstract.',
+  description: 'Explore the fine art photography galleries of Sheldon Roth — the tropics, mountains and forests, and the ocean coast.',
 };
 
 export default function CollectionsPage() {
@@ -18,26 +18,20 @@ export default function CollectionsPage() {
         title="Explore the Collections"
         intro="Three bodies of work, each a journey — the reefs and islands of the tropics, the high country of the mountains, and the clarity and power of the ocean."
       />
-      <section className="pb-28 lg:pb-40">
-        <div className="mx-auto max-w-[1600px] space-y-6 px-6 lg:space-y-8 lg:px-10">
+      <section className="lk-container pb-20 lg:pb-[100px]">
+        <div className="grid grid-cols-1 gap-x-10 gap-y-16 md:grid-cols-3">
           {collections.map((c, i) => {
             const count = getWorksInCollection(c.slug).length;
             return (
-              <Reveal key={c.slug}>
-                <Link
-                  href={`/collections/${c.slug}`}
-                  className="group relative block aspect-[4/5] overflow-hidden bg-surface sm:aspect-[16/9] lg:aspect-[21/9]"
-                >
-                  <Image src={getImage(c.cover).src} alt={`${c.title} gallery`} fill sizes="100vw" priority={i === 0} className="zoom-img object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
-                  <div className="absolute inset-0 flex items-end p-8 sm:items-center sm:p-14 lg:p-20">
-                    <div className="max-w-md">
-                      <p className="eyebrow text-accent-light">0{i + 1} — {count} {count === 1 ? 'Work' : 'Works'}</p>
-                      <h2 className="font-display mt-4 text-5xl text-white lg:text-7xl">{c.title}</h2>
-                      <p className="mt-5 hidden leading-relaxed text-white/75 sm:block">{c.description}</p>
-                      <span className="btn btn-outline mt-8">Enter Gallery</span>
-                    </div>
+              <Reveal key={c.slug} delay={i * 100}>
+                <Link href={`/collections/${c.slug}`} className="group block text-center">
+                  <div className="relative aspect-[4/5] overflow-hidden bg-surface">
+                    <Image src={getImage(c.cover).src} alt={`${c.title} gallery`} fill quality={85} sizes="(max-width: 768px) 100vw, 33vw" priority={i === 0} className="zoom-img object-cover" />
                   </div>
+                  <h2 className="lk-related-title mt-6">{c.title}</h2>
+                  <p className="lk-card-edition mt-2">{count} {count === 1 ? 'Work' : 'Works'}</p>
+                  <p className="lk-body mx-auto mt-3 max-w-sm">{c.description}</p>
+                  <span className="lk-btn lk-btn-gold mt-6">View Gallery</span>
                 </Link>
               </Reveal>
             );

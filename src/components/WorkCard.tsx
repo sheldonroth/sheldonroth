@@ -1,51 +1,37 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getImage, getCollection, type Work } from '@/content/catalog';
+import { formatPrice, getImage, PRINT_SIZES, type Work } from '@/content/catalog';
 
-interface WorkCardProps {
+/** Grid card styled after lik.com's collection grid: image, small gold caps title, edition, price. */
+export default function WorkCard({
+  work,
+  sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
+  priority,
+}: {
   work: Work;
-  /** CSS aspect ratio for the frame, e.g. '4/5'. Omit to use the photo's own ratio. */
   aspect?: string;
   sizes?: string;
   priority?: boolean;
   showCollection?: boolean;
-}
-
-export default function WorkCard({
-  work,
-  aspect,
-  sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
-  priority,
-  showCollection = true,
-}: WorkCardProps) {
+}) {
   const img = getImage(work.slug);
-  const collection = getCollection(work.collection);
   return (
-    <Link href={`/shop/${work.slug}`} className="group block">
-      <div
-        className="relative overflow-hidden bg-surface"
-        style={{ aspectRatio: aspect ?? `${img.width}/${img.height}` }}
-      >
-        <Image
+    <Link href={`/shop/${work.slug}`} className="group block text-center">
+      <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-white">
+        <Image quality={85}
           src={img.src}
           alt={`${work.title} — fine art photograph by Sheldon Roth`}
-          fill
+          width={img.width}
+          height={img.height}
           sizes={sizes}
           priority={priority}
-          className="zoom-img object-cover"
+          className="zoom-img h-auto max-h-full w-auto max-w-full object-contain"
         />
-        <div className="absolute inset-0 bg-black/0 transition-colors duration-700 group-hover:bg-black/25" />
-        <span className="eyebrow absolute bottom-5 left-1/2 -translate-x-1/2 translate-y-3 whitespace-nowrap border border-white/60 bg-black/30 px-5 py-3 text-white opacity-0 backdrop-blur-sm transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-          View Artwork
-        </span>
       </div>
-      <div className="mt-5 text-center">
-        <h3 className="font-display text-2xl text-foreground transition-colors group-hover:text-accent-light">
-          {work.title}
-        </h3>
-        <p className="eyebrow mt-2 text-muted">
-          {showCollection && collection ? `${collection.title} · ` : ''}Limited Edition {work.editionSize}
-        </p>
+      <div className="mt-6">
+        <h3 className="lk-card-title">{work.title}</h3>
+        <p className="lk-card-edition mt-2">Limited Edition</p>
+        <p className="lk-price mt-1">{formatPrice(PRINT_SIZES[0].price)}</p>
       </div>
     </Link>
   );

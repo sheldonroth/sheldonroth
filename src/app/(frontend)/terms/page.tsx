@@ -12,7 +12,7 @@ export default function TermsPage() {
           <h1 className="font-display text-4xl md:text-5xl  text-foreground mb-6">
             Terms of Service
           </h1>
-          <p className="text-sm text-foreground/65 font-light">
+          <p className="text-sm text-muted font-light">
             Last updated: January 2024
           </p>
         </div>
@@ -21,7 +21,7 @@ export default function TermsPage() {
       {/* Content */}
       <section className="pb-24 px-6 lg:px-12">
         <div className="max-w-3xl mx-auto prose-dark">
-          <div className="space-y-8 text-foreground/65 font-light leading-relaxed">
+          <div className="space-y-8 text-muted font-light leading-relaxed">
             <div>
               <h2 className="text-xl font-light text-foreground mb-4">Agreement to Terms</h2>
               <p>

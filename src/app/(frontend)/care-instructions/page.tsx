@@ -15,7 +15,7 @@ export default function CareInstructionsPage() {
           <h1 className="font-display text-4xl md:text-5xl  text-foreground mb-6">
             Care Instructions
           </h1>
-          <p className="text-lg text-foreground/65 font-light max-w-2xl mx-auto">
+          <p className="text-lg text-muted font-light max-w-2xl mx-auto">
             Proper care ensures your fine art prints remain vibrant and beautiful for generations.
           </p>
         </div>
@@ -27,7 +27,7 @@ export default function CareInstructionsPage() {
           {/* Handling */}
           <div className="mb-16">
             <h2 className="text-2xl font-light text-foreground mb-6">Handling Your Print</h2>
-            <div className="space-y-4 text-foreground/65 font-light leading-relaxed">
+            <div className="space-y-4 text-muted font-light leading-relaxed">
               <p>
                 Always handle your print with clean, dry hands or wear cotton gloves to prevent
                 oils and moisture from transferring to the surface. Hold prints by the edges
@@ -43,7 +43,7 @@ export default function CareInstructionsPage() {
           {/* Display */}
           <div className="mb-16">
             <h2 className="text-2xl font-light text-foreground mb-6">Display Guidelines</h2>
-            <div className="space-y-4 text-foreground/65 font-light leading-relaxed">
+            <div className="space-y-4 text-muted font-light leading-relaxed">
               <p>
                 <strong className="text-foreground">Avoid direct sunlight:</strong> UV rays can
                 cause fading over time. Display your print away from windows or use UV-protective
@@ -65,7 +65,7 @@ export default function CareInstructionsPage() {
           {/* Cleaning */}
           <div className="mb-16">
             <h2 className="text-2xl font-light text-foreground mb-6">Cleaning</h2>
-            <div className="space-y-4 text-foreground/65 font-light leading-relaxed">
+            <div className="space-y-4 text-muted font-light leading-relaxed">
               <p>
                 For framed prints, gently dust the glass with a soft, lint-free cloth. Never
                 spray cleaning solutions directly onto the glass—apply to the cloth first.
@@ -80,7 +80,7 @@ export default function CareInstructionsPage() {
           {/* Storage */}
           <div className="mb-16">
             <h2 className="text-2xl font-light text-foreground mb-6">Storage</h2>
-            <div className="space-y-4 text-foreground/65 font-light leading-relaxed">
+            <div className="space-y-4 text-muted font-light leading-relaxed">
               <p>
                 If you need to store your print temporarily, keep it flat in a cool, dry place
                 away from direct light. Wrap it in acid-free tissue paper and place it in an
@@ -95,10 +95,10 @@ export default function CareInstructionsPage() {
 
           {/* CTA */}
           <div className="text-center pt-8 border-t border-line">
-            <p className="text-foreground/65 font-light mb-6">
+            <p className="text-muted font-light mb-6">
               Have questions about caring for your artwork?
             </p>
-            <Link href="/contact" className="btn-primary">
+            <Link href="/contact" className="lk-btn lk-btn-solid">
               Contact Us
             </Link>
           </div>

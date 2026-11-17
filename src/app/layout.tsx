@@ -1,19 +1,12 @@
 import type { Metadata, Viewport } from 'next';
-import { Cormorant_Garamond, Montserrat } from 'next/font/google';
+import { Barlow } from 'next/font/google';
 import './globals.css';
 
-const serif = Cormorant_Garamond({
-  variable: '--font-serif-face',
+// Lik.com sets everything in DIN 2014 (Adobe Fonts, commercial). Barlow is the closest free (OFL) DIN-style match.
+const din = Barlow({
+  variable: '--font-din',
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
-  style: ['normal', 'italic'],
-  display: 'swap',
-});
-
-const sans = Montserrat({
-  variable: '--font-sans-face',
-  subsets: ['latin'],
-  weight: ['300', '400', '500'],
+  weight: ['200', '300', '400', '500', '600', '700'],
   display: 'swap',
 });
 
@@ -45,14 +38,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0a0a0a',
-  colorScheme: 'dark',
+  themeColor: '#ffffff',
+  colorScheme: 'light',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${serif.variable} ${sans.variable} antialiased`} suppressHydrationWarning>
+      <body className={`${din.variable} antialiased`} suppressHydrationWarning>
         {children}
       </body>
     </html>

@@ -2,14 +2,16 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Reveal from '@/components/Reveal';
-import WorkCard from '@/components/WorkCard';
+import Image from 'next/image';
 import ProductClient from './ProductClient';
 import {
   getCollection,
   getImage,
   getWork,
   getWorksInCollection,
+  formatPrice,
   PRINT_DETAILS,
+  PRINT_SIZES,
   sizesFor,
   works,
 } from '@/content/catalog';
@@ -62,34 +64,40 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
         }}
       />
 
-      <nav className="border-y border-line" aria-label="More artworks">
-        <div className="mx-auto grid max-w-[1600px] grid-cols-2 px-6 lg:px-10">
-          <Link href={`/shop/${prev.slug}`} className="group py-8 pr-4">
-            <span className="eyebrow text-muted">← Previous</span>
-            <span className="font-display mt-2 block text-2xl text-foreground group-hover:text-accent-light">{prev.title}</span>
-          </Link>
-          <Link href={`/shop/${next.slug}`} className="group border-l border-line py-8 pl-4 text-right">
-            <span className="eyebrow text-muted">Next →</span>
-            <span className="font-display mt-2 block text-2xl text-foreground group-hover:text-accent-light">{next.title}</span>
-          </Link>
-        </div>
-      </nav>
-
-      <section className="py-24 lg:py-32">
-        <div className="mx-auto max-w-[1600px] px-6 lg:px-10">
+      <section className="lk-section">
+        <div className="lk-container">
           <Reveal className="mb-14 text-center">
-            <p className="eyebrow text-accent">Continue Exploring</p>
-            <h2 className="font-display mt-3 text-4xl text-foreground lg:text-5xl">You May Also Like</h2>
+            <h2 className="text-[30px] font-light leading-[1.1] tracking-[0.02em] text-[#222] md:text-[45px]">You May Also Like</h2>
           </Reveal>
-          <div className="grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-x-10 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
             {more.map((w, i) => (
               <Reveal key={w.slug} delay={i * 100}>
-                <WorkCard work={w} aspect="4/5" />
+                <Link href={`/shop/${w.slug}`} className="group block text-center">
+                  <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden">
+                    <Image quality={85} src={getImage(w.slug).src} alt={`${w.title} by Sheldon Roth`} width={getImage(w.slug).width} height={getImage(w.slug).height} sizes="(max-width: 640px) 100vw, 33vw" className="zoom-img h-auto max-h-full w-auto max-w-full object-contain" />
+                  </div>
+                  <h3 className="lk-related-title mt-6">{w.title}</h3>
+                  <p className="lk-related-edition mt-3">Limited Edition of {w.editionSize}</p>
+                  <p className="mt-3 text-[18px] leading-[27px] text-accent-dark">From {formatPrice(PRINT_SIZES[0].price)}</p>
+                </Link>
               </Reveal>
             ))}
           </div>
         </div>
       </section>
+
+      <nav className="border-t border-line" aria-label="More artworks">
+        <div className="lk-container grid grid-cols-2">
+          <Link href={`/shop/${prev.slug}`} className="group py-8 pr-4">
+            <span className="lk-edition-label">← Previous</span>
+            <span className="lk-related-title mt-3 block group-hover:underline">{prev.title}</span>
+          </Link>
+          <Link href={`/shop/${next.slug}`} className="group border-l border-line py-8 pl-4 text-right">
+            <span className="lk-edition-label">Next →</span>
+            <span className="lk-related-title mt-3 block group-hover:underline">{next.title}</span>
+          </Link>
+        </div>
+      </nav>
     </>
   );
 }

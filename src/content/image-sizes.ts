@@ -1,13 +1,13 @@
 // Generated from public/works by scripts — width/height for next/image
 export const imageSizes: Record<string, { width: number; height: number }> = {
-  'aspen-cascade': { width: 1707, height: 2560 },
-  'coral-symphony': { width: 2560, height: 1707 },
-  'crystal-lagoon': { width: 1707, height: 2560 },
-  'island-paradise': { width: 2560, height: 1707 },
-  'mountain-majesty': { width: 2560, height: 1865 },
-  'pacific-edge': { width: 3200, height: 1309 },
-  'shipwreck-at-dawn': { width: 2560, height: 1779 },
-  'still-water': { width: 1611, height: 2560 },
-  'tropical-sunset': { width: 1707, height: 2560 },
-  'turquoise-depths': { width: 2560, height: 1707 },
+  'aspen-cascade': { width: 2560, height: 3840 },
+  'coral-symphony': { width: 3840, height: 2560 },
+  'crystal-lagoon': { width: 2560, height: 3840 },
+  'island-paradise': { width: 3840, height: 2560 },
+  'mountain-majesty': { width: 3840, height: 2797 },
+  'pacific-edge': { width: 5760, height: 2357 },
+  'shipwreck-at-dawn': { width: 3840, height: 2668 },
+  'still-water': { width: 2417, height: 3840 },
+  'tropical-sunset': { width: 2560, height: 3840 },
+  'turquoise-depths': { width: 3840, height: 2560 },
 };

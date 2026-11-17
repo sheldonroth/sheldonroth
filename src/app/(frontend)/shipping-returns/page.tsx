@@ -15,7 +15,7 @@ export default function ShippingReturnsPage() {
           <h1 className="font-display text-4xl md:text-5xl  text-foreground mb-6">
             Shipping &amp; Returns
           </h1>
-          <p className="text-lg text-foreground/65 font-light max-w-2xl mx-auto">
+          <p className="text-lg text-muted font-light max-w-2xl mx-auto">
             We take great care in packaging and delivering your artwork safely to your door.
           </p>
         </div>
@@ -27,7 +27,7 @@ export default function ShippingReturnsPage() {
           {/* Shipping */}
           <div className="mb-16">
             <h2 className="text-2xl font-light text-foreground mb-6">Shipping</h2>
-            <div className="space-y-4 text-foreground/65 font-light leading-relaxed">
+            <div className="space-y-4 text-muted font-light leading-relaxed">
               <p>
                 <strong className="text-foreground">Processing Time:</strong> Each print is
                 produced to order using archival materials. Please allow 5-7 business days
@@ -55,7 +55,7 @@ export default function ShippingReturnsPage() {
           {/* Packaging */}
           <div className="mb-16">
             <h2 className="text-2xl font-light text-foreground mb-6">Packaging</h2>
-            <div className="space-y-4 text-foreground/65 font-light leading-relaxed">
+            <div className="space-y-4 text-muted font-light leading-relaxed">
               <p>
                 Your artwork is our top priority. Each print is carefully inspected before
                 packaging and protected with acid-free tissue paper. Depending on size,
@@ -72,7 +72,7 @@ export default function ShippingReturnsPage() {
           {/* Returns */}
           <div className="mb-16">
             <h2 className="text-2xl font-light text-foreground mb-6">Returns &amp; Exchanges</h2>
-            <div className="space-y-4 text-foreground/65 font-light leading-relaxed">
+            <div className="space-y-4 text-muted font-light leading-relaxed">
               <p>
                 <strong className="text-foreground">Satisfaction Guarantee:</strong> We want
                 you to love your artwork. If you&apos;re not completely satisfied with your
@@ -102,10 +102,10 @@ export default function ShippingReturnsPage() {
 
           {/* CTA */}
           <div className="text-center pt-8 border-t border-line">
-            <p className="text-foreground/65 font-light mb-6">
+            <p className="text-muted font-light mb-6">
               Have questions about your order?
             </p>
-            <Link href="/contact" className="btn-primary">
+            <Link href="/contact" className="lk-btn lk-btn-solid">
               Contact Us
             </Link>
           </div>

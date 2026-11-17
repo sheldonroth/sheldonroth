@@ -33,40 +33,38 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
 
   return (
     <>
-      <section className="relative h-[82svh] min-h-[520px] w-full overflow-hidden">
-        <Image src={getImage(collection.cover).src} alt={`${collection.title} gallery`} fill priority sizes="100vw" className="kenburns object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-black/30 to-black/40" />
-        <div className="absolute inset-x-0 bottom-0 px-6 pb-16 text-center lg:pb-24">
-          <p className="eyebrow fade-up text-accent-light">
-            <Link href="/collections" className="hover:text-white">Galleries</Link> · {items.length} {items.length === 1 ? 'Work' : 'Works'}
-          </p>
-          <h1 className="font-display fade-up mt-4 text-6xl text-white md:text-8xl" style={{ animationDelay: '150ms' }}>
-            {collection.title}
-          </h1>
-          <p className="fade-up mx-auto mt-6 max-w-xl leading-relaxed text-white/75" style={{ animationDelay: '300ms' }}>
-            {collection.description}
-          </p>
+      {/* Wide banner under the header, then a centred title + intro, as on lik.com collection pages */}
+      <section className="pt-[70px] lg:pt-[166px]">
+        <div className="relative h-[220px] w-full overflow-hidden md:h-[360px] lg:h-[420px]">
+          <Image quality={90} src={getImage(collection.cover).src} alt={`${collection.title} gallery`} fill priority sizes="100vw" className="object-cover" />
         </div>
       </section>
 
-      <section className="py-20 lg:py-28">
-        <div className="mx-auto max-w-[1600px] px-6 lg:px-10">
-          <div className="grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((w, i) => (
-              <Reveal key={w.slug} delay={(i % 3) * 100}>
-                <WorkCard work={w} aspect="4/5" showCollection={false} />
-              </Reveal>
-            ))}
-          </div>
+      <header className="lk-container pb-12 pt-12 text-center lg:pb-16 lg:pt-16">
+        <p className="lk-small">
+          <Link href="/" className="hover:underline">Home</Link> / <Link href="/collections" className="hover:underline">Galleries</Link> / {collection.title}
+        </p>
+        <h1 className="lk-page-title mt-6">{collection.title}</h1>
+        <p className="lk-intro mx-auto mt-6 max-w-[900px]">{collection.description}</p>
+        <p className="lk-card-edition mt-6">{items.length} {items.length === 1 ? 'Work' : 'Works'}</p>
+      </header>
+
+      <section className="lk-container pb-20 lg:pb-[100px]">
+        <div className="grid grid-cols-1 gap-x-10 gap-y-16 border-t border-line pt-14 sm:grid-cols-2 lg:grid-cols-3">
+          {items.map((w, i) => (
+            <Reveal key={w.slug} delay={(i % 3) * 100}>
+              <WorkCard work={w} />
+            </Reveal>
+          ))}
         </div>
       </section>
 
-      <Link href={`/collections/${next.slug}`} className="group relative block h-[46vh] min-h-[320px] overflow-hidden">
-        <Image src={getImage(next.cover).src} alt={`${next.title} gallery`} fill sizes="100vw" className="zoom-img object-cover" />
-        <div className="absolute inset-0 bg-black/55 transition-colors duration-700 group-hover:bg-black/40" />
-        <div className="relative flex h-full flex-col items-center justify-center text-center">
-          <p className="eyebrow text-white/70">Next Gallery</p>
-          <p className="font-display mt-3 text-5xl text-white lg:text-7xl">{next.title}</p>
+      <Link href={`/collections/${next.slug}`} className="group relative block h-[360px] overflow-hidden md:h-[420px]">
+        <Image quality={90} src={getImage(next.cover).src} alt={`${next.title} gallery`} fill sizes="100vw" className="zoom-img object-cover" />
+        <div className="lk-scrim absolute inset-0" />
+        <div className="absolute inset-x-0 bottom-0 px-5 pb-14 text-center text-white">
+          <p className="lk-hero-eyebrow">Next Gallery</p>
+          <p className="lk-hero-title mt-4">{next.title}</p>
         </div>
       </Link>
     </>
