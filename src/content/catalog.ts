@@ -1235,6 +1235,105 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "reflections-in-rose",
+    title: "Reflections in Rose",
+    collection: "mountain-forest",
+    description:
+      "Rose-tinted peaks rise above a dark spruce forest and lie perfectly mirrored in a still alpine lake.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "river-sunburst",
+    title: "River Sunburst",
+    collection: "water",
+    description:
+      "The sun bursts over a canyon rim as rapids tumble past smooth stones below.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "canyon-rampart",
+    title: "Canyon Rampart",
+    collection: "far-horizons",
+    description:
+      "Layered red cliffs glow in afternoon light above a calm green river.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "emerald-pool",
+    title: "Emerald Pool",
+    collection: "water",
+    description:
+      "Turquoise water pools beneath sweeping walls of polished red stone.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "golden-hillside",
+    title: "Golden Hillside",
+    collection: "mountain-forest",
+    description:
+      "Aspens in full autumn colour sweep up a mountainside toward a rocky summit.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "aspen-flame",
+    title: "Aspen Flame",
+    collection: "light-sky",
+    description:
+      "Backlit aspen leaves burn bright gold against a hillside of muted autumn colour.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "forest-cascade",
+    title: "Forest Cascade",
+    collection: "water",
+    description:
+      "A creek spills over mossy boulders in a cool, shaded mountain forest.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "storm-spire",
+    title: "Storm Spire",
+    collection: "peaks-ice",
+    description:
+      "A dark granite spire pierces brooding cloud above a steep, snow-streaked ridge.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "cloud-shadows",
+    title: "Cloud Shadows",
+    collection: "far-horizons",
+    description:
+      "Summer clouds drift over range after range of high peaks, their shadows moving across the slopes.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "headwaters",
+    title: "Headwaters",
+    collection: "mountain-forest",
+    description:
+      "A clear stream runs over a bed of rounded stones toward a distant summit beneath a bright summer sky.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "painted-butte",
+    title: "Painted Butte",
+    collection: "far-horizons",
+    description:
+      "Bands of red and ochre rock rise above green scrub beneath a pale sky.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {
