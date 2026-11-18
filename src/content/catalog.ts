@@ -1505,6 +1505,114 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "emerald-amphitheater",
+    title: "Emerald Amphitheater",
+    collection: "water",
+    description:
+      "A slender waterfall drops into a vast bowl of basalt carpeted in moss and fern.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "ancient-mariner",
+    title: "Ancient Mariner",
+    collection: "wildlife",
+    description:
+      "A green sea turtle glides over a reef crowded with branching coral.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "mountain-staircase",
+    title: "Mountain Staircase",
+    collection: "water",
+    description:
+      "Snowmelt tumbles down a staircase of boulders below a high waterfall and dark spruce.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "snowmelt-run",
+    title: "Snowmelt Run",
+    collection: "water",
+    description:
+      "A clear mountain river races over smooth stones, a distant waterfall feeding it from the forest above.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "granite-ribbon",
+    title: "Granite Ribbon",
+    collection: "water",
+    description:
+      "A ribbon of falling water threads down a towering granite wall framed by pines.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "sapphire-caldera",
+    title: "Sapphire Caldera",
+    collection: "water",
+    description:
+      "Deep blue water fills an ancient volcanic caldera beneath a sky of drifting summer cloud.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "reef-garden",
+    title: "Reef Garden",
+    collection: "water",
+    description:
+      "A great fan of table coral spreads across the reef as small fish dart through the blue.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "the-great-bend",
+    title: "The Great Bend",
+    collection: "far-horizons",
+    description:
+      "A jade-green river carves a perfect horseshoe around a sandstone butte a thousand feet below.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "first-steps",
+    title: "First Steps",
+    collection: "wildlife",
+    description:
+      "A young rhino calf stands close beside its mother on sun-baked earth.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "forest-jewel",
+    title: "Forest Jewel",
+    collection: "water",
+    description:
+      "Water spills between moss-covered boulders in a quiet corner of the forest.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "stone-window",
+    title: "Stone Window",
+    collection: "far-horizons",
+    description:
+      "A natural sandstone arch frames a distant butte under a clear desert sky.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "little-lion",
+    title: "Little Lion",
+    collection: "wildlife",
+    description:
+      "A lion cub rests in lush grass, its sibling dozing close behind.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {
