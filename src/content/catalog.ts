@@ -1,6 +1,6 @@
 import { imageSizes } from './image-sizes';
 
-export type CollectionSlug = 'peaks-ice' | 'mountain-forest' | 'light-sky' | 'water' | 'far-horizons';
+export type CollectionSlug = 'peaks-ice' | 'mountain-forest' | 'light-sky' | 'water' | 'far-horizons' | 'wildlife';
 
 export interface Collection {
   slug: CollectionSlug;
@@ -86,6 +86,14 @@ export const collections: Collection[] = [
     description:
       'Lone trees on golden grassland, wind-written dunes and cloud pouring over the cliffs — wide open land at the edge of the world.',
     cover: 'sentinel-tree',
+  },
+  {
+    slug: 'wildlife',
+    title: 'Wildlife',
+    tagline: 'Portraits of the wild',
+    description:
+      'Lions in the shade of the rocks, elephants emerging from darkness and a leopard at rest — intimate portraits of the great animals of the wild.',
+    cover: 'the-elder',
   },
 ];
 
@@ -890,6 +898,78 @@ export const works: Work[] = [
     collection: "light-sky",
     description:
       "Reflected light pours through a narrow canyon, turning wind-carved sandstone into rolling waves of orange and gold.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "lone-vigil",
+    title: "Lone Vigil",
+    collection: "wildlife",
+    description:
+      "A fish eagle keeps watch from the twisted arm of a dead tree, stark against a pale, empty sky.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "the-elder",
+    title: "The Elder",
+    collection: "wildlife",
+    description:
+      "A great bull elephant emerges from the darkness, every fold and furrow of a long life etched into its skin.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "above-it-all",
+    title: "Above It All",
+    collection: "wildlife",
+    description:
+      "A young giraffe turns its gaze from the shadows, its patterned neck rising out of total darkness.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "the-king",
+    title: "The King",
+    collection: "wildlife",
+    description:
+      "A lion rests in the shade of the rocks, its heavy mane framing a calm and unwavering stare.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "pride",
+    title: "Pride",
+    collection: "wildlife",
+    description:
+      "A lioness presses close to her mate in a quiet moment of affection beneath the rock walls.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "the-hidden-horn",
+    title: "The Hidden Horn",
+    collection: "wildlife",
+    description:
+      "A cape buffalo peers through tall grass, its great sweeping horns framing a wary stare.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "into-the-mist",
+    title: "Into the Mist",
+    collection: "wildlife",
+    description:
+      "A lone gemsbok steps through golden grass as morning mist swallows the plain behind it.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "the-watcher",
+    title: "The Watcher",
+    collection: "wildlife",
+    description:
+      "A leopard lounges on a weathered branch, its golden coat glowing against a forest rendered in silver.",
     editionSize: 50,
     isNew: true,
   },

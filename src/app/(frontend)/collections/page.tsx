@@ -16,7 +16,7 @@ export default function CollectionsPage() {
       <PageHeader
         eyebrow="The Galleries"
         title="Explore the Collections"
-        intro="Five bodies of work, each a journey — the high peaks and their glaciers, the lakes and forests of the high country, fleeting light, the colour of water and wide open horizons."
+        intro="Six bodies of work, each a journey — the high peaks and their glaciers, the lakes and forests of the high country, fleeting light, the colour of water, wide open horizons and the great animals of the wild."
       />
       <section className="lk-container pb-20 lg:pb-[120px]">
         <div className="grid grid-cols-1 gap-[34px] sm:grid-cols-2 lg:grid-cols-3">

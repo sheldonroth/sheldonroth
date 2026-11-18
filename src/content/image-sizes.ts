@@ -92,4 +92,12 @@ export const imageSizes: Record<string, { width: number; height: number }> = {
   "crimson-sky": { width: 3840, height: 2560 },
   "river-strata": { width: 3840, height: 1852 },
   "sandstone-wave": { width: 3840, height: 2561 },
+  "lone-vigil": { width: 3840, height: 2560 },
+  "the-elder": { width: 3840, height: 2560 },
+  "above-it-all": { width: 3840, height: 2560 },
+  "the-king": { width: 3840, height: 2560 },
+  "pride": { width: 3840, height: 2560 },
+  "the-hidden-horn": { width: 3840, height: 2560 },
+  "into-the-mist": { width: 3840, height: 1946 },
+  "the-watcher": { width: 3840, height: 2469 },
 };

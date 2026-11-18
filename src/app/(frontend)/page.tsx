@@ -80,12 +80,12 @@ export default function Home() {
             <p className="lk-eyebrow">Shop by Gallery</p>
             <h2 className="lk-h2 mt-6">The Galleries</h2>
           </div>
-          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {collections.map((c) => {
               const img = getImage(c.cover);
               return (
                 <Link key={c.slug} href={`/collections/${c.slug}`} className="group relative block aspect-[4/5] overflow-hidden bg-black">
-                  <Image quality={85} src={img.src} alt={`${c.title} gallery`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw" className="zoom-img object-cover" />
+                  <Image quality={85} src={img.src} alt={`${c.title} gallery`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="zoom-img object-cover" />
                   <div className="lk-scrim absolute inset-0" />
                   <div className="absolute inset-x-0 bottom-0 p-8 text-center text-white">
                     <h3 className="lk-h2-sm">{c.title}</h3>
