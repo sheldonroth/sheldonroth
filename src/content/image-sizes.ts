@@ -76,4 +76,12 @@ export const imageSizes: Record<string, { width: number; height: number }> = {
   "winter-crown": { width: 3840, height: 2850 },
   "summit-cloud": { width: 3840, height: 2692 },
   "spindrift": { width: 3840, height: 2880 },
+  "canyon-glow": { width: 3840, height: 2561 },
+  "sandstone-flame": { width: 2563, height: 3840 },
+  "molten-lake": { width: 3840, height: 2594 },
+  "dune-lines": { width: 3840, height: 2160 },
+  "tidewater-stones": { width: 3840, height: 2160 },
+  "three-veils": { width: 3840, height: 2561 },
+  "living-sculpture": { width: 3840, height: 2561 },
+  "sea-monolith": { width: 3840, height: 2031 },
 };

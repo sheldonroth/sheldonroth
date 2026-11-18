@@ -749,6 +749,78 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "canyon-glow",
+    title: "Canyon Glow",
+    collection: "light-sky",
+    description:
+      "Sunlight bursts through a sculpted sandstone arch, setting the smooth canyon walls aglow in shades of fire.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "sandstone-flame",
+    title: "Sandstone Flame",
+    collection: "light-sky",
+    description:
+      "Wind- and water-carved sandstone curls upward like a frozen flame toward a sliver of blue sky.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "molten-lake",
+    title: "Molten Lake",
+    collection: "water",
+    description:
+      "The last light of day turns a mountain lake to molten gold beneath a sky of rose and violet.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "dune-lines",
+    title: "Dune Lines",
+    collection: "far-horizons",
+    description:
+      "Wind-drawn ripples sweep across the flank of a great dune, rising to a crest against the evening sky.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "tidewater-stones",
+    title: "Tidewater Stones",
+    collection: "water",
+    description:
+      "Surf washes over a beach of smooth dark stones while a green sea cliff stands against the open ocean.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "three-veils",
+    title: "Three Veils",
+    collection: "water",
+    description:
+      "Three ribbons of white water fall through a moss-draped gorge into a still, misty pool.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "living-sculpture",
+    title: "Living Sculpture",
+    collection: "mountain-forest",
+    description:
+      "The twisting limbs of an ancient maple spread beneath a glowing canopy of gold and green.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "sea-monolith",
+    title: "Sea Monolith",
+    collection: "water",
+    description:
+      "A great sea monolith stands dark against a brooding sky as the tide slips across the sand.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {
