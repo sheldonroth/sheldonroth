@@ -1793,6 +1793,114 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "quiet-stride",
+    title: "Quiet Stride",
+    collection: "wildlife",
+    description:
+      "A cheetah steps across a rain-darkened track, its gaze locked on something beyond the frame.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "wading-party",
+    title: "Wading Party",
+    collection: "wildlife",
+    description:
+      "Three yellow-billed storks probe the shallows, their reflections trembling on the still water.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "on-the-wing",
+    title: "On the Wing",
+    collection: "wildlife",
+    description:
+      "A pale chanting goshawk banks against a flawless blue sky, wings spread wide.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "moss-cascade",
+    title: "Moss Cascade",
+    collection: "water",
+    description:
+      "A clear stream slips between moss-covered boulders and ferns in a quiet old-growth forest.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "skyward",
+    title: "Skyward",
+    collection: "mountain-forest",
+    description:
+      "Looking straight up the trunks of towering redwoods as they converge toward a pale sky.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "fern-pool",
+    title: "Fern Pool",
+    collection: "water",
+    description:
+      "Tree ferns arch over a still forest pool that mirrors their feathered fronds.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "thundering-mist",
+    title: "Thundering Mist",
+    collection: "water",
+    description:
+      "A great river plunges into a deep gorge, throwing towering clouds of spray over the forest.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "birch-sun",
+    title: "Reaching for the Sun",
+    collection: "mountain-forest",
+    description:
+      "A slender white trunk climbs into a crown of bright leaves, the sun glowing just beyond.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "beach-patrol",
+    title: "Beach Patrol",
+    collection: "wildlife",
+    description:
+      "African penguins march across the bright sand, their long shadows trailing behind them.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "penguin-portrait",
+    title: "Formal Attire",
+    collection: "wildlife",
+    description:
+      "An African penguin faces the lens against deep blue water, every feather crisp.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "fern-gorge",
+    title: "Fern Gorge",
+    collection: "water",
+    description:
+      "A shallow creek winds through a narrow gorge whose walls are draped in ferns.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "tropic-flame",
+    title: "Tropic Flame",
+    collection: "mountain-forest",
+    description:
+      "A hibiscus bloom flares from deep crimson to gold against dark tropical leaves.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {
