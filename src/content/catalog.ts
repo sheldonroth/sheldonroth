@@ -866,6 +866,33 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "crimson-sky",
+    title: "Crimson Sky",
+    collection: "light-sky",
+    description:
+      "A storm of crimson cloud blazes above a darkened mountain ridge in the final minutes of dusk.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "river-strata",
+    title: "River Strata",
+    collection: "water",
+    description:
+      "A silken river slides past fallen slabs beneath towering walls of layered stone.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "sandstone-wave",
+    title: "Sandstone Wave",
+    collection: "light-sky",
+    description:
+      "Reflected light pours through a narrow canyon, turning wind-carved sandstone into rolling waves of orange and gold.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {

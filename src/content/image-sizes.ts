@@ -89,4 +89,7 @@ export const imageSizes: Record<string, { width: number; height: number }> = {
   "mirror-lake": { width: 3840, height: 2160 },
   "blue-hour-shore": { width: 3840, height: 2546 },
   "emerald-falls": { width: 3840, height: 2561 },
+  "crimson-sky": { width: 3840, height: 2560 },
+  "river-strata": { width: 3840, height: 1852 },
+  "sandstone-wave": { width: 3840, height: 2561 },
 };
