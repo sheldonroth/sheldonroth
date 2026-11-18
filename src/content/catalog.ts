@@ -731,6 +731,69 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "wind-painted",
+    title: "Wind Painted",
+    collection: "light-sky",
+    description:
+      "Brushstrokes of high cloud sweep across a deep blue sky above snow-streaked peaks and a sapphire lake.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "ocean-of-cloud",
+    title: "Ocean of Cloud",
+    collection: "peaks-ice",
+    description:
+      "Snow-clad summits stand above a still ocean of cloud that fills the valleys far below.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "winter-crown",
+    title: "Winter Crown",
+    collection: "peaks-ice",
+    description:
+      "A great pyramid of rock and ice crowns the range, its snow-laced ridges sharp against a deep blue sky.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "summit-cloud",
+    title: "Summit Cloud",
+    collection: "peaks-ice",
+    description:
+      "A single cloud drifts past a soaring pyramid of rock and snow in the clear high-altitude air.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "spindrift",
+    title: "Spindrift",
+    collection: "peaks-ice",
+    description:
+      "High winds tear a plume of spindrift from a towering wall of snow and ice.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "rising-from-mist",
+    title: "Rising from Mist",
+    collection: "light-sky",
+    description:
+      "Morning light catches the twin faces of a great peak as it rises from a sea of mist.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "frozen-cascade",
+    title: "Frozen Cascade",
+    collection: "peaks-ice",
+    description:
+      "A towering icefall of blue seracs spills over dark rock beneath a deep alpine sky.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {
