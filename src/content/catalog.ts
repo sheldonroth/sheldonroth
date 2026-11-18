@@ -821,6 +821,51 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "golden-slope",
+    title: "Golden Slope",
+    collection: "mountain-forest",
+    description:
+      "A hillside of aspens blazes gold beneath a summit dusted with the season's first snow.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "autumn-cascade",
+    title: "Autumn Cascade",
+    collection: "water",
+    description:
+      "A mountain stream tumbles in silken steps over mossy boulders through a forest turning gold.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "mirror-lake",
+    title: "Mirror Lake",
+    collection: "mountain-forest",
+    description:
+      "Dark pines and golden aspens ring a glassy lake that mirrors a cloudless sky.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "blue-hour-shore",
+    title: "Blue Hour Shore",
+    collection: "water",
+    description:
+      "Sea stacks stand in silhouette as the last violet light of evening settles over a quiet tide.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "emerald-falls",
+    title: "Emerald Falls",
+    collection: "water",
+    description:
+      "A slender waterfall plunges from a basalt cliff into a lush emerald gorge.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {
