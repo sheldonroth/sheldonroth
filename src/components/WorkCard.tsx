@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { formatPrice, getImage, PRINT_SIZES, type Work } from '@/content/catalog';
+import { formatPrice, getImage, sizesFor, type Work } from '@/content/catalog';
 
 /**
  * Grid card after lik.com's collection grid: a light grey mat (#edecec) with the photograph contained in a
@@ -38,7 +38,7 @@ export default function WorkCard({
       <div className="mt-8">
         <h3 className={`lk-card-title ${tone === 'dark' ? '!text-[#c9b48a]' : ''}`}>{work.title}</h3>
         <p className={`lk-card-edition mt-3 ${tone === 'dark' ? '!text-[#bdbdbd]' : ''}`}>Limited Edition</p>
-        <p className={`lk-price mt-1 ${tone === 'dark' ? '!text-[#c9b48a]' : ''}`}>{formatPrice(PRINT_SIZES[0].price)}</p>
+        <p className={`lk-price mt-1 ${tone === 'dark' ? '!text-[#c9b48a]' : ''}`}>{sizesFor(work.slug)[0] ? formatPrice(sizesFor(work.slug)[0].price) : 'Price on request'}</p>
       </div>
     </Link>
   );

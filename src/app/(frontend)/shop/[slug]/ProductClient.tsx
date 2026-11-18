@@ -24,7 +24,7 @@ export default function ProductClient({ work }: { work: ProductData }) {
   const [checkingOut, setCheckingOut] = useState(false);
   const [lightbox, setLightbox] = useState(false);
   const { addItem } = useCart();
-  const size = work.sizes[selected];
+  const size = work.sizes[selected] as ProductData['sizes'][number] | undefined;
   const portrait = work.image.height > work.image.width;
 
   useEffect(() => {
@@ -39,6 +39,7 @@ export default function ProductClient({ work }: { work: ProductData }) {
   }, [lightbox]);
 
   const handleAdd = () => {
+    if (!size) return;
     addItem({
       productSlug: work.slug,
       title: work.title,
@@ -53,6 +54,7 @@ export default function ProductClient({ work }: { work: ProductData }) {
   };
 
   const handleBuyNow = async () => {
+    if (!size) return;
     setCheckingOut(true);
     try {
       const res = await fetch('/api/checkout', {
@@ -60,13 +62,7 @@ export default function ProductClient({ work }: { work: ProductData }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           items: [
-            {
-              name: `${work.title} — ${size.name}`,
-              price: size.price,
-              quantity: 1,
-              image: new URL(work.image.src, window.location.origin).toString(),
-              description: `${size.dimensions} · Limited Edition of ${work.editionSize}`,
-            },
+            { slug: work.slug, size: size.name, quantity: 1 },
           ],
         }),
       });
@@ -115,9 +111,23 @@ export default function ProductClient({ work }: { work: ProductData }) {
             <div>
               <h1 className="lk-product-title">{work.title}</h1>
               <p className="lk-edition-label mt-5">Limited Edition of {work.editionSize}</p>
-              <p className="lk-price mt-5">{formatPrice(size.price)}</p>
+              <p className="lk-price mt-5">{size ? formatPrice(size.price) : 'Price on request'}</p>
             </div>
 
+            {!size ? (
+              <div>
+                <h2 className="lk-edition-label">Available by Inquiry</h2>
+                <p className="lk-body mt-4">
+                  This photograph is offered by private inquiry rather than in our standard gallery sizes. Contact the studio to discuss a
+                  print of this work.
+                </p>
+                <div className="mt-8 grid gap-3">
+                  <Link href={`/contact?work=${work.slug}`} className="lk-btn lk-btn-solid w-full">
+                    Inquire
+                  </Link>
+                </div>
+              </div>
+            ) : (
             <div>
               <div>
                 <h2 className="lk-edition-label">Select a Size</h2>
@@ -163,6 +173,7 @@ export default function ProductClient({ work }: { work: ProductData }) {
               )}
               <p className="lk-small mt-6">Complimentary shipping. Each piece is made to order, signed and numbered by the artist.</p>
             </div>
+            )}
           </div>
         </div>
       </section>

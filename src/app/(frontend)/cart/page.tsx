@@ -18,18 +18,18 @@ export default function CartPage() {
         },
         body: JSON.stringify({
           items: items.map(item => ({
-            name: `${item.title} - ${item.size}`,
-            price: item.price,
+            slug: item.productSlug,
+            size: item.size,
             quantity: item.quantity,
-            image: item.image,
-            description: `${item.dimensions} | ${item.edition}`,
           })),
         }),
       });
 
-      const { url } = await response.json();
+      const { url, error } = await response.json();
       if (url) {
         window.location.href = url;
+      } else if (error) {
+        alert(error);
       }
     } catch (error) {
       console.error('Checkout error:', error);

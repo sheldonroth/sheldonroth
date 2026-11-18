@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { getImage, sizeFor, works } from '@/content/catalog';
 
 // Initialize Stripe lazily to avoid build-time errors
 const getStripe = () => {
@@ -12,41 +13,46 @@ const getStripe = () => {
 
 export async function POST(request: Request) {
   try {
-    const stripe = getStripe();
-    const { items, successUrl, cancelUrl } = await request.json();
+    const { items } = await request.json();
 
     // Validate items
-    if (!items || !Array.isArray(items) || items.length === 0) {
+    if (!items || !Array.isArray(items) || items.length === 0 || items.length > 20) {
       return NextResponse.json({ error: 'Invalid items' }, { status: 400 });
     }
 
-    // Create line items for Stripe
-    const lineItems = items.map((item: {
-      name: string;
-      price: number;
-      quantity: number;
-      image?: string;
-      description?: string;
-    }) => ({
-      price_data: {
-        currency: 'usd',
-        product_data: {
-          name: item.name,
-          description: item.description,
-          images: item.image ? [item.image] : [],
+    // Price every line from the catalog: the client only names the work and size, and a size is only accepted
+    // when the work's master supports it (see sizesFor).
+    const origin = process.env.NEXT_PUBLIC_BASE_URL || new URL(request.url).origin;
+    const lineItems = [];
+    for (const item of items as { slug?: unknown; size?: unknown; quantity?: unknown }[]) {
+      const work = typeof item?.slug === 'string' ? works.find((w) => w.slug === item.slug) : undefined;
+      const size = work && typeof item.size === 'string' ? sizeFor(work.slug, item.size) : undefined;
+      const quantity = Number(item?.quantity);
+      if (!work || !size || !Number.isInteger(quantity) || quantity < 1 || quantity > 10) {
+        return NextResponse.json({ error: 'One or more items are not available in the selected size.' }, { status: 400 });
+      }
+      lineItems.push({
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: `${work.title} — ${size.name}`,
+            description: `${size.dimensions} · Limited Edition of ${work.editionSize}`,
+            images: [new URL(getImage(work.slug).src, origin).toString()],
+          },
+          unit_amount: Math.round(size.price * 100), // Convert to cents
         },
-        unit_amount: Math.round(item.price * 100), // Convert to cents
-      },
-      quantity: item.quantity,
-    }));
+        quantity,
+      });
+    }
 
     // Create Checkout Session
+    const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
-      success_url: successUrl || `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: cancelUrl || `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/cart`,
+      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/cart`,
       shipping_address_collection: {
         allowed_countries: ['US', 'CA', 'GB', 'AU', 'DE', 'FR', 'IT', 'ES', 'NL', 'BE', 'CH', 'AT', 'JP', 'SG', 'AE'],
       },

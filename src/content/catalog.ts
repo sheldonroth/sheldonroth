@@ -1,4 +1,5 @@
 import { imageSizes } from './image-sizes';
+import { masterLongEdge } from './master-sizes';
 
 export type CollectionSlug = 'peaks-ice' | 'mountain-forest' | 'light-sky' | 'water' | 'far-horizons' | 'wildlife';
 
@@ -1108,6 +1109,132 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "nectar-flight",
+    title: "Nectar Flight",
+    collection: "wildlife",
+    description:
+      "A white-lined sphinx moth hovers at a spire of blue delphinium, its striped wings frozen mid-beat.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "river-of-stars",
+    title: "River of Stars",
+    collection: "light-sky",
+    description:
+      "The Milky Way arcs over a dark mountain ridge as the last trace of twilight fades from the horizon.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "silent-passage",
+    title: "Silent Passage",
+    collection: "water",
+    description:
+      "Smoothed to silk by a long exposure, a great river glides past boulders between towering canyon walls.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "wild-coast",
+    title: "Wild Coast",
+    collection: "water",
+    description:
+      "Waves fan across a dark-sand bay beneath green sea cliffs that run out into a deep blue ocean.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "canopy-of-gold",
+    title: "Canopy of Gold",
+    collection: "mountain-forest",
+    description:
+      "Slender aspen trunks reach into a canopy of glowing gold leaves against a clear blue sky.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "white-giant",
+    title: "White Giant",
+    collection: "peaks-ice",
+    description:
+      "A vast dome of snow and ice crowns a range of granite needles under a deep blue sky.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "the-needle",
+    title: "The Needle",
+    collection: "peaks-ice",
+    description:
+      "A sharp summit of dark rock and snow rises above a sea of ridges and hanging glaciers.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "frozen-ramparts",
+    title: "Frozen Ramparts",
+    collection: "peaks-ice",
+    description:
+      "A ridge of dark granite climbs into a great snow-covered summit, its glaciers bright in the high sun.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "serrated-sky",
+    title: "Serrated Sky",
+    collection: "peaks-ice",
+    description:
+      "A row of jagged granite spires, dusted with snow, cuts across a clear alpine sky.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "firestorm",
+    title: "Firestorm",
+    collection: "light-sky",
+    description:
+      "Ragged clouds ignite in crimson and orange above a dark ridgeline in the final moments of sunset.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "jade-waters",
+    title: "Jade Waters",
+    collection: "water",
+    description:
+      "Milky turquoise water flows past moss-covered stones beneath towering red canyon walls.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "travertine-falls",
+    title: "Travertine Falls",
+    collection: "water",
+    description:
+      "Turquoise water spills over mossy travertine ledges in a hidden red-rock canyon.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "silver-thread",
+    title: "Silver Thread",
+    collection: "water",
+    description:
+      "A slender waterfall drops from a sculpted rock lip into a quiet stone alcove.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "afterglow",
+    title: "Afterglow",
+    collection: "light-sky",
+    description:
+      "The sky smoulders orange behind silhouetted mountains, its glow mirrored on the dark water below.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {
@@ -1146,12 +1273,22 @@ export function getBestSellers() {
   return works.filter((w) => w.bestSeller);
 }
 
+/** Minimum print resolution: a size is only offered when the work's master holds at least this many pixels per inch. */
+export const MIN_PRINT_PPI = 150;
+
+/** Print sizes this work's master can support at MIN_PRINT_PPI (long edge vs long edge). */
 export function sizesFor(slug: string) {
   const portrait = isPortrait(slug);
-  return PRINT_SIZES.map((s) => ({
+  const master = masterLongEdge[slug] ?? 0;
+  return PRINT_SIZES.filter((s) => master >= s.long * MIN_PRINT_PPI).map((s) => ({
     ...s,
     dimensions: portrait ? `${s.short}" × ${s.long}"` : `${s.long}" × ${s.short}"`,
   }));
+}
+
+/** The supported size with this name, or undefined when the work can't be printed that large. */
+export function sizeFor(slug: string, name: string) {
+  return sizesFor(slug).find((s) => s.name === name);
 }
 
 export function formatPrice(price: number) {

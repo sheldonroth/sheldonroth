@@ -11,10 +11,14 @@ const label = 'block text-[11px] font-bold uppercase leading-[11px] tracking-[0.
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
 /** Lik-style inquiry form: underlined fields, small caps labels. Posts to /api/inquiry; no address in the client. */
-export default function InquiryForm({ works, sizes }: { works: { slug: string; title: string }[]; sizes: string[] }) {
+export default function InquiryForm({ works, sizes }: { works: { slug: string; title: string; sizes: string[] }[]; sizes: string[] }) {
   const params = useSearchParams();
   const initialWork = works.some((w) => w.slug === params.get('work')) ? (params.get('work') as string) : '';
-  const initialSize = sizes.includes(params.get('size') ?? '') ? (params.get('size') as string) : '';
+  const sizesForWork = (slug: string) => works.find((w) => w.slug === slug)?.sizes ?? sizes;
+  const initialSize = sizesForWork(initialWork).includes(params.get('size') ?? '') ? (params.get('size') as string) : '';
+  const [work, setWork] = useState(initialWork);
+  const [size, setSize] = useState(initialSize);
+  const sizeOptions = work ? sizesForWork(work) : sizes;
   const [status, setStatus] = useState<Status>('idle');
   const [error, setError] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -101,9 +105,9 @@ export default function InquiryForm({ works, sizes }: { works: { slug: string; t
         </label>
         <label className="block">
           <span className={label}>Print size</span>
-          <select name="size" defaultValue={initialSize} className={field}>
-            <option value="">Not sure yet</option>
-            {sizes.map((s) => (
+          <select name="size" value={sizeOptions.includes(size) ? size : ''} onChange={(e) => setSize(e.target.value)} className={field}>
+            <option value="">{work && sizeOptions.length === 0 ? 'By inquiry' : 'Not sure yet'}</option>
+            {sizeOptions.map((s) => (
               <option key={s} value={s}>{s}</option>
             ))}
           </select>
@@ -111,7 +115,7 @@ export default function InquiryForm({ works, sizes }: { works: { slug: string; t
       </div>
       <label className="block">
         <span className={label}>Artwork of interest</span>
-        <select name="artwork" defaultValue={initialWork} className={field}>
+        <select name="artwork" value={work} onChange={(e) => setWork(e.target.value)} className={field}>
           <option value="">— Not a specific piece —</option>
           {works.map((w) => (
             <option key={w.slug} value={w.slug}>{w.title}</option>
