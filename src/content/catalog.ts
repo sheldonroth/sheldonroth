@@ -1236,15 +1236,6 @@ export const works: Work[] = [
     isNew: true,
   },
   {
-    slug: "reflections-in-rose",
-    title: "Reflections in Rose",
-    collection: "mountain-forest",
-    description:
-      "Rose-tinted peaks rise above a dark spruce forest and lie perfectly mirrored in a still alpine lake.",
-    editionSize: 50,
-    isNew: true,
-  },
-  {
     slug: "river-sunburst",
     title: "River Sunburst",
     collection: "water",
@@ -1276,16 +1267,7 @@ export const works: Work[] = [
     title: "Golden Hillside",
     collection: "mountain-forest",
     description:
-      "Aspens in full autumn colour sweep up a mountainside toward a rocky summit.",
-    editionSize: 50,
-    isNew: true,
-  },
-  {
-    slug: "aspen-flame",
-    title: "Aspen Flame",
-    collection: "light-sky",
-    description:
-      "Backlit aspen leaves burn bright gold against a hillside of muted autumn colour.",
+      "Aspens in full autumn colour blanket a steep mountainside, a lone spruce standing dark among the gold.",
     editionSize: 50,
     isNew: true,
   },
@@ -1322,15 +1304,6 @@ export const works: Work[] = [
     collection: "mountain-forest",
     description:
       "A clear stream runs over a bed of rounded stones toward a distant summit beneath a bright summer sky.",
-    editionSize: 50,
-    isNew: true,
-  },
-  {
-    slug: "painted-butte",
-    title: "Painted Butte",
-    collection: "far-horizons",
-    description:
-      "Bands of red and ochre rock rise above green scrub beneath a pale sky.",
     editionSize: 50,
     isNew: true,
   },
