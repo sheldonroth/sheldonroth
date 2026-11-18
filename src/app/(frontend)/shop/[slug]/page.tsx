@@ -9,6 +9,7 @@ import {
   getImage,
   getWork,
   getWorksInCollection,
+  getCollectionsForWork,
   PRINT_DETAILS,
   sizesFor,
   works,
@@ -39,6 +40,7 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
 
   const collection = getCollection(work.collection)!;
   const image = getImage(work.slug);
+  const galleries = getCollectionsForWork(work);
   const related = getWorksInCollection(work.collection).filter((w) => w.slug !== work.slug);
   const more = related.length >= 4 ? related.slice(0, 4) : [...related, ...works.filter((w) => w.collection !== work.collection && !w.webOnly && !related.includes(w))].slice(0, 4);
 
@@ -72,6 +74,16 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
             </div>
             <Link href={`/collections/${collection.slug}`} className="lk-btn lk-btn-gold shrink-0">Shop the Gallery</Link>
           </div>
+          {/* Cross-links: every gallery this work appears in, as lik.com links related collections */}
+          <p className="mt-6 text-[14px] leading-[21px] text-[#5f5f58]">
+            <span className="lk-edition-label mr-2">Featured in</span>
+            {galleries.map((g, i) => (
+              <span key={g.slug}>
+                {i > 0 && <span aria-hidden="true"> · </span>}
+                <Link href={`/collections/${g.slug}`} className="underline-offset-4 hover:underline">{g.title}</Link>
+              </span>
+            ))}
+          </p>
           <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {more.map((w, i) => (
               <Reveal key={w.slug} delay={i * 100}>

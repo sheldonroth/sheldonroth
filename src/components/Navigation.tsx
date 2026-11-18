@@ -6,6 +6,8 @@ import { usePathname } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import Wordmark from './Wordmark';
 
+type GalleryLink = { slug: string; title: string };
+
 const links = [
   { href: '/shop', label: 'The Work' },
   { href: '/collections', label: 'The Galleries' },
@@ -14,7 +16,14 @@ const links = [
   { href: '/contact', label: 'Inquire' },
 ];
 
-export default function Navigation() {
+export default function Navigation({ galleries }: { galleries: GalleryLink[] }) {
+  /** "The Work" menu, numbered as on lik.com: the curated tiers first, then every gallery. */
+  const workMenu = [
+    { href: '/shop', label: 'View All' },
+    { href: '/new-releases', label: 'New Releases' },
+    { href: '/best-sellers', label: 'Best Sellers' },
+    ...galleries.map((c) => ({ href: `/collections/${c.slug}`, label: c.title })),
+  ];
   const pathname = usePathname();
   const { totalItems } = useCart();
   const [scrolled, setScrolled] = useState(false);
@@ -63,6 +72,32 @@ export default function Navigation() {
             <ul className="flex items-center">
               {links.map((l) => {
                 const active = pathname === l.href || pathname.startsWith(`${l.href}/`);
+                if (l.href === '/shop') {
+                  return (
+                    <li key={l.href} className="group relative">
+                      <Link
+                        href={l.href}
+                        aria-haspopup="true"
+                        aria-current={active ? 'page' : undefined}
+                        className={`lk-nav block p-5 transition-opacity hover:opacity-70 ${active ? 'underline underline-offset-8' : ''}`}
+                      >
+                        {l.label}
+                      </Link>
+                      <div className="invisible absolute left-1/2 top-full z-50 w-[300px] -translate-x-1/2 bg-white pb-5 pt-4 text-[#222] opacity-0 shadow-[0_10px_30px_rgba(0,0,0,0.12)] transition-opacity duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
+                        <ul>
+                          {workMenu.map((m, i) => (
+                            <li key={m.href}>
+                              <Link href={m.href} className="flex gap-4 px-7 py-[7px] text-[14px] leading-[20px] hover:bg-[#f4f4f2]">
+                                <span className="w-7 text-[#9a9a90]">/{String(i + 1).padStart(2, '0')}</span>
+                                <span>{m.label}</span>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </li>
+                  );
+                }
                 return (
                   <li key={l.href}>
                     <Link
@@ -102,7 +137,7 @@ export default function Navigation() {
         </div>
       </header>
 
-      <div className={`fixed inset-0 z-40 bg-white pt-[70px] transition-opacity duration-300 lg:hidden ${open ? 'opacity-100' : 'pointer-events-none opacity-0'}`} aria-hidden={!open}>
+      <div className={`fixed inset-0 z-40 overflow-y-auto bg-white pt-[70px] transition-opacity duration-300 lg:hidden ${open ? 'opacity-100' : 'pointer-events-none opacity-0'}`} aria-hidden={!open}>
         <nav className="lk-container flex flex-col pt-8" aria-label="Mobile">
           {links.map((l) => (
             <Link key={l.href} href={l.href} tabIndex={open ? 0 : -1} className="lk-nav border-b border-line py-5 text-[#222]">
@@ -110,6 +145,14 @@ export default function Navigation() {
             </Link>
           ))}
           <Link href="/best-sellers" tabIndex={open ? 0 : -1} className="lk-nav border-b border-line py-5 text-[#222]">Best Sellers</Link>
+          <p className="pt-6 text-[12px] font-bold uppercase tracking-[0.08em] text-[#767676]">Galleries</p>
+          <div className="grid grid-cols-2 gap-x-6 pb-10 pt-2">
+            {galleries.map((c) => (
+              <Link key={c.slug} href={`/collections/${c.slug}`} tabIndex={open ? 0 : -1} className="py-2 text-[15px] text-[#222]">
+                {c.title}
+              </Link>
+            ))}
+          </div>
         </nav>
       </div>
     </>

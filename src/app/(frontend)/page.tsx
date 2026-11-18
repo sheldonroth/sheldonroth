@@ -3,7 +3,7 @@ import Link from 'next/link';
 import HeroSlideshow from '@/components/HeroSlideshow';
 import Reveal from '@/components/Reveal';
 import WorkCard from '@/components/WorkCard';
-import { collections, getBestSellers, getCollection, getHeroWorks, getImage, getNewReleases, getWork } from '@/content/catalog';
+import { collections, getBestSellers, getCollection, getHeroWorks, getImage, getNewReleases, getWorksInCollection } from '@/content/catalog';
 
 export default function Home() {
   const slides = getHeroWorks().map((w) => ({
@@ -15,9 +15,12 @@ export default function Home() {
     blurb: w.description,
   }));
 
-  const newReleases = getNewReleases();
+  const heroSlugs = new Set(slides.map((s) => s.slug));
+  const signature = getWorksInCollection('signature').filter((w) => !heroSlugs.has(w.slug)).slice(0, 8);
+  const newReleases = getNewReleases().slice(0, 8);
   const bestSellers = getBestSellers().slice(0, 6);
-  const panorama = getWork('roof-of-the-world')!;
+  const galleries = collections.filter((c) => !c.curated);
+  const panorama = getWorksInCollection('panoramas').find((w) => !heroSlugs.has(w.slug))!;
   const panoImg = getImage(panorama.slug);
   const artistImage = getImage('sentinel');
 
@@ -39,6 +42,24 @@ export default function Home() {
               <Link href="/shop" className="lk-btn lk-btn-gold">Explore the Work</Link>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      {/* Signature works (lik.com "Premier Images") */}
+      <section className="lk-section border-t border-line">
+        <div className="lk-container">
+          <div className="text-center">
+            <p className="lk-eyebrow">The Defining Images</p>
+            <h2 className="lk-h2 mt-6">Signature Works</h2>
+          </div>
+          <div className="mt-14 grid grid-cols-1 gap-x-10 gap-y-16 sm:grid-cols-2 lg:grid-cols-4">
+            {signature.map((w) => (
+              <WorkCard key={w.slug} work={w} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" />
+            ))}
+          </div>
+          <div className="mt-14 text-center">
+            <Link href="/collections/signature" className="lk-btn lk-btn-gold">View All Signature Works</Link>
+          </div>
         </div>
       </section>
 
@@ -80,12 +101,12 @@ export default function Home() {
             <p className="lk-eyebrow">Shop by Gallery</p>
             <h2 className="lk-h2 mt-6">The Galleries</h2>
           </div>
-          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {collections.map((c) => {
+          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
+            {galleries.map((c) => {
               const img = getImage(c.cover);
               return (
                 <Link key={c.slug} href={`/collections/${c.slug}`} className="group relative block aspect-[4/5] overflow-hidden bg-black">
-                  <Image quality={75} src={img.src} alt={`${c.title} gallery`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="zoom-img object-cover" />
+                  <Image quality={75} src={img.src} alt={`${c.title} gallery`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw" className="zoom-img object-cover" />
                   <div className="lk-scrim absolute inset-0" />
                   <div className="absolute inset-x-0 bottom-0 p-8 text-center text-white">
                     <h3 className="lk-h2-sm">{c.title}</h3>

@@ -15,8 +15,13 @@ const nextConfig: NextConfig = {
   async redirects() {
     const removed = ['tropical-sunset', 'aspen-cascade', 'crystal-lagoon', 'shipwreck-at-dawn', 'mountain-majesty', 'still-water'];
     return [
-      { source: '/collections/tropics', destination: '/collections/water', permanent: true },
-      { source: '/collections/ocean-coast', destination: '/collections/water', permanent: true },
+      // Old gallery slugs from before the Lik-style reorganisation
+      { source: '/collections/tropics', destination: '/collections/coast', permanent: true },
+      { source: '/collections/ocean-coast', destination: '/collections/coast', permanent: true },
+      { source: '/collections/peaks-ice', destination: '/collections/mountains', permanent: true },
+      { source: '/collections/mountain-forest', destination: '/collections/lakes', permanent: true },
+      { source: '/collections/light-sky', destination: '/collections/sky', permanent: true },
+      { source: '/collections/far-horizons', destination: '/collections/panoramas', permanent: true },
       ...removed.map((slug) => ({ source: `/shop/${slug}`, destination: '/shop', permanent: true })),
     ];
   },

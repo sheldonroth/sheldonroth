@@ -7,7 +7,7 @@ import { collections, getImage, getWorksInCollection } from '@/content/catalog';
 
 export const metadata: Metadata = {
   title: 'Galleries',
-  description: 'Explore the fine art photography galleries of Sheldon Roth — high peaks and ice, mountain and forest, light and sky, water and far horizons.',
+  description: 'Explore the fine art photography galleries of Sheldon Roth — mountains, lakes, waterfalls, canyons, forests, coast, sky, wildlife, black and white and panoramas.',
 };
 
 export default function CollectionsPage() {
@@ -16,7 +16,7 @@ export default function CollectionsPage() {
       <PageHeader
         eyebrow="The Galleries"
         title="Explore the Collections"
-        intro="Six bodies of work, each a journey — the high peaks and their glaciers, the lakes and forests of the high country, fleeting light, the colour of water, wide open horizons and the great animals of the wild."
+        intro="Begin with the Signature Works, then wander by subject — high peaks and still lakes, falling water and sculpted stone, forests, the sea, fleeting light and the great animals of the wild."
       />
       <section className="lk-container pb-20 lg:pb-[120px]">
         <div className="grid grid-cols-1 gap-[34px] sm:grid-cols-2 lg:grid-cols-3">

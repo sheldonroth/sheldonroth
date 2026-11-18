@@ -10,7 +10,7 @@ import type { Work } from '@/content/catalog';
  */
 export default function GalleryGrid({ works, filters, aside }: { works: Work[]; filters?: { slug: string; title: string }[]; aside?: ReactNode }) {
   const [active, setActive] = useState<string>('all');
-  const shown = useMemo(() => (active === 'all' ? works : works.filter((w) => w.collection === active && !w.webOnly)), [active, works]);
+  const shown = useMemo(() => (active === 'all' ? works : works.filter((w) => (w.collections as string[]).includes(active) && !w.webOnly)), [active, works]);
   const options = filters && filters.length > 0 ? [{ slug: 'all', title: 'View All' }, ...filters] : null;
 
   return (

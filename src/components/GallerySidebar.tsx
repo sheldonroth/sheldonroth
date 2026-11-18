@@ -5,9 +5,9 @@ import { collections } from '@/content/catalog';
 export default function GallerySidebar({ active }: { active?: string }) {
   const items = [
     { href: '/shop', slug: 'all', title: 'View All' },
-    ...collections.map((c) => ({ href: `/collections/${c.slug}`, slug: c.slug, title: c.title })),
     { href: '/new-releases', slug: 'new-releases', title: 'New Releases' },
     { href: '/best-sellers', slug: 'best-sellers', title: 'Best Sellers' },
+    ...collections.map((c) => ({ href: `/collections/${c.slug}`, slug: c.slug, title: c.title })),
   ];
   return (
     <nav aria-label="Galleries" className="sticky top-[96px]">
