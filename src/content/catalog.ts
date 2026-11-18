@@ -1334,6 +1334,24 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "mirror-dusk",
+    title: "Mirror Dusk",
+    collection: "water",
+    description:
+      "Fiery clouds drift above a dark mountain notch and repeat themselves in the perfectly still water of a lake at dusk.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "autumn-mirror",
+    title: "Autumn Mirror",
+    collection: "mountain-forest",
+    description:
+      "A hillside of golden aspens and a sky of drifting clouds lie doubled in a quiet beaver pond.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {

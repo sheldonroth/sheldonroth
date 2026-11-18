@@ -29,7 +29,7 @@ export const imageSizes: Record<string, { width: number; height: number }> = {
   "island-paradise": { width: 3840, height: 2560 },
   "lake-and-summit": { width: 2560, height: 3840 },
   "liquid-jade": { width: 3840, height: 2348 },
-  "massif-from-the-water": { width: 3840, height: 2560 },
+  "massif-from-the-water": { width: 3840, height: 2304 },
   "mist-veil": { width: 3840, height: 1641 },
   "monarch-of-ice": { width: 3840, height: 1920 },
   "pacific-edge": { width: 5760, height: 2357 },
@@ -140,4 +140,6 @@ export const imageSizes: Record<string, { width: number; height: number }> = {
   "cloud-shadows": { width: 3840, height: 2561 },
   "headwaters": { width: 3840, height: 2561 },
   "painted-butte": { width: 3840, height: 2562 },
+  "mirror-dusk": { width: 3840, height: 2561 },
+  "autumn-mirror": { width: 3840, height: 2382 },
 };
