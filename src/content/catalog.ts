@@ -687,24 +687,6 @@ export const works: Work[] = [
     isNew: true,
   },
   {
-    slug: "stone-island",
-    title: "Stone Island",
-    collection: "mountain-forest",
-    description:
-      "A weathered island of stone rises from turquoise water beneath a rust-capped summit and sweeping alpine slopes.",
-    editionSize: 50,
-    isNew: true,
-  },
-  {
-    slug: "turquoise-heart",
-    title: "Turquoise Heart",
-    collection: "mountain-forest",
-    description:
-      "Glacial water glows impossibly turquoise around a lone rocky island, cradled in a bowl of green alpine meadow.",
-    editionSize: 50,
-    isNew: true,
-  },
-  {
     slug: "stone-spires",
     title: "Stone Spires",
     collection: "peaks-ice",
@@ -728,15 +710,6 @@ export const works: Work[] = [
     collection: "peaks-ice",
     description:
       "Cloud pours through a vast glacial valley ringed by jagged, snow-bound peaks.",
-    editionSize: 50,
-    isNew: true,
-  },
-  {
-    slug: "wind-painted",
-    title: "Wind Painted",
-    collection: "light-sky",
-    description:
-      "Brushstrokes of high cloud sweep across a deep blue sky above snow-streaked peaks and a sapphire lake.",
     editionSize: 50,
     isNew: true,
   },
@@ -773,15 +746,6 @@ export const works: Work[] = [
     collection: "peaks-ice",
     description:
       "High winds tear a plume of spindrift from a towering wall of snow and ice.",
-    editionSize: 50,
-    isNew: true,
-  },
-  {
-    slug: "frozen-cascade",
-    title: "Frozen Cascade",
-    collection: "peaks-ice",
-    description:
-      "A towering icefall of blue seracs spills over dark rock beneath a deep alpine sky.",
     editionSize: 50,
     isNew: true,
   },
