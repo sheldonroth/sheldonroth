@@ -1352,6 +1352,15 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "aspen-script",
+    title: "Aspen Script",
+    collection: "mountain-forest",
+    description:
+      "Dark scars and pale bark form a quiet calligraphy across a stand of aspen trunks.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {

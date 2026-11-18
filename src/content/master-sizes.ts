@@ -143,4 +143,5 @@ export const masterLongEdge: Record<string, number> = {
   "painted-butte": 5168,
   "mirror-dusk": 7952,
   "autumn-mirror": 7952,
+  "aspen-script": 6000,
 };

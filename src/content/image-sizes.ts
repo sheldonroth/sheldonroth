@@ -142,4 +142,5 @@ export const imageSizes: Record<string, { width: number; height: number }> = {
   "painted-butte": { width: 3840, height: 2562 },
   "mirror-dusk": { width: 3840, height: 2561 },
   "autumn-mirror": { width: 3840, height: 2382 },
+  "aspen-script": { width: 2560, height: 3840 },
 };
