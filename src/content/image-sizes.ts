@@ -69,4 +69,9 @@ export const imageSizes: Record<string, { width: number; height: number }> = {
   "canyon-song": { width: 3840, height: 2561 },
   "secret-grotto": { width: 3840, height: 2561 },
   "golden-grove": { width: 3840, height: 2880 },
+  "stone-island": { width: 3840, height: 2880 },
+  "turquoise-heart": { width: 3840, height: 2893 },
+  "stone-spires": { width: 3840, height: 2692 },
+  "cloud-weave": { width: 3840, height: 2702 },
+  "ice-valley": { width: 3840, height: 2476 },
 };

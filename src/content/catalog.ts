@@ -686,6 +686,51 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "stone-island",
+    title: "Stone Island",
+    collection: "mountain-forest",
+    description:
+      "A weathered island of stone rises from turquoise water beneath a rust-capped summit and sweeping alpine slopes.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "turquoise-heart",
+    title: "Turquoise Heart",
+    collection: "mountain-forest",
+    description:
+      "Glacial water glows impossibly turquoise around a lone rocky island, cradled in a bowl of green alpine meadow.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "stone-spires",
+    title: "Stone Spires",
+    collection: "peaks-ice",
+    description:
+      "A forest of fluted stone spires climbs toward the sky, every rib and gully carved sharp by wind and ice.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "cloud-weave",
+    title: "Cloud Weave",
+    collection: "peaks-ice",
+    description:
+      "Clouds weave through a vast wall of ice and rock as the high peaks emerge from the drifting mist.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "ice-valley",
+    title: "Ice Valley",
+    collection: "peaks-ice",
+    description:
+      "Cloud pours through a vast glacial valley ringed by jagged, snow-bound peaks.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {
