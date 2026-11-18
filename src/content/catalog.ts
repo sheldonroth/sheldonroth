@@ -1613,6 +1613,105 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "granite-valley",
+    title: "Granite Valley",
+    collection: "mountain-forest",
+    description:
+      "Great granite walls fall away into a forested valley as afternoon cloud drifts overhead.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "standoff",
+    title: "Standoff",
+    collection: "wildlife",
+    description:
+      "A Cape buffalo bull fixes the camera with a level stare from the tall grass.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "river-horse",
+    title: "River Horse",
+    collection: "wildlife",
+    description:
+      "A hippo strides across a grassy bank, an oxpecker riding on its back.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "three-of-a-kind",
+    title: "Three of a Kind",
+    collection: "wildlife",
+    description:
+      "Three zebras stand pressed together, their stripes merging into a single bold pattern.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "meadow-prowler",
+    title: "Meadow Prowler",
+    collection: "wildlife",
+    description:
+      "A black-backed jackal pauses among wildflowers, ears tuned to the grass ahead.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "midday-rest",
+    title: "Midday Rest",
+    collection: "wildlife",
+    description:
+      "A dark-maned lion sprawls in the shade of fallen timber, eyes narrowed against the heat.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "ocean-fury",
+    title: "Ocean Fury",
+    collection: "water",
+    description:
+      "A breaking wave explodes against a dark reef in a white burst of spray.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "the-lookout",
+    title: "The Lookout",
+    collection: "wildlife",
+    description:
+      "A pied kingfisher keeps watch from a leafy perch against a flawless blue sky.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "lone-lily",
+    title: "Lone Lily",
+    collection: "water",
+    description:
+      "A single white water lily rises on its slender stem above still, silvered water.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "gentle-giant",
+    title: "Gentle Giant",
+    collection: "wildlife",
+    description:
+      "An elephant bull curls his trunk as he browses at the edge of the woodland.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "painted-earth",
+    title: "Painted Earth",
+    collection: "far-horizons",
+    description:
+      "Steam drifts over a vast hot spring whose mineral-rich edges glow in rust and orange.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {
