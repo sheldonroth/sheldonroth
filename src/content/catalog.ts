@@ -777,15 +777,6 @@ export const works: Work[] = [
     isNew: true,
   },
   {
-    slug: "rising-from-mist",
-    title: "Rising from Mist",
-    collection: "light-sky",
-    description:
-      "Morning light catches the twin faces of a great peak as it rises from a sea of mist.",
-    editionSize: 50,
-    isNew: true,
-  },
-  {
     slug: "frozen-cascade",
     title: "Frozen Cascade",
     collection: "peaks-ice",

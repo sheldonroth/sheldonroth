@@ -79,6 +79,5 @@ export const imageSizes: Record<string, { width: number; height: number }> = {
   "winter-crown": { width: 3840, height: 2850 },
   "summit-cloud": { width: 3840, height: 2692 },
   "spindrift": { width: 3840, height: 2880 },
-  "rising-from-mist": { width: 3840, height: 2646 },
   "frozen-cascade": { width: 3840, height: 2773 },
 };
