@@ -1,7 +1,7 @@
 // Generated from public/works by scripts — width/height for next/image
 export const imageSizes: Record<string, { width: number; height: number }> = {
   "above-the-clouds": { width: 3840, height: 1920 },
-  "alpenglow": { width: 3840, height: 1920 },
+  "alpenglow": { width: 3840, height: 2663 },
   "alpine-bloom": { width: 2794, height: 3840 },
   "autumn-majesty": { width: 3840, height: 1280 },
   "bands-of-light": { width: 3840, height: 2560 },

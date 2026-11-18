@@ -171,7 +171,7 @@ const catalogWorks: Work[] = [
     rank: 128,
     title: "Alpenglow",
     collection: "mountains",
-    collections: ["mountains", "panoramas"],
+    collections: ["mountains"],
     description:
       "Fresh snow and fluted ice catch the last warm light as a great summit rises into a deep blue sky.",
     editionSize: 50,
