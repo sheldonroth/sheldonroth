@@ -973,6 +973,42 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "the-huntress",
+    title: "The Huntress",
+    collection: "wildlife",
+    description:
+      "A lioness pauses in the long grass, ears forward and every muscle ready.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "leap-of-faith",
+    title: "Leap of Faith",
+    collection: "wildlife",
+    description:
+      "A dolphin arcs clear of the water, its sleek body mirrored in the dark, rippling sea.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "golden-mane",
+    title: "Golden Mane",
+    collection: "wildlife",
+    description:
+      "A great maned lion stands in warm light before red stone, gazing out over his domain.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "the-heavyweight",
+    title: "The Heavyweight",
+    collection: "wildlife",
+    description:
+      "A hippo stands squarely in the grass, its heavy frame and steady gaze filling the frame.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {
