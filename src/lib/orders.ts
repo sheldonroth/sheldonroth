@@ -69,6 +69,8 @@ export interface PaidOrder {
   amountTax: number | null;
   amountTotal: number | null;
   currency: string | null;
+  /** Stripe Tax was off or unavailable for this session, so no sales tax was collected. */
+  taxNotCalculated?: boolean;
 }
 
 /**
@@ -137,7 +139,7 @@ export function orderEmailText(id: number, o: PaidOrder, items: OrderItem[], ove
     ),
     `Subtotal: ${money(o.amountSubtotal, o.currency)}`,
     `Shipping: ${money(o.amountShipping, o.currency)}`,
-    `Tax: ${money(o.amountTax, o.currency)}`,
+    `Tax: ${money(o.amountTax, o.currency)}${o.taxNotCalculated ? '  !! TAX NOT CALCULATED (Stripe Tax not active at checkout)' : ''}`,
     `Total charged: ${money(o.amountTotal, o.currency)}`,
     `Stripe: session ${o.sessionId}${o.paymentIntent ? `, payment ${o.paymentIntent}` : ''}`,
     '',

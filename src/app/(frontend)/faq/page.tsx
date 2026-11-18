@@ -50,6 +50,10 @@ const faqs = [
         a: 'Each piece is made to order. Please allow 2–4 weeks from your order to delivery. You will receive tracking details by email when it ships.',
       },
       {
+        q: 'How much is shipping?',
+        a: 'Free shipping within the US, fully insured with a signature required on delivery. Sales tax, where it applies, is calculated at checkout.',
+      },
+      {
         q: 'Do you ship internationally?',
         a: 'Online checkout ships to US addresses. For delivery elsewhere, contact the studio for a crate and freight quote; import duties and taxes are the buyer\'s responsibility.',
       },

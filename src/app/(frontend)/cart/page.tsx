@@ -149,14 +149,18 @@ export default function CartPage() {
                   <span>${totalPrice.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted">Shipping</span>
+                  <span className="text-muted">Shipping (US)</span>
+                  <span>Free</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted">Tax</span>
                   <span className="text-muted">Calculated at checkout</span>
                 </div>
               </div>
 
               <div className="border-t border-line pt-4 mb-6">
                 <div className="flex justify-between">
-                  <span className="font-light">Total</span>
+                  <span className="font-light">Total before tax</span>
                   <span className="text-xl font-light">${totalPrice.toLocaleString()}</span>
                 </div>
               </div>
@@ -195,7 +199,7 @@ export default function CartPage() {
                 <svg className="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                 </svg>
-                <span>Made to order · ships insured in 2–4 weeks (US)</span>
+                <span>Made to order · free insured US shipping · 2–4 weeks</span>
               </div>
             </div>
           </div>

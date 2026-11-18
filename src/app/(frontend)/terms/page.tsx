@@ -29,7 +29,7 @@ export default function TermsPage() {
         <p>
           Prices are in US dollars. Payment is taken securely by Stripe at checkout; we never see or store your card number. An order is
           accepted when payment is confirmed. If a price or edition count on the site is ever wrong, we will contact you and you may
-          cancel for a full refund before production begins. Sales tax is charged where required by law.
+          cancel for a full refund before production begins. Shipping within the US is free. Sales tax is calculated at checkout from the shipping address and charged where required by law.
         </p>
       </PolicySection>
       <PolicySection title="Production, Shipping and Returns">

@@ -10,3 +10,10 @@ export function getStripe() {
   client ??= new Stripe(key);
   return client;
 }
+
+/** True when Stripe refused automatic_tax because Stripe Tax isn't set up on the account. */
+export function isTaxSetupError(error: unknown): boolean {
+  const e = error as { type?: string; param?: string; message?: string } | null;
+  if (!e || (e.type && e.type !== 'StripeInvalidRequestError')) return false;
+  return (e.param ?? '').startsWith('automatic_tax') || /stripe tax|automatic[_ ]tax|tax settings|head office|origin address/i.test(e.message ?? '');
+}

@@ -21,8 +21,8 @@ export default function ShippingReturnsPage() {
 
       <PolicySection title="Shipping">
         <Term label="United States">
-          Orders ship within the United States, fully insured, with tracking and a signature required on delivery. The shipping charge,
-          if any, is shown at checkout before you pay.
+          Free shipping within the US. Every order ships fully insured, with tracking and a signature required on delivery. Sales tax,
+          where it applies, is calculated at checkout from your shipping address before you pay.
         </Term>
         <Term label="Outside the United States">
           Online checkout currently ships to US addresses only. For delivery elsewhere, please{' '}

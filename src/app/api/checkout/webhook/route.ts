@@ -80,5 +80,6 @@ async function toPaidOrder(stripe: Stripe, session: Stripe.Checkout.Session): Pr
     amountTax: session.total_details?.amount_tax ?? null,
     amountTotal: session.amount_total ?? null,
     currency: session.currency ?? 'usd',
+    taxNotCalculated: session.metadata?.tax_status === 'not_calculated' || session.automatic_tax?.enabled === false,
   };
 }

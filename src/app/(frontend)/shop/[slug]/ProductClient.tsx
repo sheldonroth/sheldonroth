@@ -135,6 +135,7 @@ export default function ProductClient({ work }: { work: ProductData }) {
               <h1 className="lk-product-title">{work.title}</h1>
               <p className="lk-edition-label mt-5">Limited Edition of {work.editionSize}</p>
               <p className="lk-price mt-5">{size ? formatPrice(size.price) : 'Price on request'}</p>
+              {size && <p className="lk-small mt-2">Free shipping within the US · Tax calculated at checkout</p>}
             </div>
 
             {!size ? (
@@ -204,7 +205,7 @@ export default function ProductClient({ work }: { work: ProductData }) {
                   Added to your cart. <Link href="/cart" className="font-bold text-accent-dark underline">View cart</Link>
                 </p>
               )}
-              <p className="lk-small mt-6">Made to order and shipped in 2–4 weeks, insured and signature-required. Each piece is signed and numbered by the artist. <Link href="/shipping-returns" className="underline">Shipping &amp; returns</Link></p>
+              <p className="lk-small mt-6">Made to order and shipped in 2–4 weeks. Free shipping within the US, insured and signature-required. Tax calculated at checkout. Each piece is signed and numbered by the artist. <Link href="/shipping-returns" className="underline">Shipping &amp; returns</Link></p>
             </div>
             )}
           </div>
