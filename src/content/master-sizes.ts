@@ -103,7 +103,7 @@ export const masterLongEdge: Record<string, number> = {
   "the-hidden-horn": 6000,
   "the-huntress": 6000,
   "the-king": 6000,
-  "the-watcher": 5976,
+  "the-watcher": 6000,
   "three-veils": 7952,
   "tidewater-stones": 7797,
   "travertine": 11654,

@@ -1167,9 +1167,9 @@ const catalogWorks: Work[] = [
     rank: 2,
     title: "The Watcher",
     collection: "wildlife",
-    collections: ["wildlife", "black-and-white"],
+    collections: ["wildlife"],
     description:
-      "A leopard lounges on a weathered branch, its golden coat glowing against a forest rendered in silver.",
+      "A leopard lounges on a weathered branch, its golden coat glowing against a deep green forest.",
     editionSize: 50,
   },
   {
@@ -1187,9 +1187,9 @@ const catalogWorks: Work[] = [
     rank: 1,
     title: "Leap of Faith",
     collection: "wildlife",
-    collections: ["wildlife", "coast", "black-and-white"],
+    collections: ["wildlife", "coast"],
     description:
-      "A dolphin arcs clear of the water, its sleek body mirrored in the dark, rippling sea.",
+      "A dolphin arcs clear of the water, its sleek body mirrored in the rippling blue sea.",
     editionSize: 50,
   },
   {

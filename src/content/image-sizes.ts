@@ -99,7 +99,7 @@ export const imageSizes: Record<string, { width: number; height: number }> = {
   "pride": { width: 3840, height: 2560 },
   "the-hidden-horn": { width: 3840, height: 2560 },
   "into-the-mist": { width: 3840, height: 1946 },
-  "the-watcher": { width: 3840, height: 2469 },
+  "the-watcher": { width: 3840, height: 2560 },
   "the-huntress": { width: 3840, height: 2560 },
   "leap-of-faith": { width: 3840, height: 2560 },
   "golden-mane": { width: 3840, height: 2560 },
