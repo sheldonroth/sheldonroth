@@ -1009,6 +1009,105 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "crystal-crown",
+    title: "Crystal Crown",
+    collection: "peaks-ice",
+    description:
+      "A soaring granite summit, streaked with ice and fresh snow, rises into a flawless blue sky.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "twin-horns",
+    title: "Twin Horns",
+    collection: "peaks-ice",
+    description:
+      "Two dark rock horns, laced with snow and ice, tear through drifting cloud high above the valley.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "sea-of-silence",
+    title: "Sea of Silence",
+    collection: "peaks-ice",
+    description:
+      "A snow-crowned summit floats above a still sea of cloud in the deep blue of the high mountains.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "cloud-crest",
+    title: "Cloud Crest",
+    collection: "peaks-ice",
+    description:
+      "Cloud spills over a vast wall of ice and rock, its crest catching the bright mountain light.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "breath-of-the-mountain",
+    title: "Breath of the Mountain",
+    collection: "peaks-ice",
+    description:
+      "Storm cloud boils around a hanging glacier as the mountain reveals itself for a fleeting moment.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "turquoise-mesa",
+    title: "Turquoise Mesa",
+    collection: "mountain-forest",
+    description:
+      "A crown of dark cliffs rises above green alpine slopes and a lake of deep turquoise.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "jagged-horizon",
+    title: "Jagged Horizon",
+    collection: "far-horizons",
+    description:
+      "Ridge after ridge rolls toward a skyline of jagged peaks beneath towering summer clouds.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "paintbrush-meadow",
+    title: "Paintbrush Meadow",
+    collection: "mountain-forest",
+    description:
+      "Wildflowers blaze crimson and gold across a high meadow beneath rolling clouds and green ridges.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "ghost-forest",
+    title: "Ghost Forest",
+    collection: "mountain-forest",
+    description:
+      "Bleached, twisted remains of old trees stand on a steaming mineral flat before a dark wall of pines.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "granite-cathedral",
+    title: "Granite Cathedral",
+    collection: "peaks-ice",
+    description:
+      "Jagged granite spires rise in silver light above the sage flats beneath a brooding sky.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "ice-blade",
+    title: "Ice Blade",
+    collection: "peaks-ice",
+    description:
+      "A sharp ridge of rock and hanging ice cuts across a clear blue mountain sky.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {
