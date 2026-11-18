@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getPayloadClient } from '@/lib/payload'
+import { adminGuard } from '@/lib/admin-guard';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const collections: any[] = [
@@ -47,7 +48,9 @@ const collections: any[] = [
   },
 ]
 
-export async function GET() {
+export async function GET(req: Request) {
+  const denied = adminGuard(req);
+  if (denied) return denied;
   try {
     const payload = await getPayloadClient()
     const results: string[] = []

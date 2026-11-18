@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <p className="lk-wordmark mb-5"><span className="font-semibold">Sheldon Roth</span> <small>Fine Art</small></p>
-            <p className="text-[14px] leading-[17.86px] text-white">Limited edition fine art photography, hand-signed and numbered by the artist.</p>
+            <p className="text-[14px] leading-[17.86px] text-white">Limited edition fine art photography, signed and numbered by the artist.</p>
             <Link href="/contact" className="lk-footer-link mt-4 block underline-offset-4 hover:underline">Inquire</Link>
           </div>
           <div>
@@ -30,6 +30,7 @@ export default function Footer() {
               <li><Link href="/faq" className="lk-footer-link hover:underline">FAQ</Link></li>
               <li><Link href="/shipping-returns" className="lk-footer-link hover:underline">Shipping &amp; Returns</Link></li>
               <li><Link href="/care-instructions" className="lk-footer-link hover:underline">Caring for Your Art</Link></li>
+              <li><Link href="/certificate" className="lk-footer-link hover:underline">Certificate of Authenticity</Link></li>
             </ul>
           </div>
           <div>
@@ -43,7 +44,7 @@ export default function Footer() {
         <div className="mt-14 flex flex-col items-center justify-center gap-x-6 border-t border-white/15 pt-4 text-center md:flex-row">
           <span className="lk-legal">© {year} Sheldon Roth. All photographs © Sheldon Roth.</span>
           <Link href="/privacy" className="lk-legal px-1 hover:underline">Privacy Policy</Link>
-          <Link href="/terms" className="lk-legal px-1 hover:underline">Terms of Service</Link>
+          <Link href="/terms" className="lk-legal px-1 hover:underline">Terms of Sale</Link>
         </div>
       </div>
     </footer>

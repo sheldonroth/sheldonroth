@@ -1,107 +1,41 @@
-import Link from 'next/link';
-export const metadata = {
-  title: 'Privacy Policy | Sheldon Roth Fine Art',
-  description: 'Privacy policy for Sheldon Roth Fine Art website.',
-};
+import type { Metadata } from 'next';
+import PolicyPage, { PolicySection } from '@/components/PolicyPage';
+
+export const metadata: Metadata = { title: 'Privacy Policy', description: 'How Sheldon Roth Fine Art collects and uses personal information.' };
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero */}
-      <section className="pt-32 pb-16 px-6 lg:px-12">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="font-display text-4xl md:text-5xl  text-foreground mb-6">
-            Privacy Policy
-          </h1>
-          <p className="text-sm text-muted font-light">
-            Last updated: January 2024
-          </p>
-        </div>
-      </section>
-
-      {/* Content */}
-      <section className="pb-24 px-6 lg:px-12">
-        <div className="max-w-3xl mx-auto prose-dark">
-          <div className="space-y-8 text-muted font-light leading-relaxed">
-            <div>
-              <h2 className="text-xl font-light text-foreground mb-4">Information We Collect</h2>
-              <p>
-                When you visit our website or make a purchase, we collect certain information
-                about you, including your name, email address, shipping address, and payment
-                information. We also collect information about your browsing behavior through
-                cookies and similar technologies.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-light text-foreground mb-4">How We Use Your Information</h2>
-              <p>We use the information we collect to:</p>
-              <ul className="list-disc list-inside space-y-2 mt-2">
-                <li>Process and fulfill your orders</li>
-                <li>Communicate with you about your orders and account</li>
-                <li>Send you marketing communications (with your consent)</li>
-                <li>Improve our website and services</li>
-                <li>Comply with legal obligations</li>
-              </ul>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-light text-foreground mb-4">Information Sharing</h2>
-              <p>
-                We do not sell your personal information. We may share your information with
-                third-party service providers who help us operate our business, such as payment
-                processors and shipping carriers. These providers are contractually obligated
-                to protect your information.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-light text-foreground mb-4">Cookies</h2>
-              <p>
-                We use cookies and similar tracking technologies to enhance your browsing
-                experience, analyze website traffic, and understand where our visitors come
-                from. You can control cookie settings through your browser preferences.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-light text-foreground mb-4">Your Rights</h2>
-              <p>
-                You have the right to access, correct, or delete your personal information.
-                You may also opt out of marketing communications at any time. To exercise
-                these rights, please contact the studio through the{' '}
-                <Link href="/contact" className="text-accent hover:underline">Inquire page</Link>.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-light text-foreground mb-4">Security</h2>
-              <p>
-                We implement appropriate technical and organizational measures to protect
-                your personal information against unauthorized access, alteration, disclosure,
-                or destruction.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-light text-foreground mb-4">Changes to This Policy</h2>
-              <p>
-                We may update this privacy policy from time to time. We will notify you of
-                any material changes by posting the new policy on this page and updating
-                the &quot;last updated&quot; date.
-              </p>
-            </div>
-
-            <div>
-              <h2 className="text-xl font-light text-foreground mb-4">Contact Us</h2>
-              <p>
-                If you have questions about this privacy policy, please contact the studio through the{' '}
-                <Link href="/contact" className="text-accent hover:underline">Inquire page</Link>.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+    <PolicyPage eyebrow="Policies" title="Privacy Policy" updated="November 2026">
+      <PolicySection title="What We Collect">
+        <p>
+          When you send an inquiry we keep your name, email address, optional phone number and message. When you buy a print we receive
+          your name, email, phone number, billing and shipping addresses and the details of your order. Card details are entered directly
+          with our payment processor, Stripe, and never reach our servers.
+        </p>
+        <p>
+          To limit spam, the inquiry form stores a one-way hash of your IP address rather than the address itself. Your cart is kept in your
+          own browser. The site does not use advertising or third-party tracking cookies.
+        </p>
+      </PolicySection>
+      <PolicySection title="How We Use It">
+        <p>
+          Only to reply to you, to make, ship and support your order, to keep records required by law, and to prevent fraud. We do not send
+          marketing email unless you ask us to, and we never sell your information.
+        </p>
+      </PolicySection>
+      <PolicySection title="Who We Share It With">
+        <p>
+          Only the services needed to run the studio: Stripe (payments), our fine art lab and its carriers (to produce and deliver your
+          print, which requires your name, shipping address and phone number), our email provider (to send messages), and our hosting and
+          database providers. Each processes your data only to provide that service.
+        </p>
+      </PolicySection>
+      <PolicySection title="Retention and Your Rights">
+        <p>
+          Order records are kept for as long as tax and accounting rules require; inquiries are deleted on request. You may ask to see,
+          correct or delete your information at any time by contacting the studio.
+        </p>
+      </PolicySection>
+    </PolicyPage>
   );
 }

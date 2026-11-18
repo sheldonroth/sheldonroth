@@ -1,114 +1,51 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
+import PolicyPage, { PolicySection, Term } from '@/components/PolicyPage';
+import { LEAD_TIME_TEXT } from '@/content/commerce';
 
-export const metadata = {
-  title: 'Shipping & Returns | Sheldon Roth Fine Art',
-  description: 'Information about shipping, delivery, and return policies for fine art photography prints.',
+export const metadata: Metadata = {
+  title: 'Shipping & Returns',
+  description: 'How limited edition prints by Sheldon Roth are made, shipped and protected, and the returns policy.',
 };
 
 export default function ShippingReturnsPage() {
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero */}
-      <section className="pt-32 pb-16 px-6 lg:px-12">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-xs tracking-[0.3em] text-accent mb-4">POLICIES</p>
-          <h1 className="font-display text-4xl md:text-5xl  text-foreground mb-6">
-            Shipping &amp; Returns
-          </h1>
-          <p className="text-lg text-muted font-light max-w-2xl mx-auto">
-            We take great care in packaging and delivering your artwork safely to your door.
-          </p>
-        </div>
-      </section>
+    <PolicyPage eyebrow="Policies" title="Shipping & Returns" intro="Every piece is made to order and delivered with care." updated="November 2026">
+      <PolicySection title="Made to Order">
+        <Term label="Production">
+          Each limited edition is printed, face-mounted to acrylic, signed and numbered specifically for you by our fine art lab. Please
+          allow {LEAD_TIME_TEXT} from your order to delivery. If a piece will take longer, the studio will tell you before it ships.
+        </Term>
+        <Term label="Inspection">Every print is inspected before it is packed. Large acrylic works travel in a protective crate.</Term>
+      </PolicySection>
 
-      {/* Content */}
-      <section className="pb-24 px-6 lg:px-12">
-        <div className="max-w-3xl mx-auto">
-          {/* Shipping */}
-          <div className="mb-16">
-            <h2 className="text-2xl font-light text-foreground mb-6">Shipping</h2>
-            <div className="space-y-4 text-muted font-light leading-relaxed">
-              <p>
-                <strong className="text-foreground">Processing Time:</strong> Each print is
-                produced to order using archival materials. Please allow 5-7 business days
-                for production before shipping.
-              </p>
-              <p>
-                <strong className="text-foreground">Domestic Shipping (US):</strong> We offer
-                free standard shipping on all orders. Prints are carefully packaged in
-                protective tubes or flat mailers depending on size, and shipped via insured
-                carriers. Standard delivery takes 5-10 business days after production.
-              </p>
-              <p>
-                <strong className="text-foreground">International Shipping:</strong> We ship
-                worldwide. International shipping rates are calculated at checkout based on
-                destination and package size. Delivery times vary by location (typically
-                10-21 business days). Please note that customs duties and taxes may apply.
-              </p>
-              <p>
-                <strong className="text-foreground">Tracking:</strong> All orders include
-                tracking information, which will be emailed to you once your order ships.
-              </p>
-            </div>
-          </div>
+      <PolicySection title="Shipping">
+        <Term label="United States">
+          Orders ship within the United States, fully insured, with tracking and a signature required on delivery. The shipping charge,
+          if any, is shown at checkout before you pay.
+        </Term>
+        <Term label="Outside the United States">
+          Online checkout currently ships to US addresses only. For delivery elsewhere, please{' '}
+          <Link href="/contact" className="text-accent hover:underline">contact the studio</Link> for a crate and freight quote before
+          ordering. International buyers are responsible for any import duties and taxes.
+        </Term>
+        <Term label="Tracking">You will receive tracking details by email as soon as your piece ships.</Term>
+      </PolicySection>
 
-          {/* Packaging */}
-          <div className="mb-16">
-            <h2 className="text-2xl font-light text-foreground mb-6">Packaging</h2>
-            <div className="space-y-4 text-muted font-light leading-relaxed">
-              <p>
-                Your artwork is our top priority. Each print is carefully inspected before
-                packaging and protected with acid-free tissue paper. Depending on size,
-                prints are shipped in:
-              </p>
-              <ul className="list-disc list-inside space-y-2 ml-4">
-                <li>Heavy-duty cardboard tubes with protective end caps (rolled prints)</li>
-                <li>Rigid flat mailers with corner protection (smaller prints)</li>
-                <li>Custom wooden crates for oversized or framed pieces</li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Returns */}
-          <div className="mb-16">
-            <h2 className="text-2xl font-light text-foreground mb-6">Returns &amp; Exchanges</h2>
-            <div className="space-y-4 text-muted font-light leading-relaxed">
-              <p>
-                <strong className="text-foreground">Satisfaction Guarantee:</strong> We want
-                you to love your artwork. If you&apos;re not completely satisfied with your
-                purchase, you may return it within 30 days of delivery for a full refund or
-                exchange.
-              </p>
-              <p>
-                <strong className="text-foreground">Return Conditions:</strong> Items must be
-                returned in their original packaging and in the same condition as received.
-                Custom or commissioned pieces are final sale.
-              </p>
-              <p>
-                <strong className="text-foreground">Damaged Items:</strong> If your artwork
-                arrives damaged, please contact us within 48 hours with photos of the damage.
-                We will arrange a replacement or full refund at no additional cost.
-              </p>
-              <p>
-                <strong className="text-foreground">Return Process:</strong> To initiate a
-                return, please contact the studio through the{' '}
-                <Link href="/contact" className="text-accent hover:underline">Inquire page</Link>{' '}
-                with your order number and reason for return.
-              </p>
-            </div>
-          </div>
-
-          {/* CTA */}
-          <div className="text-center pt-8 border-t border-line">
-            <p className="text-muted font-light mb-6">
-              Have questions about your order?
-            </p>
-            <Link href="/contact" className="lk-btn lk-btn-solid">
-              Contact Us
-            </Link>
-          </div>
-        </div>
-      </section>
-    </div>
+      <PolicySection title="Returns">
+        <Term label="Sales are final">
+          Because each print is produced to order and numbered within a limited edition, all sales are final. We cannot accept returns
+          or exchanges for a change of mind.
+        </Term>
+        <Term label="Damage in transit">
+          If your artwork arrives damaged, please photograph the packaging and the piece and contact the studio within 48 hours of
+          delivery. Keep all packing materials. We will arrange a replacement of the same edition number at no cost to you.
+        </Term>
+        <Term label="Order changes">
+          If you need to change the size or shipping address, contact the studio as soon as possible. Once production has started, an
+          order can no longer be cancelled.
+        </Term>
+      </PolicySection>
+    </PolicyPage>
   );
 }

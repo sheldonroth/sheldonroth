@@ -6,7 +6,7 @@ import { collections, getImage, works } from '@/content/catalog';
 
 export const metadata: Metadata = {
   title: 'Limited Editions',
-  description: 'Every limited edition fine art photograph by Sheldon Roth, hand-signed and numbered.',
+  description: 'Every limited edition fine art photograph by Sheldon Roth, signed and numbered.',
 };
 
 export default function ShopPage() {
@@ -19,7 +19,7 @@ export default function ShopPage() {
         </p>
         <h1 className="lk-page-title mt-6">View All Limited Editions</h1>
         <p className="lk-intro mx-auto mt-6 max-w-[900px]">
-          Every work is released in a strictly limited, numbered edition — face-mounted to acrylic, hand-signed and accompanied by a
+          Every work is released in a strictly limited, numbered edition — face-mounted to acrylic, signed and accompanied by a
           certificate of authenticity.
         </p>
       </header>

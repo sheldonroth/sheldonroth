@@ -3,38 +3,52 @@
 import { useCart } from '@/context/CartContext';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, totalPrice, clearCart } = useCart();
 
+  const [enabled, setEnabled] = useState<boolean | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch('/api/checkout')
+      .then((r) => r.json())
+      .then((d: { enabled?: boolean }) => setEnabled(!!d.enabled))
+      .catch(() => setEnabled(false));
+  }, []);
+
+  const inquiryHref = () => {
+    const first = items[0];
+    return first ? `/contact?work=${first.productSlug}&size=${encodeURIComponent(first.size)}` : '/contact';
+  };
+
+  // Straight to Stripe Checkout when it's configured; the inquiry form only while online checkout is switched off.
   const handleCheckout = async () => {
     if (items.length === 0) return;
-
+    setBusy(true);
+    setError(null);
     try {
       const response = await fetch('/api/checkout', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          items: items.map(item => ({
-            slug: item.productSlug,
-            size: item.size,
-            quantity: item.quantity,
-          })),
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: items.map((item) => ({ slug: item.productSlug, size: item.size, quantity: item.quantity })) }),
       });
-
-      const { url, error } = await response.json();
-      if (url) {
-        window.location.href = url;
-      } else if (error) {
-        alert(error);
+      const data = await response.json().catch(() => ({}));
+      if (data.url) {
+        window.location.href = data.url;
+        return;
       }
-    } catch (error) {
-      console.error('Checkout error:', error);
-      alert('Failed to initiate checkout. Please try again.');
+      if (data.code === 'checkout_disabled') {
+        window.location.href = inquiryHref();
+        return;
+      }
+      setError(data.error || 'Could not start checkout. Please try again.');
+    } catch {
+      setError('Could not start checkout. Please check your connection and try again.');
     }
+    setBusy(false);
   };
 
   if (items.length === 0) {
@@ -136,7 +150,7 @@ export default function CartPage() {
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-muted">Shipping</span>
-                  <span className="text-accent">Complimentary</span>
+                  <span className="text-muted">Calculated at checkout</span>
                 </div>
               </div>
 
@@ -149,10 +163,17 @@ export default function CartPage() {
 
               <button
                 onClick={handleCheckout}
-                className="w-full py-4 lk-btn lk-btn-gold"
+                disabled={busy}
+                className="w-full py-4 lk-btn lk-btn-gold disabled:opacity-60"
               >
-                PROCEED TO CHECKOUT
+                {busy ? 'ONE MOMENT…' : enabled === false ? 'INQUIRE TO PURCHASE' : 'PROCEED TO CHECKOUT'}
               </button>
+              {enabled === false && (
+                <p className="mt-3 text-center text-xs text-muted">Online checkout opens soon. Send an inquiry and the studio will reply personally.</p>
+              )}
+              {error && (
+                <p role="alert" className="mt-3 text-center text-xs text-[#a12a2a]">{error}</p>
+              )}
 
               <Link
                 href="/shop"
@@ -174,7 +195,7 @@ export default function CartPage() {
                 <svg className="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                 </svg>
-                <span>Free worldwide insured shipping</span>
+                <span>Made to order · ships insured in 2–4 weeks (US)</span>
               </div>
             </div>
           </div>

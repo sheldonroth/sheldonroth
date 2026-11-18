@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server'
 import { getPayloadClient } from '@/lib/payload'
+import { adminGuard } from '@/lib/admin-guard';
 
 const BLOB_BASE_URL = 'https://awuvex5gqiu0dqk6.public.blob.vercel-storage.com'
 
-export async function GET() {
+export async function GET(req: Request) {
+  const denied = adminGuard(req);
+  if (denied) return denied;
   try {
     const payload = await getPayloadClient()
     const results: string[] = []

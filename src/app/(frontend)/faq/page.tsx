@@ -9,19 +9,19 @@ const faqs = [
     questions: [
       {
         q: 'How are the prints made?',
-        a: 'Each limited edition is an archival chromogenic print, face-mounted to museum-grade acrylic with an aluminium backing and a floating French-cleat hanging system. The result has remarkable depth, clarity and longevity.',
+        a: 'Each limited edition is an archival Lumachrome HD print face-mounted to anti-glare museum acrylic, with an acrylic backing, a floating mount and a French-cleat hanger. The result has remarkable depth, clarity and longevity.',
       },
       {
         q: 'What sizes are available?',
-        a: 'We offer prints in various sizes depending on the artwork. Standard sizes range from 16x20" to 40x60". Limited edition prints are available in specific sizes noted on each product page. Custom sizes may be available upon request.',
+        a: 'Most works are offered in three sizes: Gallery (30 × 20 in), Signature (45 × 30 in) and Masterwork (60 × 40 in), turned for portrait images. A size is only offered when the original file holds enough detail for it, so some works come in fewer sizes. Each product page lists what is available.',
       },
       {
         q: 'Are the prints signed?',
-        a: 'Yes, all limited edition prints are hand-signed by Sheldon Roth and include a certificate of authenticity with the edition number. Open edition prints include a printed signature.',
+        a: 'Yes. Every limited edition is signed and numbered and comes with a certificate of authenticity recording its edition number.',
       },
       {
-        q: 'What is a limited edition print?',
-        a: 'Limited edition prints are produced in a specific quantity (e.g., 25 or 50 prints total) and are numbered accordingly. Once the edition sells out, no more prints of that image will be made at that size, increasing their collectible value.',
+        q: 'What is a limited edition?',
+        a: 'Each size of each work is a separate edition of 50 prints, numbered in order as they are sold. Once a size sells out it is closed permanently and no further prints are made at that size.',
       },
     ],
   },
@@ -29,16 +29,16 @@ const faqs = [
     category: 'Ordering & Payment',
     questions: [
       {
-        q: 'What payment methods do you accept?',
-        a: 'We accept all major credit cards (Visa, Mastercard, American Express, Discover) through our secure payment processor. We also accept PayPal and Apple Pay.',
+        q: 'How do I pay?',
+        a: 'Checkout is handled securely by Stripe. Major credit and debit cards are accepted, and Apple Pay or Google Pay where your device supports them. We never see or store your card details.',
       },
       {
-        q: 'Can I request a custom size or framing?',
-        a: 'Yes, we offer custom sizing and professional framing services. Please contact us with your requirements for a personalized quote. Custom orders typically require 2-3 weeks additional production time.',
+        q: 'Can I request a custom size or a work that is not listed in a size I want?',
+        a: 'Please contact the studio with your space and the size you have in mind. Custom pieces are quoted individually.',
       },
       {
-        q: 'Do you offer gift certificates?',
-        a: 'Yes, we offer digital gift certificates in various denominations. They make perfect gifts for art lovers and can be used toward any purchase on our site.',
+        q: 'Can I return a print?',
+        a: 'Because each print is made to order and numbered, sales are final. If your artwork arrives damaged, contact the studio within 48 hours with photos and we will replace it. See Shipping & Returns for details.',
       },
     ],
   },
@@ -46,16 +46,16 @@ const faqs = [
     category: 'Shipping & Delivery',
     questions: [
       {
-        q: 'How long does shipping take?',
-        a: 'Each print is made to order, requiring 5-7 business days for production. After that, domestic (US) shipping takes 5-10 business days. International shipping varies by destination, typically 10-21 business days.',
+        q: 'How long does delivery take?',
+        a: 'Each piece is made to order. Please allow 2–4 weeks from your order to delivery. You will receive tracking details by email when it ships.',
       },
       {
         q: 'Do you ship internationally?',
-        a: 'Yes, we ship worldwide. International shipping rates are calculated at checkout. Please note that customers are responsible for any customs duties or taxes that may apply in their country.',
+        a: 'Online checkout ships to US addresses. For delivery elsewhere, contact the studio for a crate and freight quote; import duties and taxes are the buyer\'s responsibility.',
       },
       {
-        q: 'How are prints packaged?',
-        a: 'Prints are carefully protected with acid-free tissue paper and shipped in heavy-duty tubes (for rolled prints) or rigid flat mailers (for smaller prints). Framed works are shipped in custom protective crates.',
+        q: 'How are works packaged?',
+        a: 'Acrylic works are wrapped, corner-protected and shipped in a rigid crate, fully insured and with a signature required on delivery.',
       },
     ],
   },
@@ -63,12 +63,12 @@ const faqs = [
     category: 'Care & Display',
     questions: [
       {
-        q: 'How should I frame my print?',
-        a: 'We recommend professional framing with archival materials. Use acid-free matting and backing, and consider UV-protective glass to prevent fading. A simple frame in black, white, or natural wood complements most artwork.',
+        q: 'Does the print need framing?',
+        a: 'No. Each work arrives face-mounted and ready to hang on its French cleat. Hang it away from direct sunlight and heat sources.',
       },
       {
-        q: 'How do I care for my print?',
-        a: 'Display your print away from direct sunlight and maintain consistent temperature and humidity. Avoid touching the print surface. For detailed care guidelines, please visit our Care Instructions page.',
+        q: 'How do I clean the acrylic?',
+        a: 'Dust gently with a soft microfibre cloth. If needed, use a cleaner made for acrylic; never use glass cleaner, ammonia or paper towels. See the Care Instructions page for more.',
       },
     ],
   },

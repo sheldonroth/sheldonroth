@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     template: '%s | Sheldon Roth Fine Art',
   },
   description:
-    'Limited edition fine art photography by Sheldon Roth — mountains, glaciers, water and wild landscapes, hand-signed and numbered.',
+    'Limited edition fine art photography by Sheldon Roth — mountains, glaciers, water and wild landscapes, signed and numbered.',
   keywords: [
     'Sheldon Roth',
     'fine art photography',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://sheldonroth.com',
     siteName: 'Sheldon Roth Fine Art',
-    images: [{ url: '/works/sunstar-valley.jpg', width: 3840, height: 2897 }],
+    images: [{ url: '/og.jpg', width: 1200, height: 630, alt: 'Cloud Lake by Sheldon Roth' }],
   },
   twitter: { card: 'summary_large_image' },
 };

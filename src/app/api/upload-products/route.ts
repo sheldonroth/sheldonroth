@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { getPayloadClient } from '@/lib/payload'
 import * as fs from 'fs'
 import * as path from 'path'
+import { adminGuard } from '@/lib/admin-guard';
 
 // Product definitions with collection assignments
 const productDefinitions = [
@@ -36,7 +37,9 @@ const productDefinitions = [
   { filename: 'light-dance.jpg', title: 'Light Dance', collection: 'abstract', price: 420, description: 'Captured light weaves through space in an ethereal dance of color and form, blurring the line between photography and painting.' },
 ]
 
-export async function GET() {
+export async function GET(req: Request) {
+  const denied = adminGuard(req);
+  if (denied) return denied;
   try {
     const payload = await getPayloadClient()
     const results: string[] = []

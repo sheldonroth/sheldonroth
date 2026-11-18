@@ -1,109 +1,47 @@
-import Link from 'next/link';
+import type { Metadata } from 'next';
+import PolicyPage, { PolicySection, Term } from '@/components/PolicyPage';
 
-export const metadata = {
-  title: 'Care Instructions | Sheldon Roth Fine Art',
-  description: 'Learn how to properly care for and preserve your fine art photography prints.',
+export const metadata: Metadata = {
+  title: 'Caring for Your Art',
+  description: 'How to unpack, hang, display and clean a face-mounted acrylic print by Sheldon Roth.',
 };
 
 export default function CareInstructionsPage() {
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero */}
-      <section className="pt-32 pb-16 px-6 lg:px-12">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-xs tracking-[0.3em] text-accent mb-4">PRESERVATION</p>
-          <h1 className="font-display text-4xl md:text-5xl  text-foreground mb-6">
-            Care Instructions
-          </h1>
-          <p className="text-lg text-muted font-light max-w-2xl mx-auto">
-            Proper care ensures your fine art prints remain vibrant and beautiful for generations.
-          </p>
-        </div>
-      </section>
-
-      {/* Content */}
-      <section className="pb-24 px-6 lg:px-12">
-        <div className="max-w-3xl mx-auto">
-          {/* Handling */}
-          <div className="mb-16">
-            <h2 className="text-2xl font-light text-foreground mb-6">Handling Your Print</h2>
-            <div className="space-y-4 text-muted font-light leading-relaxed">
-              <p>
-                Always handle your print with clean, dry hands or wear cotton gloves to prevent
-                oils and moisture from transferring to the surface. Hold prints by the edges
-                whenever possible.
-              </p>
-              <p>
-                When moving or transporting your artwork, keep it flat or slightly curved
-                (never fold) and protect it with acid-free tissue paper.
-              </p>
-            </div>
-          </div>
-
-          {/* Display */}
-          <div className="mb-16">
-            <h2 className="text-2xl font-light text-foreground mb-6">Display Guidelines</h2>
-            <div className="space-y-4 text-muted font-light leading-relaxed">
-              <p>
-                <strong className="text-foreground">Avoid direct sunlight:</strong> UV rays can
-                cause fading over time. Display your print away from windows or use UV-protective
-                glass if framing.
-              </p>
-              <p>
-                <strong className="text-foreground">Temperature and humidity:</strong> Maintain
-                consistent room temperature (65-75°F) and humidity levels (30-50%). Avoid placing
-                prints near heating vents, fireplaces, or in damp areas.
-              </p>
-              <p>
-                <strong className="text-foreground">Framing:</strong> We recommend professional
-                framing with archival materials. Use acid-free matting and backing boards to
-                prevent yellowing and deterioration.
-              </p>
-            </div>
-          </div>
-
-          {/* Cleaning */}
-          <div className="mb-16">
-            <h2 className="text-2xl font-light text-foreground mb-6">Cleaning</h2>
-            <div className="space-y-4 text-muted font-light leading-relaxed">
-              <p>
-                For framed prints, gently dust the glass with a soft, lint-free cloth. Never
-                spray cleaning solutions directly onto the glass—apply to the cloth first.
-              </p>
-              <p>
-                Unframed prints should only be dusted with a soft brush or compressed air.
-                Never use water or cleaning solutions directly on the print surface.
-              </p>
-            </div>
-          </div>
-
-          {/* Storage */}
-          <div className="mb-16">
-            <h2 className="text-2xl font-light text-foreground mb-6">Storage</h2>
-            <div className="space-y-4 text-muted font-light leading-relaxed">
-              <p>
-                If you need to store your print temporarily, keep it flat in a cool, dry place
-                away from direct light. Wrap it in acid-free tissue paper and place it in an
-                archival storage box.
-              </p>
-              <p>
-                Never store prints in attics, basements, or garages where temperature and
-                humidity fluctuate significantly.
-              </p>
-            </div>
-          </div>
-
-          {/* CTA */}
-          <div className="text-center pt-8 border-t border-line">
-            <p className="text-muted font-light mb-6">
-              Have questions about caring for your artwork?
-            </p>
-            <Link href="/contact" className="lk-btn lk-btn-solid">
-              Contact Us
-            </Link>
-          </div>
-        </div>
-      </section>
-    </div>
+    <PolicyPage eyebrow="Collector Services" title="Caring for Your Art" intro="A face-mounted acrylic print needs very little care to look its best for decades.">
+      <PolicySection title="Unpacking">
+        <Term label="Take your time">
+          Open the crate on a clean, soft surface with two people for larger works. Lift the piece by its edges, never by pressing on the
+          acrylic face. Keep the crate and packing until you are sure the work arrived undamaged.
+        </Term>
+        <Term label="Check on arrival">If you see any damage, photograph it and contact the studio within 48 hours.</Term>
+      </PolicySection>
+      <PolicySection title="Hanging">
+        <Term label="French cleat">
+          The work arrives ready to hang on its French cleat. Fix the wall cleat level and into studs or rated anchors suitable for the
+          weight, then lower the piece onto it. Larger sizes are heavy; use two people.
+        </Term>
+      </PolicySection>
+      <PolicySection title="Display">
+        <Term label="Light">Avoid direct sunlight and strong UV light, which can fade any photograph over time.</Term>
+        <Term label="Environment">
+          Keep away from heat sources such as radiators, fireplaces and vents, and from very humid rooms. A stable room temperature is
+          ideal.
+        </Term>
+      </PolicySection>
+      <PolicySection title="Cleaning the Acrylic">
+        <Term label="Dusting">Dust gently with a clean, soft microfibre cloth, without pressure.</Term>
+        <Term label="Marks">
+          Use a cleaner made for acrylic, sprayed onto the cloth, never directly onto the work. Never use glass cleaner, ammonia, alcohol,
+          paper towels or abrasive pads, which can cloud or scratch the surface.
+        </Term>
+      </PolicySection>
+      <PolicySection title="Moving or Storing">
+        <Term label="Protect the face">
+          Wrap the acrylic face in soft, lint-free material and store the work upright, never flat with weight on it. The original crate is
+          ideal.
+        </Term>
+      </PolicySection>
+    </PolicyPage>
   );
 }

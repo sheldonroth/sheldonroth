@@ -35,7 +35,7 @@ export default function Home() {
             <p className="lk-eyebrow">Limited Edition Fine Art Photography</p>
             <h2 className="lk-h2 mx-auto mt-6 max-w-4xl">Light, water and wild places</h2>
             <p className="lk-body mx-auto mt-6 max-w-[760px]">
-              Every photograph is captured in a single moment and produced as a strictly limited edition. Each print is hand-signed,
+              Every photograph is captured in a single moment and produced as a strictly limited edition. Each print is signed,
               numbered and accompanied by a certificate of authenticity.
             </p>
             <div className="mt-10">

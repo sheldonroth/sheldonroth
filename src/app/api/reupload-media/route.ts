@@ -2,8 +2,11 @@ import { NextResponse } from 'next/server'
 import { getPayloadClient } from '@/lib/payload'
 import * as fs from 'fs'
 import * as path from 'path'
+import { adminGuard } from '@/lib/admin-guard';
 
-export async function GET() {
+export async function GET(req: Request) {
+  const denied = adminGuard(req);
+  if (denied) return denied;
   try {
     const payload = await getPayloadClient()
     const results: string[] = []

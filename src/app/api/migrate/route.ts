@@ -1,8 +1,11 @@
 import { NextResponse } from 'next/server'
 import { getPayloadClient } from '@/lib/payload'
 import { sql } from '@payloadcms/db-postgres'
+import { adminGuard } from '@/lib/admin-guard';
 
-export async function GET() {
+export async function GET(req: Request) {
+  const denied = adminGuard(req);
+  if (denied) return denied;
   try {
     const payload = await getPayloadClient()
 

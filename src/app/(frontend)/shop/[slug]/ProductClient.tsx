@@ -23,6 +23,25 @@ export default function ProductClient({ work }: { work: ProductData }) {
   const [added, setAdded] = useState(false);
   const [checkingOut, setCheckingOut] = useState(false);
   const [lightbox, setLightbox] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [remaining, setRemaining] = useState<Record<string, number> | null>(null);
+  const [editionSize, setEditionSize] = useState<number>(work.editionSize);
+
+  // Live edition counter: shown only when the edition database answers.
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`/api/editions/${work.slug}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d: { remaining?: Record<string, number> | null; editionSize?: number } | null) => {
+        if (cancelled || !d?.remaining) return;
+        setRemaining(d.remaining);
+        if (d.editionSize) setEditionSize(d.editionSize);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [work.slug]);
   const { addItem } = useCart();
   const size = work.sizes[selected] as ProductData['sizes'][number] | undefined;
   const portrait = work.image.height > work.image.width;
@@ -53,30 +72,34 @@ export default function ProductClient({ work }: { work: ProductData }) {
     setTimeout(() => setAdded(false), 2400);
   };
 
+  const soldOut = !!(size && remaining && remaining[size.name] !== undefined && remaining[size.name] <= 0);
+  const inquiryHref = (s?: { name: string }) => `/contact?work=${work.slug}${s ? `&size=${encodeURIComponent(s.name)}` : ''}`;
+
+  // Straight to Stripe Checkout when it's configured; the inquiry form only while online checkout is switched off.
   const handleBuyNow = async () => {
     if (!size) return;
     setCheckingOut(true);
+    setError(null);
     try {
       const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          items: [
-            { slug: work.slug, size: size.name, quantity: 1 },
-          ],
-        }),
+        body: JSON.stringify({ items: [{ slug: work.slug, size: size.name, quantity: 1 }] }),
       });
       const data = await res.json().catch(() => ({}));
       if (data.url) {
         window.location.href = data.url;
         return;
       }
-      window.location.href = `/contact?work=${work.slug}&size=${encodeURIComponent(size.name)}`;
+      if (data.code === 'checkout_disabled') {
+        window.location.href = inquiryHref(size);
+        return;
+      }
+      setError(data.error || 'Could not start checkout. Please try again.');
     } catch {
-      window.location.href = `/contact?work=${work.slug}&size=${encodeURIComponent(size.name)}`;
-    } finally {
-      setCheckingOut(false);
+      setError('Could not start checkout. Please check your connection and try again.');
     }
+    setCheckingOut(false);
   };
 
   return (
@@ -146,6 +169,11 @@ export default function ProductClient({ work }: { work: ProductData }) {
                       <span>
                         <span className="block text-[16px] font-semibold leading-6 text-[#222]">{s.name}</span>
                         <span className="lk-small">{s.dimensions}</span>
+                        {remaining && remaining[s.name] !== undefined && (
+                          <span className="lk-small block text-accent-dark">
+                            {remaining[s.name] > 0 ? `${remaining[s.name]} of ${editionSize} remaining` : 'Edition sold out'}
+                          </span>
+                        )}
                       </span>
                       <span className="text-[16px] leading-6 text-[#222]">{formatPrice(s.price)}</span>
                     </button>
@@ -154,24 +182,29 @@ export default function ProductClient({ work }: { work: ProductData }) {
               </div>
 
               <div className="mt-8 grid gap-3">
-                <button type="button" onClick={handleAdd} className="lk-btn lk-btn-solid w-full">
+                <button type="button" onClick={handleAdd} disabled={soldOut} className="lk-btn lk-btn-solid w-full disabled:opacity-50">
                   {added ? 'Added to Cart ✓' : 'Add to Cart'}
                 </button>
                 <div className="grid grid-cols-2 gap-3">
-                  <button type="button" onClick={handleBuyNow} disabled={checkingOut} className="lk-btn lk-btn-gold w-full px-3">
+                  <button type="button" onClick={handleBuyNow} disabled={checkingOut || soldOut} className="lk-btn lk-btn-gold w-full px-3 disabled:opacity-50">
                     {checkingOut ? 'One Moment…' : 'Buy Now'}
                   </button>
-                  <Link href={`/contact?work=${work.slug}&size=${encodeURIComponent(size.name)}`} className="lk-btn lk-btn-gold w-full px-3">
+                  <Link href={inquiryHref(size)} className="lk-btn lk-btn-gold w-full px-3">
                     Inquire
                   </Link>
                 </div>
               </div>
+              {error && (
+                <p role="alert" className="lk-small mt-4 text-center text-[#a12a2a]">
+                  {error} You can also <Link href={inquiryHref(size)} className="underline">contact the studio</Link>.
+                </p>
+              )}
               {added && (
                 <p className="lk-small mt-4 text-center">
                   Added to your cart. <Link href="/cart" className="font-bold text-accent-dark underline">View cart</Link>
                 </p>
               )}
-              <p className="lk-small mt-6">Complimentary shipping. Each piece is made to order, signed and numbered by the artist.</p>
+              <p className="lk-small mt-6">Made to order and shipped in 2–4 weeks, insured and signature-required. Each piece is signed and numbered by the artist. <Link href="/shipping-returns" className="underline">Shipping &amp; returns</Link></p>
             </div>
             )}
           </div>

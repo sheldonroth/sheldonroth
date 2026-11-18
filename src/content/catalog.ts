@@ -56,10 +56,10 @@ export const PRINT_SIZES: PrintSize[] = [
 ];
 
 export const PRINT_DETAILS = [
-  'Face-mounted to museum-grade acrylic for depth and luminosity',
-  'Archival chromogenic print with brilliant colour and fine detail',
-  'Aluminium backing with a floating French-cleat hanging system',
-  'Hand-signed and numbered by Sheldon Roth',
+  'Face-mounted to anti-glare museum acrylic for depth and luminosity',
+  'Archival Lumachrome HD print with brilliant colour and fine detail',
+  'Acrylic backing with a floating mount and French-cleat hanging',
+  'Signed and numbered by Sheldon Roth',
   'Certificate of authenticity included',
 ];
 

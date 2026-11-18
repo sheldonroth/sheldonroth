@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getPayloadClient } from '@/lib/payload'
+import { adminGuard } from '@/lib/admin-guard';
 
 // Peter Lik prices ~$3,500-$5,700 for small, $8,000+ for medium, $15,000+ for large
 // 30% less pricing structure
@@ -19,7 +20,9 @@ const NEW_DETAILS = [
   { detail: 'Certificate of authenticity included' },
 ]
 
-export async function GET() {
+export async function GET(req: Request) {
+  const denied = adminGuard(req);
+  if (denied) return denied;
   try {
     const payload = await getPayloadClient()
     const results: string[] = []
