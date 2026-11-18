@@ -183,4 +183,13 @@ export const masterLongEdge: Record<string, number> = {
   "lone-lily": 6000,
   "gentle-giant": 6000,
   "painted-earth": 5168,
+  "fern-cathedral": 7952,
+  "winter-quiet": 5168,
+  "hidden-gaze": 6000,
+  "first-bloom": 6000,
+  "the-old-warrior": 6000,
+  "golden-beak": 6000,
+  "tuxedo-pair": 6000,
+  "grooming-hour": 6000,
+  "amber-chamber": 7952,
 };

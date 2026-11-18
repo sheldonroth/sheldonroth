@@ -182,4 +182,13 @@ export const imageSizes: Record<string, { width: number; height: number }> = {
   "lone-lily": { width: 3840, height: 2560 },
   "gentle-giant": { width: 3840, height: 2560 },
   "painted-earth": { width: 3840, height: 2562 },
+  "fern-cathedral": { width: 3840, height: 2561 },
+  "winter-quiet": { width: 3840, height: 2562 },
+  "hidden-gaze": { width: 3840, height: 2560 },
+  "first-bloom": { width: 3840, height: 2560 },
+  "the-old-warrior": { width: 3840, height: 2560 },
+  "golden-beak": { width: 3840, height: 2560 },
+  "tuxedo-pair": { width: 3840, height: 2560 },
+  "grooming-hour": { width: 3840, height: 2560 },
+  "amber-chamber": { width: 3840, height: 2561 },
 };

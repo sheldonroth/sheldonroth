@@ -1712,6 +1712,87 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "fern-cathedral",
+    title: "Fern Cathedral",
+    collection: "mountain-forest",
+    description:
+      "Ancient redwood trunks rise like columns from a deep understory of sword ferns.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "winter-quiet",
+    title: "Winter Quiet",
+    collection: "mountain-forest",
+    description:
+      "Pale aspen trunks stand in rows across fresh snow beneath a clear winter sky.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "hidden-gaze",
+    title: "Hidden Gaze",
+    collection: "wildlife",
+    description:
+      "A young leopard rests in tall green grass beneath a fallen branch, eyes fixed on the lens.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "first-bloom",
+    title: "First Bloom",
+    collection: "mountain-forest",
+    description:
+      "A single rose-pink camellia opens its layered petals against deep green leaves.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "the-old-warrior",
+    title: "The Old Warrior",
+    collection: "wildlife",
+    description:
+      "A blue wildebeest bull lies in the pale dust, his shaggy mane lit by soft afternoon light.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "golden-beak",
+    title: "Golden Beak",
+    collection: "wildlife",
+    description:
+      "A yellow-billed hornbill perches among willowy leaves, its great curved bill catching the light.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "tuxedo-pair",
+    title: "Tuxedo Pair",
+    collection: "wildlife",
+    description:
+      "Two African penguins stand side by side in the sand, one preening the other.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "grooming-hour",
+    title: "Grooming Hour",
+    collection: "wildlife",
+    description:
+      "High in a tree, one baboon patiently grooms another, who gazes calmly back with amber eyes.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "amber-chamber",
+    title: "Amber Chamber",
+    collection: "light-sky",
+    description:
+      "Reflected light glows through the sculpted sandstone walls of a narrow slot canyon.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {
