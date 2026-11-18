@@ -13,7 +13,7 @@ export default function Footer() {
             <Link href="/contact" className="lk-footer-link mt-4 block underline-offset-4 hover:underline">Inquire</Link>
           </div>
           <div>
-            <h4 className="lk-footer-h mb-4">Shop by Gallery</h4>
+            <h2 className="lk-footer-h mb-4">Shop by Gallery</h2>
             <ul>
               {collections.map((c) => (
                 <li key={c.slug}><Link href={`/collections/${c.slug}`} className="lk-footer-link hover:underline">{c.title}</Link></li>
@@ -24,7 +24,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="lk-footer-h mb-4">Collector Services</h4>
+            <h2 className="lk-footer-h mb-4">Collector Services</h2>
             <ul>
               <li><Link href="/contact" className="lk-footer-link hover:underline">Inquire</Link></li>
               <li><Link href="/faq" className="lk-footer-link hover:underline">FAQ</Link></li>
@@ -34,7 +34,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="lk-footer-h mb-4">About</h4>
+            <h2 className="lk-footer-h mb-4">About</h2>
             <ul>
               <li><Link href="/artist" className="lk-footer-link hover:underline">The Artist</Link></li>
               <li><Link href="/cart" className="lk-footer-link hover:underline">Cart</Link></li>

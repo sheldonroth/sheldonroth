@@ -164,9 +164,9 @@ export default function Home() {
       {/* Inquire */}
       <section className="bg-black text-white">
         <div className="lk-container py-[60px] text-center lg:py-[100px]">
-          <p className="lk-eyebrow text-white">Private Consultations</p>
-          <h2 className="lk-h2 mt-6 text-white">Find the right piece for your space</h2>
-          <p className="lk-body mx-auto mt-6 max-w-[700px] text-white">
+          <p className="lk-eyebrow !text-white">Private Consultations</p>
+          <h2 className="lk-h2 mt-6 !text-white">Find the right piece for your space</h2>
+          <p className="lk-body mx-auto mt-6 max-w-[700px] !text-white">
             Questions about sizing, framing or availability of an edition? Get in touch and Sheldon will help you choose the perfect work.
           </p>
           <div className="mt-10">
