@@ -8,7 +8,7 @@ export default function CollectionBanner({ src, alt }: { src: string; alt: strin
   return (
     <section className="pt-[70px] lg:pt-[160px]">
       <div className="relative mt-[30px] h-[75vw] max-h-[700px] overflow-hidden sm:mx-5 sm:h-[40vw] lg:mx-[30px] lg:mt-0 lg:h-[30vw]">
-        <Image quality={90} src={src} alt={alt} fill priority sizes="100vw" className="object-cover" />
+        <Image quality={80} src={src} alt={alt} fill priority sizes="100vw" className="object-cover" />
       </div>
     </section>
   );

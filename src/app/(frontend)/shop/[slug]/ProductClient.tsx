@@ -95,7 +95,7 @@ export default function ProductClient({ work }: { work: ProductData }) {
             className="group flex w-full cursor-zoom-in items-center justify-center"
             aria-label={`View ${work.title} full screen`}
           >
-            <Image quality={90}
+            <Image quality={80}
               src={work.image.src}
               alt={`${work.title} — limited edition photograph by Sheldon Roth`}
               width={work.image.width}
@@ -216,7 +216,7 @@ export default function ProductClient({ work }: { work: ProductData }) {
             width={work.image.width}
             height={work.image.height}
             sizes="100vw"
-            quality={90}
+            quality={80}
             className="h-auto max-h-[94vh] w-auto max-w-full object-contain"
           />
           <button

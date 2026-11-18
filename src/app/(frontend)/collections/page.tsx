@@ -28,7 +28,7 @@ export default function CollectionsPage() {
                 {/* lik.com collection card: #efefef mat, photograph contained inside, small caps title + link */}
                 <Link href={`/collections/${c.slug}`} className="group block bg-[#efefef] px-[7%] pb-8 pt-[9%] text-center transition-colors duration-300 hover:bg-[#e8e8e7]">
                   <div className="relative flex aspect-[325/199] items-center justify-center">
-                    <Image src={img.src} alt={`${c.title} gallery`} width={img.width} height={img.height} quality={85} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px" priority={i < 3} className="zoom-img h-auto max-h-full w-auto max-w-full object-contain shadow-[0_3px_10px_rgba(0,0,0,0.22)]" />
+                    <Image src={img.src} alt={`${c.title} gallery`} width={img.width} height={img.height} quality={75} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px" priority={i < 3} className="zoom-img h-auto max-h-full w-auto max-w-full object-contain shadow-[0_3px_10px_rgba(0,0,0,0.22)]" />
                   </div>
                   <h2 className="lk-card-title mt-8">{c.title}</h2>
                   <p className="lk-card-edition mt-3">{count} {count === 1 ? 'Work' : 'Works'}</p>

@@ -25,7 +25,7 @@ export default function WorkCard({
     <Link href={`/shop/${work.slug}`} className={`group block h-full px-[7%] pb-9 pt-[14%] text-center transition-colors duration-300 ${tone === 'dark' ? 'bg-[#202022] hover:bg-[#2a2a2c]' : 'bg-[#edecec] hover:bg-[#e6e5e3]'}`}>
       <div className="relative flex aspect-[1/0.97] items-center justify-center">
         <Image
-          quality={85}
+          quality={75}
           src={img.src}
           alt={`${work.title} — fine art photograph by Sheldon Roth`}
           width={img.width}

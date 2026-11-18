@@ -49,7 +49,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
       <GalleryGrid works={items} aside={<GallerySidebar active={collection.slug} />} />
 
       <Link href={`/collections/${next.slug}`} className="group relative block h-[360px] overflow-hidden md:h-[420px]">
-        <Image quality={90} src={getImage(next.cover).src} alt={`${next.title} gallery`} fill sizes="100vw" className="zoom-img object-cover" />
+        <Image quality={80} src={getImage(next.cover).src} alt={`${next.title} gallery`} fill sizes="100vw" className="zoom-img object-cover" />
         <div className="lk-scrim absolute inset-0" />
         <div className="absolute inset-x-0 bottom-0 px-5 pb-14 text-center text-white">
           <p className="lk-hero-eyebrow">Next Gallery</p>

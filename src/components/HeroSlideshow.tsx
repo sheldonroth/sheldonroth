@@ -46,7 +46,7 @@ export default function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
         if (!near) return null;
         return (
           <div key={s.slug} className={`absolute inset-0 transition-opacity duration-[1400ms] ease-in-out ${active ? 'opacity-100' : 'opacity-0'}`} aria-hidden={!active}>
-            <Image quality={90} src={s.src} alt={`${s.title} by Sheldon Roth`} fill priority={i === 0} sizes="100vw" className={`object-cover ${active ? 'kenburns' : ''}`} />
+            <Image quality={80} src={s.src} alt={`${s.title} by Sheldon Roth`} fill priority={i === 0} sizes="100vw" className={`object-cover ${active ? 'kenburns' : ''}`} />
           </div>
         );
       })}

@@ -20,7 +20,8 @@ export interface Work {
   isNew?: boolean;
   bestSeller?: boolean;
   /** Shown in the home page hero slideshow, in this order */
-  heroOrder?: number;
+  /** Curated fine-art ranking, 1 = strongest. Drives display order everywhere works are listed. */
+  rank: number;
   /** On the site with its own page, but kept out of the main galleries */
   webOnly?: boolean;
 }
@@ -98,85 +99,86 @@ export const collections: Collection[] = [
   },
 ];
 
-export const works: Work[] = [
+const catalogWorks: Work[] = [
   {
     slug: "sunstar-valley",
+    rank: 45,
     title: "Sunstar Valley",
     collection: "peaks-ice",
     description:
       "The sun bursts over a high ridge and pours light down a deep mountain valley, layer after layer of peaks fading into the haze.",
     editionSize: 50,
-    heroOrder: 1,
   },
   {
     slug: "alpenglow",
+    rank: 128,
     title: "Alpenglow",
     collection: "peaks-ice",
     description:
       "Fresh snow and fluted ice catch the last warm light as a great summit rises into a deep blue sky.",
     editionSize: 50,
     bestSeller: true,
-    heroOrder: 2,
   },
   {
     slug: "above-the-clouds",
+    rank: 30,
     title: "Above the Clouds",
     collection: "peaks-ice",
     description:
       "Twin summits stand clear above a sea of cloud, their ridgelines sharp against an endless blue.",
     editionSize: 50,
     bestSeller: true,
-    heroOrder: 3,
   },
   {
     slug: "cloud-tide",
+    rank: 25,
     title: "Cloud Tide",
     collection: "far-horizons",
     description:
       "A tide of cloud spills over a sheer escarpment and dissolves into the valley below, slow as breath.",
     editionSize: 50,
-    heroOrder: 4,
   },
   {
     slug: "glacial-jewel",
+    rank: 16,
     title: "Glacial Jewel",
     collection: "mountain-forest",
     description:
       "A turquoise lake glows in a basin of red and green stone, fed by the snowfields that cradle it.",
     editionSize: 50,
     bestSeller: true,
-    heroOrder: 5,
   },
   {
     slug: "sky-on-fire",
+    rank: 120,
     title: "Sky on Fire",
     collection: "light-sky",
     description:
       "The whole sky ignites in crimson and gold above still water, mirrored in a single burning moment.",
     editionSize: 50,
-    heroOrder: 6,
   },
   {
     slug: "wildflower-basin",
+    rank: 112,
     title: "Wildflower Basin",
     collection: "mountain-forest",
     description:
       "A carpet of magenta wildflowers runs to the foot of the peaks in a high summer basin.",
     editionSize: 50,
-    heroOrder: 7,
   },
   {
     slug: "granite-throne",
+    rank: 125,
     title: "Granite Throne",
     collection: "peaks-ice",
     description:
       "A sculpted granite spire stands enthroned above its glaciers, every ridge drawn in light and shadow.",
     editionSize: 50,
     bestSeller: true,
-    heroOrder: 8,
   },
   {
     slug: "glacier-frame",
+    rank: 167,
     title: "Glacier Frame",
     collection: "peaks-ice",
     description:
@@ -186,6 +188,7 @@ export const works: Work[] = [
   },
   {
     slug: "snow-range",
+    rank: 191,
     title: "Snow Range",
     collection: "peaks-ice",
     description:
@@ -194,6 +197,7 @@ export const works: Work[] = [
   },
   {
     slug: "sentinel",
+    rank: 50,
     title: "Sentinel",
     collection: "peaks-ice",
     description:
@@ -202,6 +206,7 @@ export const works: Work[] = [
   },
   {
     slug: "rising-pyramid",
+    rank: 146,
     title: "Rising Pyramid",
     collection: "peaks-ice",
     description:
@@ -210,6 +215,7 @@ export const works: Work[] = [
   },
   {
     slug: "roof-of-the-world",
+    rank: 59,
     title: "Roof of the World",
     collection: "peaks-ice",
     description:
@@ -218,6 +224,7 @@ export const works: Work[] = [
   },
   {
     slug: "frozen-symphony",
+    rank: 56,
     title: "Frozen Symphony",
     collection: "peaks-ice",
     description:
@@ -226,6 +233,7 @@ export const works: Work[] = [
   },
   {
     slug: "valley-of-giants",
+    rank: 149,
     title: "Valley of Giants",
     collection: "peaks-ice",
     description:
@@ -234,6 +242,7 @@ export const works: Work[] = [
   },
   {
     slug: "ice-spires",
+    rank: 13,
     title: "Ice Spires",
     collection: "peaks-ice",
     description:
@@ -242,6 +251,7 @@ export const works: Work[] = [
   },
   {
     slug: "monarch-of-ice",
+    rank: 155,
     title: "Monarch of Ice",
     collection: "peaks-ice",
     description:
@@ -250,6 +260,7 @@ export const works: Work[] = [
   },
   {
     slug: "glaciers-edge",
+    rank: 85,
     title: "Glacier's Edge",
     collection: "peaks-ice",
     description:
@@ -258,6 +269,7 @@ export const works: Work[] = [
   },
   {
     slug: "cloud-lake",
+    rank: 3,
     title: "Cloud Lake",
     collection: "mountain-forest",
     description:
@@ -266,6 +278,7 @@ export const works: Work[] = [
   },
   {
     slug: "rhododendron-valley",
+    rank: 194,
     title: "Rhododendron Valley",
     collection: "mountain-forest",
     description:
@@ -275,6 +288,7 @@ export const works: Work[] = [
   },
   {
     slug: "storm-lake",
+    rank: 64,
     title: "Storm Lake",
     collection: "mountain-forest",
     description:
@@ -284,6 +298,7 @@ export const works: Work[] = [
   },
   {
     slug: "bands-of-light",
+    rank: 62,
     title: "Bands of Light",
     collection: "mountain-forest",
     description:
@@ -293,6 +308,7 @@ export const works: Work[] = [
   },
   {
     slug: "mist-veil",
+    rank: 197,
     title: "Mist Veil",
     collection: "mountain-forest",
     description:
@@ -302,6 +318,7 @@ export const works: Work[] = [
   },
   {
     slug: "lake-and-summit",
+    rank: 52,
     title: "Lake and Summit",
     collection: "mountain-forest",
     description:
@@ -311,6 +328,7 @@ export const works: Work[] = [
   },
   {
     slug: "heart-of-the-mountains",
+    rank: 6,
     title: "Heart of the Mountains",
     collection: "mountain-forest",
     description:
@@ -319,6 +337,7 @@ export const works: Work[] = [
   },
   {
     slug: "alpine-bloom",
+    rank: 180,
     title: "Alpine Bloom",
     collection: "mountain-forest",
     description:
@@ -327,6 +346,7 @@ export const works: Work[] = [
   },
   {
     slug: "snowfield-mirror",
+    rank: 113,
     title: "Snowfield Mirror",
     collection: "mountain-forest",
     description:
@@ -335,6 +355,7 @@ export const works: Work[] = [
   },
   {
     slug: "painted-mountain",
+    rank: 65,
     title: "Painted Mountain",
     collection: "mountain-forest",
     description:
@@ -343,6 +364,7 @@ export const works: Work[] = [
   },
   {
     slug: "emerald-ribbons",
+    rank: 184,
     title: "Emerald Ribbons",
     collection: "mountain-forest",
     description:
@@ -351,6 +373,7 @@ export const works: Work[] = [
   },
   {
     slug: "blue-ribbon",
+    rank: 42,
     title: "Blue Ribbon",
     collection: "mountain-forest",
     description:
@@ -359,6 +382,7 @@ export const works: Work[] = [
   },
   {
     slug: "hidden-falls",
+    rank: 89,
     title: "Hidden Falls",
     collection: "mountain-forest",
     description:
@@ -367,6 +391,7 @@ export const works: Work[] = [
   },
   {
     slug: "liquid-jade",
+    rank: 61,
     title: "Liquid Jade",
     collection: "mountain-forest",
     description:
@@ -375,6 +400,7 @@ export const works: Work[] = [
   },
   {
     slug: "sapphire-basin",
+    rank: 31,
     title: "Sapphire Basin",
     collection: "mountain-forest",
     description:
@@ -383,6 +409,7 @@ export const works: Work[] = [
   },
   {
     slug: "range-of-light",
+    rank: 161,
     title: "Range of Light",
     collection: "mountain-forest",
     description:
@@ -391,6 +418,7 @@ export const works: Work[] = [
   },
   {
     slug: "high-country",
+    rank: 176,
     title: "High Country",
     collection: "mountain-forest",
     description:
@@ -399,6 +427,7 @@ export const works: Work[] = [
   },
   {
     slug: "eye-of-the-mountain",
+    rank: 153,
     title: "Eye of the Mountain",
     collection: "mountain-forest",
     description:
@@ -407,6 +436,7 @@ export const works: Work[] = [
   },
   {
     slug: "gold-forest",
+    rank: 86,
     title: "Gold Forest",
     collection: "light-sky",
     description:
@@ -415,6 +445,7 @@ export const works: Work[] = [
   },
   {
     slug: "table-of-the-gods",
+    rank: 169,
     title: "Table of the Gods",
     collection: "water",
     description:
@@ -423,6 +454,7 @@ export const works: Work[] = [
   },
   {
     slug: "swirling-sands",
+    rank: 28,
     title: "Swirling Sands",
     collection: "water",
     description:
@@ -431,6 +463,7 @@ export const works: Work[] = [
   },
   {
     slug: "coral-symphony",
+    rank: 24,
     title: "Coral Symphony",
     collection: "water",
     description:
@@ -440,6 +473,7 @@ export const works: Work[] = [
   },
   {
     slug: "island-paradise",
+    rank: 91,
     title: "Island Paradise",
     collection: "water",
     description:
@@ -448,6 +482,7 @@ export const works: Work[] = [
   },
   {
     slug: "turquoise-depths",
+    rank: 203,
     title: "Turquoise Depths",
     collection: "water",
     description:
@@ -457,6 +492,7 @@ export const works: Work[] = [
   },
   {
     slug: "pacific-edge",
+    rank: 201,
     title: "Pacific Edge",
     collection: "water",
     description:
@@ -465,6 +501,7 @@ export const works: Work[] = [
   },
   {
     slug: "sentinel-tree",
+    rank: 20,
     title: "Sentinel Tree",
     collection: "far-horizons",
     description:
@@ -474,6 +511,7 @@ export const works: Work[] = [
   },
   {
     slug: "wind-script",
+    rank: 96,
     title: "Wind Script",
     collection: "far-horizons",
     description:
@@ -483,6 +521,7 @@ export const works: Work[] = [
   },
   {
     slug: "massif-from-the-water",
+    rank: 195,
     title: "Massif from the Water",
     collection: "far-horizons",
     description:
@@ -491,6 +530,7 @@ export const works: Work[] = [
   },
   {
     slug: "sea-stack",
+    rank: 189,
     title: "Sea Stack",
     collection: "far-horizons",
     description:
@@ -499,6 +539,7 @@ export const works: Work[] = [
   },
   {
     slug: "veil-of-cloud",
+    rank: 131,
     title: "Veil of Cloud",
     collection: "peaks-ice",
     description:
@@ -508,6 +549,7 @@ export const works: Work[] = [
   },
   {
     slug: "first-light",
+    rank: 172,
     title: "First Light",
     collection: "peaks-ice",
     description:
@@ -517,6 +559,7 @@ export const works: Work[] = [
   },
   {
     slug: "blue-cathedral",
+    rank: 188,
     title: "Blue Cathedral",
     collection: "peaks-ice",
     description:
@@ -526,6 +569,7 @@ export const works: Work[] = [
   },
   {
     slug: "sheer-majesty",
+    rank: 95,
     title: "Sheer Majesty",
     collection: "peaks-ice",
     description:
@@ -535,6 +579,7 @@ export const works: Work[] = [
   },
   {
     slug: "emerald-basin",
+    rank: 99,
     title: "Emerald Basin",
     collection: "mountain-forest",
     description:
@@ -544,6 +589,7 @@ export const works: Work[] = [
   },
   {
     slug: "wild-water",
+    rank: 181,
     title: "Wild Water",
     collection: "mountain-forest",
     description:
@@ -553,6 +599,7 @@ export const works: Work[] = [
   },
   {
     slug: "travertine",
+    rank: 190,
     title: "Travertine",
     collection: "water",
     description:
@@ -562,6 +609,7 @@ export const works: Work[] = [
   },
   {
     slug: "autumn-majesty",
+    rank: 177,
     title: "Autumn Majesty",
     collection: "mountain-forest",
     description:
@@ -571,6 +619,7 @@ export const works: Work[] = [
   },
   {
     slug: "crystal-shores",
+    rank: 186,
     title: "Crystal Shores",
     collection: "water",
     description:
@@ -580,6 +629,7 @@ export const works: Work[] = [
   },
   {
     slug: "high-valley",
+    rank: 185,
     title: "High Valley",
     collection: "mountain-forest",
     description:
@@ -589,6 +639,7 @@ export const works: Work[] = [
   },
   {
     slug: "ember-sky",
+    rank: 148,
     title: "Ember Sky",
     collection: "light-sky",
     description:
@@ -598,6 +649,7 @@ export const works: Work[] = [
   },
   {
     slug: "horizon-burn",
+    rank: 199,
     title: "Horizon Burn",
     collection: "light-sky",
     description:
@@ -607,6 +659,7 @@ export const works: Work[] = [
   },
   {
     slug: "last-light",
+    rank: 183,
     title: "Last Light",
     collection: "light-sky",
     description:
@@ -616,6 +669,7 @@ export const works: Work[] = [
   },
   {
     slug: "terraced-meadow",
+    rank: 134,
     title: "Terraced Meadow",
     collection: "mountain-forest",
     description:
@@ -625,6 +679,7 @@ export const works: Work[] = [
   },
   {
     slug: "gilded-sky",
+    rank: 193,
     title: "Gilded Sky",
     collection: "light-sky",
     description:
@@ -634,6 +689,7 @@ export const works: Work[] = [
   },
   {
     slug: "rose-summit",
+    rank: 71,
     title: "Rose Summit",
     collection: "light-sky",
     description:
@@ -643,6 +699,7 @@ export const works: Work[] = [
   },
   {
     slug: "golden-tide",
+    rank: 187,
     title: "Golden Tide",
     collection: "light-sky",
     description:
@@ -652,6 +709,7 @@ export const works: Work[] = [
   },
   {
     slug: "morning-mist",
+    rank: 196,
     title: "Morning Mist",
     collection: "light-sky",
     description:
@@ -661,6 +719,7 @@ export const works: Work[] = [
   },
   {
     slug: "storm-light",
+    rank: 143,
     title: "Storm Light",
     collection: "peaks-ice",
     description:
@@ -670,6 +729,7 @@ export const works: Work[] = [
   },
   {
     slug: "canyon-song",
+    rank: 4,
     title: "Canyon Song",
     collection: "water",
     description:
@@ -679,6 +739,7 @@ export const works: Work[] = [
   },
   {
     slug: "secret-grotto",
+    rank: 9,
     title: "Secret Grotto",
     collection: "water",
     description:
@@ -688,6 +749,7 @@ export const works: Work[] = [
   },
   {
     slug: "golden-grove",
+    rank: 39,
     title: "Golden Grove",
     collection: "mountain-forest",
     description:
@@ -697,6 +759,7 @@ export const works: Work[] = [
   },
   {
     slug: "stone-spires",
+    rank: 164,
     title: "Stone Spires",
     collection: "peaks-ice",
     description:
@@ -706,6 +769,7 @@ export const works: Work[] = [
   },
   {
     slug: "cloud-weave",
+    rank: 137,
     title: "Cloud Weave",
     collection: "peaks-ice",
     description:
@@ -715,6 +779,7 @@ export const works: Work[] = [
   },
   {
     slug: "ice-valley",
+    rank: 36,
     title: "Ice Valley",
     collection: "peaks-ice",
     description:
@@ -724,6 +789,7 @@ export const works: Work[] = [
   },
   {
     slug: "ocean-of-cloud",
+    rank: 82,
     title: "Ocean of Cloud",
     collection: "peaks-ice",
     description:
@@ -733,6 +799,7 @@ export const works: Work[] = [
   },
   {
     slug: "winter-crown",
+    rank: 53,
     title: "Winter Crown",
     collection: "peaks-ice",
     description:
@@ -742,6 +809,7 @@ export const works: Work[] = [
   },
   {
     slug: "summit-cloud",
+    rank: 119,
     title: "Summit Cloud",
     collection: "peaks-ice",
     description:
@@ -751,6 +819,7 @@ export const works: Work[] = [
   },
   {
     slug: "spindrift",
+    rank: 109,
     title: "Spindrift",
     collection: "peaks-ice",
     description:
@@ -760,6 +829,7 @@ export const works: Work[] = [
   },
   {
     slug: "canyon-glow",
+    rank: 17,
     title: "Canyon Glow",
     collection: "light-sky",
     description:
@@ -769,6 +839,7 @@ export const works: Work[] = [
   },
   {
     slug: "sandstone-flame",
+    rank: 87,
     title: "Sandstone Flame",
     collection: "light-sky",
     description:
@@ -778,6 +849,7 @@ export const works: Work[] = [
   },
   {
     slug: "molten-lake",
+    rank: 19,
     title: "Molten Lake",
     collection: "water",
     description:
@@ -787,6 +859,7 @@ export const works: Work[] = [
   },
   {
     slug: "dune-lines",
+    rank: 90,
     title: "Dune Lines",
     collection: "far-horizons",
     description:
@@ -796,6 +869,7 @@ export const works: Work[] = [
   },
   {
     slug: "tidewater-stones",
+    rank: 57,
     title: "Tidewater Stones",
     collection: "water",
     description:
@@ -805,6 +879,7 @@ export const works: Work[] = [
   },
   {
     slug: "three-veils",
+    rank: 92,
     title: "Three Veils",
     collection: "water",
     description:
@@ -814,6 +889,7 @@ export const works: Work[] = [
   },
   {
     slug: "living-sculpture",
+    rank: 8,
     title: "Living Sculpture",
     collection: "mountain-forest",
     description:
@@ -823,6 +899,7 @@ export const works: Work[] = [
   },
   {
     slug: "sea-monolith",
+    rank: 10,
     title: "Sea Monolith",
     collection: "water",
     description:
@@ -832,6 +909,7 @@ export const works: Work[] = [
   },
   {
     slug: "golden-slope",
+    rank: 126,
     title: "Golden Slope",
     collection: "mountain-forest",
     description:
@@ -841,6 +919,7 @@ export const works: Work[] = [
   },
   {
     slug: "autumn-cascade",
+    rank: 144,
     title: "Autumn Cascade",
     collection: "water",
     description:
@@ -850,6 +929,7 @@ export const works: Work[] = [
   },
   {
     slug: "mirror-lake",
+    rank: 133,
     title: "Mirror Lake",
     collection: "mountain-forest",
     description:
@@ -859,6 +939,7 @@ export const works: Work[] = [
   },
   {
     slug: "blue-hour-shore",
+    rank: 114,
     title: "Blue Hour Shore",
     collection: "water",
     description:
@@ -868,6 +949,7 @@ export const works: Work[] = [
   },
   {
     slug: "emerald-falls",
+    rank: 35,
     title: "Emerald Falls",
     collection: "water",
     description:
@@ -877,6 +959,7 @@ export const works: Work[] = [
   },
   {
     slug: "crimson-sky",
+    rank: 22,
     title: "Crimson Sky",
     collection: "light-sky",
     description:
@@ -886,6 +969,7 @@ export const works: Work[] = [
   },
   {
     slug: "river-strata",
+    rank: 111,
     title: "River Strata",
     collection: "water",
     description:
@@ -895,6 +979,7 @@ export const works: Work[] = [
   },
   {
     slug: "sandstone-wave",
+    rank: 7,
     title: "Sandstone Wave",
     collection: "light-sky",
     description:
@@ -904,6 +989,7 @@ export const works: Work[] = [
   },
   {
     slug: "lone-vigil",
+    rank: 33,
     title: "Lone Vigil",
     collection: "wildlife",
     description:
@@ -913,6 +999,7 @@ export const works: Work[] = [
   },
   {
     slug: "the-elder",
+    rank: 21,
     title: "The Elder",
     collection: "wildlife",
     description:
@@ -922,6 +1009,7 @@ export const works: Work[] = [
   },
   {
     slug: "above-it-all",
+    rank: 12,
     title: "Above It All",
     collection: "wildlife",
     description:
@@ -931,6 +1019,7 @@ export const works: Work[] = [
   },
   {
     slug: "the-king",
+    rank: 15,
     title: "The King",
     collection: "wildlife",
     description:
@@ -940,6 +1029,7 @@ export const works: Work[] = [
   },
   {
     slug: "pride",
+    rank: 5,
     title: "Pride",
     collection: "wildlife",
     description:
@@ -949,6 +1039,7 @@ export const works: Work[] = [
   },
   {
     slug: "the-hidden-horn",
+    rank: 29,
     title: "The Hidden Horn",
     collection: "wildlife",
     description:
@@ -958,6 +1049,7 @@ export const works: Work[] = [
   },
   {
     slug: "into-the-mist",
+    rank: 123,
     title: "Into the Mist",
     collection: "wildlife",
     description:
@@ -967,6 +1059,7 @@ export const works: Work[] = [
   },
   {
     slug: "the-watcher",
+    rank: 2,
     title: "The Watcher",
     collection: "wildlife",
     description:
@@ -976,6 +1069,7 @@ export const works: Work[] = [
   },
   {
     slug: "the-huntress",
+    rank: 156,
     title: "The Huntress",
     collection: "wildlife",
     description:
@@ -985,6 +1079,7 @@ export const works: Work[] = [
   },
   {
     slug: "leap-of-faith",
+    rank: 1,
     title: "Leap of Faith",
     collection: "wildlife",
     description:
@@ -994,6 +1089,7 @@ export const works: Work[] = [
   },
   {
     slug: "golden-mane",
+    rank: 68,
     title: "Golden Mane",
     collection: "wildlife",
     description:
@@ -1003,6 +1099,7 @@ export const works: Work[] = [
   },
   {
     slug: "the-heavyweight",
+    rank: 84,
     title: "The Heavyweight",
     collection: "wildlife",
     description:
@@ -1012,6 +1109,7 @@ export const works: Work[] = [
   },
   {
     slug: "crystal-crown",
+    rank: 152,
     title: "Crystal Crown",
     collection: "peaks-ice",
     description:
@@ -1021,6 +1119,7 @@ export const works: Work[] = [
   },
   {
     slug: "twin-horns",
+    rank: 182,
     title: "Twin Horns",
     collection: "peaks-ice",
     description:
@@ -1030,6 +1129,7 @@ export const works: Work[] = [
   },
   {
     slug: "sea-of-silence",
+    rank: 116,
     title: "Sea of Silence",
     collection: "peaks-ice",
     description:
@@ -1039,6 +1139,7 @@ export const works: Work[] = [
   },
   {
     slug: "cloud-crest",
+    rank: 202,
     title: "Cloud Crest",
     collection: "peaks-ice",
     description:
@@ -1048,6 +1149,7 @@ export const works: Work[] = [
   },
   {
     slug: "breath-of-the-mountain",
+    rank: 158,
     title: "Breath of the Mountain",
     collection: "peaks-ice",
     description:
@@ -1057,6 +1159,7 @@ export const works: Work[] = [
   },
   {
     slug: "turquoise-mesa",
+    rank: 142,
     title: "Turquoise Mesa",
     collection: "mountain-forest",
     description:
@@ -1066,6 +1169,7 @@ export const works: Work[] = [
   },
   {
     slug: "jagged-horizon",
+    rank: 140,
     title: "Jagged Horizon",
     collection: "far-horizons",
     description:
@@ -1075,6 +1179,7 @@ export const works: Work[] = [
   },
   {
     slug: "paintbrush-meadow",
+    rank: 163,
     title: "Paintbrush Meadow",
     collection: "mountain-forest",
     description:
@@ -1084,6 +1189,7 @@ export const works: Work[] = [
   },
   {
     slug: "ghost-forest",
+    rank: 198,
     title: "Ghost Forest",
     collection: "mountain-forest",
     description:
@@ -1093,6 +1199,7 @@ export const works: Work[] = [
   },
   {
     slug: "granite-cathedral",
+    rank: 173,
     title: "Granite Cathedral",
     collection: "peaks-ice",
     description:
@@ -1102,6 +1209,7 @@ export const works: Work[] = [
   },
   {
     slug: "ice-blade",
+    rank: 200,
     title: "Ice Blade",
     collection: "peaks-ice",
     description:
@@ -1111,6 +1219,7 @@ export const works: Work[] = [
   },
   {
     slug: "nectar-flight",
+    rank: 46,
     title: "Nectar Flight",
     collection: "wildlife",
     description:
@@ -1120,6 +1229,7 @@ export const works: Work[] = [
   },
   {
     slug: "river-of-stars",
+    rank: 14,
     title: "River of Stars",
     collection: "light-sky",
     description:
@@ -1129,6 +1239,7 @@ export const works: Work[] = [
   },
   {
     slug: "silent-passage",
+    rank: 70,
     title: "Silent Passage",
     collection: "water",
     description:
@@ -1138,6 +1249,7 @@ export const works: Work[] = [
   },
   {
     slug: "wild-coast",
+    rank: 192,
     title: "Wild Coast",
     collection: "water",
     description:
@@ -1147,6 +1259,7 @@ export const works: Work[] = [
   },
   {
     slug: "canopy-of-gold",
+    rank: 147,
     title: "Canopy of Gold",
     collection: "mountain-forest",
     description:
@@ -1156,6 +1269,7 @@ export const works: Work[] = [
   },
   {
     slug: "white-giant",
+    rank: 170,
     title: "White Giant",
     collection: "peaks-ice",
     description:
@@ -1165,6 +1279,7 @@ export const works: Work[] = [
   },
   {
     slug: "the-needle",
+    rank: 122,
     title: "The Needle",
     collection: "peaks-ice",
     description:
@@ -1174,6 +1289,7 @@ export const works: Work[] = [
   },
   {
     slug: "frozen-ramparts",
+    rank: 74,
     title: "Frozen Ramparts",
     collection: "peaks-ice",
     description:
@@ -1183,6 +1299,7 @@ export const works: Work[] = [
   },
   {
     slug: "serrated-sky",
+    rank: 18,
     title: "Serrated Sky",
     collection: "peaks-ice",
     description:
@@ -1192,6 +1309,7 @@ export const works: Work[] = [
   },
   {
     slug: "firestorm",
+    rank: 105,
     title: "Firestorm",
     collection: "light-sky",
     description:
@@ -1201,6 +1319,7 @@ export const works: Work[] = [
   },
   {
     slug: "jade-waters",
+    rank: 60,
     title: "Jade Waters",
     collection: "water",
     description:
@@ -1210,6 +1329,7 @@ export const works: Work[] = [
   },
   {
     slug: "travertine-falls",
+    rank: 32,
     title: "Travertine Falls",
     collection: "water",
     description:
@@ -1219,6 +1339,7 @@ export const works: Work[] = [
   },
   {
     slug: "silver-thread",
+    rank: 138,
     title: "Silver Thread",
     collection: "water",
     description:
@@ -1228,6 +1349,7 @@ export const works: Work[] = [
   },
   {
     slug: "afterglow",
+    rank: 139,
     title: "Afterglow",
     collection: "light-sky",
     description:
@@ -1237,6 +1359,7 @@ export const works: Work[] = [
   },
   {
     slug: "river-sunburst",
+    rank: 41,
     title: "River Sunburst",
     collection: "water",
     description:
@@ -1246,6 +1369,7 @@ export const works: Work[] = [
   },
   {
     slug: "canyon-rampart",
+    rank: 80,
     title: "Canyon Rampart",
     collection: "far-horizons",
     description:
@@ -1255,6 +1379,7 @@ export const works: Work[] = [
   },
   {
     slug: "emerald-pool",
+    rank: 63,
     title: "Emerald Pool",
     collection: "water",
     description:
@@ -1264,6 +1389,7 @@ export const works: Work[] = [
   },
   {
     slug: "golden-hillside",
+    rank: 110,
     title: "Golden Hillside",
     collection: "mountain-forest",
     description:
@@ -1273,6 +1399,7 @@ export const works: Work[] = [
   },
   {
     slug: "forest-cascade",
+    rank: 168,
     title: "Forest Cascade",
     collection: "water",
     description:
@@ -1282,6 +1409,7 @@ export const works: Work[] = [
   },
   {
     slug: "storm-spire",
+    rank: 106,
     title: "Storm Spire",
     collection: "peaks-ice",
     description:
@@ -1291,6 +1419,7 @@ export const works: Work[] = [
   },
   {
     slug: "cloud-shadows",
+    rank: 103,
     title: "Cloud Shadows",
     collection: "far-horizons",
     description:
@@ -1300,6 +1429,7 @@ export const works: Work[] = [
   },
   {
     slug: "headwaters",
+    rank: 127,
     title: "Headwaters",
     collection: "mountain-forest",
     description:
@@ -1309,6 +1439,7 @@ export const works: Work[] = [
   },
   {
     slug: "mirror-dusk",
+    rank: 151,
     title: "Mirror Dusk",
     collection: "water",
     description:
@@ -1318,6 +1449,7 @@ export const works: Work[] = [
   },
   {
     slug: "autumn-mirror",
+    rank: 136,
     title: "Autumn Mirror",
     collection: "mountain-forest",
     description:
@@ -1327,6 +1459,7 @@ export const works: Work[] = [
   },
   {
     slug: "aspen-script",
+    rank: 171,
     title: "Aspen Script",
     collection: "mountain-forest",
     description:
@@ -1336,6 +1469,7 @@ export const works: Work[] = [
   },
   {
     slug: "silver-dunes",
+    rank: 135,
     title: "Silver Dunes",
     collection: "far-horizons",
     description:
@@ -1345,6 +1479,7 @@ export const works: Work[] = [
   },
   {
     slug: "desert-gentleman",
+    rank: 132,
     title: "Desert Gentleman",
     collection: "wildlife",
     description:
@@ -1354,6 +1489,7 @@ export const works: Work[] = [
   },
   {
     slug: "silken-stream",
+    rank: 79,
     title: "Silken Stream",
     collection: "water",
     description:
@@ -1363,6 +1499,7 @@ export const works: Work[] = [
   },
   {
     slug: "canyon-evening",
+    rank: 178,
     title: "Canyon Evening",
     collection: "water",
     description:
@@ -1372,6 +1509,7 @@ export const works: Work[] = [
   },
   {
     slug: "canyon-light",
+    rank: 129,
     title: "Canyon Light",
     collection: "water",
     description:
@@ -1381,6 +1519,7 @@ export const works: Work[] = [
   },
   {
     slug: "storm-over-the-pines",
+    rank: 77,
     title: "Storm over the Pines",
     collection: "mountain-forest",
     description:
@@ -1390,6 +1529,7 @@ export const works: Work[] = [
   },
   {
     slug: "summer-reflection",
+    rank: 83,
     title: "Summer Reflection",
     collection: "mountain-forest",
     description:
@@ -1399,6 +1539,7 @@ export const works: Work[] = [
   },
   {
     slug: "meadow-watch",
+    rank: 37,
     title: "Meadow Watch",
     collection: "mountain-forest",
     description:
@@ -1408,6 +1549,7 @@ export const works: Work[] = [
   },
   {
     slug: "the-old-maple",
+    rank: 27,
     title: "The Old Maple",
     collection: "mountain-forest",
     description:
@@ -1417,6 +1559,7 @@ export const works: Work[] = [
   },
   {
     slug: "kindred",
+    rank: 69,
     title: "Kindred",
     collection: "wildlife",
     description:
@@ -1426,6 +1569,7 @@ export const works: Work[] = [
   },
   {
     slug: "savanna-sentinel",
+    rank: 100,
     title: "Savanna Sentinel",
     collection: "wildlife",
     description:
@@ -1435,6 +1579,7 @@ export const works: Work[] = [
   },
   {
     slug: "springbok",
+    rank: 78,
     title: "Springbok",
     collection: "wildlife",
     description:
@@ -1444,6 +1589,7 @@ export const works: Work[] = [
   },
   {
     slug: "last-embers",
+    rank: 117,
     title: "Last Embers",
     collection: "light-sky",
     description:
@@ -1453,6 +1599,7 @@ export const works: Work[] = [
   },
   {
     slug: "painted-hunter",
+    rank: 43,
     title: "Painted Hunter",
     collection: "wildlife",
     description:
@@ -1462,6 +1609,7 @@ export const works: Work[] = [
   },
   {
     slug: "emerald-climber",
+    rank: 54,
     title: "Emerald Climber",
     collection: "wildlife",
     description:
@@ -1471,6 +1619,7 @@ export const works: Work[] = [
   },
   {
     slug: "lord-of-the-grass",
+    rank: 101,
     title: "Lord of the Grass",
     collection: "wildlife",
     description:
@@ -1480,6 +1629,7 @@ export const works: Work[] = [
   },
   {
     slug: "rising-mist",
+    rank: 159,
     title: "Rising Mist",
     collection: "water",
     description:
@@ -1489,6 +1639,7 @@ export const works: Work[] = [
   },
   {
     slug: "open-plains",
+    rank: 115,
     title: "Open Plains",
     collection: "wildlife",
     description:
@@ -1498,6 +1649,7 @@ export const works: Work[] = [
   },
   {
     slug: "granite-tide",
+    rank: 102,
     title: "Granite Tide",
     collection: "water",
     description:
@@ -1507,6 +1659,7 @@ export const works: Work[] = [
   },
   {
     slug: "emerald-amphitheater",
+    rank: 23,
     title: "Emerald Amphitheater",
     collection: "water",
     description:
@@ -1516,6 +1669,7 @@ export const works: Work[] = [
   },
   {
     slug: "ancient-mariner",
+    rank: 98,
     title: "Ancient Mariner",
     collection: "wildlife",
     description:
@@ -1525,6 +1679,7 @@ export const works: Work[] = [
   },
   {
     slug: "mountain-staircase",
+    rank: 104,
     title: "Mountain Staircase",
     collection: "water",
     description:
@@ -1534,6 +1689,7 @@ export const works: Work[] = [
   },
   {
     slug: "snowmelt-run",
+    rank: 76,
     title: "Snowmelt Run",
     collection: "water",
     description:
@@ -1543,6 +1699,7 @@ export const works: Work[] = [
   },
   {
     slug: "granite-ribbon",
+    rank: 26,
     title: "Granite Ribbon",
     collection: "water",
     description:
@@ -1552,6 +1709,7 @@ export const works: Work[] = [
   },
   {
     slug: "sapphire-caldera",
+    rank: 67,
     title: "Sapphire Caldera",
     collection: "water",
     description:
@@ -1561,6 +1719,7 @@ export const works: Work[] = [
   },
   {
     slug: "reef-garden",
+    rank: 94,
     title: "Reef Garden",
     collection: "water",
     description:
@@ -1570,6 +1729,7 @@ export const works: Work[] = [
   },
   {
     slug: "the-great-bend",
+    rank: 11,
     title: "The Great Bend",
     collection: "far-horizons",
     description:
@@ -1579,6 +1739,7 @@ export const works: Work[] = [
   },
   {
     slug: "first-steps",
+    rank: 81,
     title: "First Steps",
     collection: "wildlife",
     description:
@@ -1588,6 +1749,7 @@ export const works: Work[] = [
   },
   {
     slug: "forest-jewel",
+    rank: 107,
     title: "Forest Jewel",
     collection: "water",
     description:
@@ -1597,6 +1759,7 @@ export const works: Work[] = [
   },
   {
     slug: "stone-window",
+    rank: 160,
     title: "Stone Window",
     collection: "far-horizons",
     description:
@@ -1606,6 +1769,7 @@ export const works: Work[] = [
   },
   {
     slug: "little-lion",
+    rank: 55,
     title: "Little Lion",
     collection: "wildlife",
     description:
@@ -1615,6 +1779,7 @@ export const works: Work[] = [
   },
   {
     slug: "granite-valley",
+    rank: 179,
     title: "Granite Valley",
     collection: "mountain-forest",
     description:
@@ -1624,6 +1789,7 @@ export const works: Work[] = [
   },
   {
     slug: "standoff",
+    rank: 47,
     title: "Standoff",
     collection: "wildlife",
     description:
@@ -1633,6 +1799,7 @@ export const works: Work[] = [
   },
   {
     slug: "river-horse",
+    rank: 75,
     title: "River Horse",
     collection: "wildlife",
     description:
@@ -1642,6 +1809,7 @@ export const works: Work[] = [
   },
   {
     slug: "three-of-a-kind",
+    rank: 88,
     title: "Three of a Kind",
     collection: "wildlife",
     description:
@@ -1651,6 +1819,7 @@ export const works: Work[] = [
   },
   {
     slug: "meadow-prowler",
+    rank: 108,
     title: "Meadow Prowler",
     collection: "wildlife",
     description:
@@ -1660,6 +1829,7 @@ export const works: Work[] = [
   },
   {
     slug: "midday-rest",
+    rank: 165,
     title: "Midday Rest",
     collection: "wildlife",
     description:
@@ -1669,6 +1839,7 @@ export const works: Work[] = [
   },
   {
     slug: "ocean-fury",
+    rank: 157,
     title: "Ocean Fury",
     collection: "water",
     description:
@@ -1678,6 +1849,7 @@ export const works: Work[] = [
   },
   {
     slug: "the-lookout",
+    rank: 121,
     title: "The Lookout",
     collection: "wildlife",
     description:
@@ -1687,6 +1859,7 @@ export const works: Work[] = [
   },
   {
     slug: "lone-lily",
+    rank: 141,
     title: "Lone Lily",
     collection: "water",
     description:
@@ -1696,6 +1869,7 @@ export const works: Work[] = [
   },
   {
     slug: "gentle-giant",
+    rank: 145,
     title: "Gentle Giant",
     collection: "wildlife",
     description:
@@ -1705,6 +1879,7 @@ export const works: Work[] = [
   },
   {
     slug: "painted-earth",
+    rank: 166,
     title: "Painted Earth",
     collection: "far-horizons",
     description:
@@ -1714,6 +1889,7 @@ export const works: Work[] = [
   },
   {
     slug: "fern-cathedral",
+    rank: 97,
     title: "Fern Cathedral",
     collection: "mountain-forest",
     description:
@@ -1723,6 +1899,7 @@ export const works: Work[] = [
   },
   {
     slug: "winter-quiet",
+    rank: 174,
     title: "Winter Quiet",
     collection: "mountain-forest",
     description:
@@ -1732,6 +1909,7 @@ export const works: Work[] = [
   },
   {
     slug: "hidden-gaze",
+    rank: 34,
     title: "Hidden Gaze",
     collection: "wildlife",
     description:
@@ -1741,6 +1919,7 @@ export const works: Work[] = [
   },
   {
     slug: "first-bloom",
+    rank: 118,
     title: "First Bloom",
     collection: "mountain-forest",
     description:
@@ -1750,6 +1929,7 @@ export const works: Work[] = [
   },
   {
     slug: "the-old-warrior",
+    rank: 154,
     title: "The Old Warrior",
     collection: "wildlife",
     description:
@@ -1759,6 +1939,7 @@ export const works: Work[] = [
   },
   {
     slug: "golden-beak",
+    rank: 51,
     title: "Golden Beak",
     collection: "wildlife",
     description:
@@ -1768,6 +1949,7 @@ export const works: Work[] = [
   },
   {
     slug: "tuxedo-pair",
+    rank: 58,
     title: "Tuxedo Pair",
     collection: "wildlife",
     description:
@@ -1777,6 +1959,7 @@ export const works: Work[] = [
   },
   {
     slug: "grooming-hour",
+    rank: 40,
     title: "Grooming Hour",
     collection: "wildlife",
     description:
@@ -1786,6 +1969,7 @@ export const works: Work[] = [
   },
   {
     slug: "amber-chamber",
+    rank: 93,
     title: "Amber Chamber",
     collection: "light-sky",
     description:
@@ -1795,6 +1979,7 @@ export const works: Work[] = [
   },
   {
     slug: "quiet-stride",
+    rank: 49,
     title: "Quiet Stride",
     collection: "wildlife",
     description:
@@ -1804,6 +1989,7 @@ export const works: Work[] = [
   },
   {
     slug: "wading-party",
+    rank: 175,
     title: "Wading Party",
     collection: "wildlife",
     description:
@@ -1813,6 +1999,7 @@ export const works: Work[] = [
   },
   {
     slug: "on-the-wing",
+    rank: 124,
     title: "On the Wing",
     collection: "wildlife",
     description:
@@ -1822,6 +2009,7 @@ export const works: Work[] = [
   },
   {
     slug: "moss-cascade",
+    rank: 38,
     title: "Moss Cascade",
     collection: "water",
     description:
@@ -1831,6 +2019,7 @@ export const works: Work[] = [
   },
   {
     slug: "skyward",
+    rank: 48,
     title: "Skyward",
     collection: "mountain-forest",
     description:
@@ -1840,6 +2029,7 @@ export const works: Work[] = [
   },
   {
     slug: "fern-pool",
+    rank: 73,
     title: "Fern Pool",
     collection: "water",
     description:
@@ -1849,6 +2039,7 @@ export const works: Work[] = [
   },
   {
     slug: "thundering-mist",
+    rank: 44,
     title: "Thundering Mist",
     collection: "water",
     description:
@@ -1858,6 +2049,7 @@ export const works: Work[] = [
   },
   {
     slug: "birch-sun",
+    rank: 150,
     title: "Reaching for the Sun",
     collection: "mountain-forest",
     description:
@@ -1867,6 +2059,7 @@ export const works: Work[] = [
   },
   {
     slug: "beach-patrol",
+    rank: 72,
     title: "Beach Patrol",
     collection: "wildlife",
     description:
@@ -1876,6 +2069,7 @@ export const works: Work[] = [
   },
   {
     slug: "penguin-portrait",
+    rank: 66,
     title: "Formal Attire",
     collection: "wildlife",
     description:
@@ -1885,6 +2079,7 @@ export const works: Work[] = [
   },
   {
     slug: "fern-gorge",
+    rank: 162,
     title: "Fern Gorge",
     collection: "water",
     description:
@@ -1894,6 +2089,7 @@ export const works: Work[] = [
   },
   {
     slug: "tropic-flame",
+    rank: 130,
     title: "Tropic Flame",
     collection: "mountain-forest",
     description:
@@ -1913,6 +2109,9 @@ export function isPortrait(slug: string) {
   return height > width;
 }
 
+/** All works, best first (by `rank`). Every listing derives from this order. */
+export const works: Work[] = [...catalogWorks].sort((a, b) => a.rank - b.rank);
+
 export function getWork(slug: string) {
   return works.find((w) => w.slug === slug);
 }
@@ -1925,10 +2124,9 @@ export function getWorksInCollection(slug: string) {
   return works.filter((w) => w.collection === slug && !w.webOnly);
 }
 
+/** Home hero: the eight top-ranked listed works. */
 export function getHeroWorks() {
-  return works
-    .filter((w) => w.heroOrder !== undefined && !w.webOnly)
-    .sort((a, b) => (a.heroOrder ?? 0) - (b.heroOrder ?? 0));
+  return works.filter((w) => !w.webOnly).slice(0, 8);
 }
 
 export function getNewReleases() {

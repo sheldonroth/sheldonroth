@@ -34,7 +34,7 @@ export default function ArtistPage() {
   return (
     <>
       <section className="lk-hero-h relative w-full overflow-hidden bg-black">
-        <Image src={hero.src} alt="Frozen Symphony by Sheldon Roth" fill priority quality={90} sizes="100vw" className="object-cover" />
+        <Image src={hero.src} alt="Frozen Symphony by Sheldon Roth" fill priority quality={80} sizes="100vw" className="object-cover" />
         <div className="lk-scrim absolute inset-0" />
         <div className="absolute inset-x-0 bottom-0 px-5 pb-[70px] text-center text-white md:pb-[90px]">
           <p className="lk-hero-eyebrow fade-up">The Artist</p>
@@ -65,13 +65,13 @@ export default function ArtistPage() {
             </div>
           </Reveal>
           <Reveal delay={150} className="relative aspect-[4/5] overflow-hidden">
-            <Image src={portrait.src} alt="Alpine Bloom by Sheldon Roth" fill quality={85} sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+            <Image src={portrait.src} alt="Alpine Bloom by Sheldon Roth" fill quality={75} sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
           </Reveal>
         </div>
       </section>
 
       <section className="relative overflow-hidden py-[100px] lg:py-[160px]">
-        <Image src={wide.src} alt="" fill quality={85} sizes="100vw" className="object-cover" />
+        <Image src={wide.src} alt="" fill quality={80} sizes="100vw" className="object-cover" />
         <div className="absolute inset-0 bg-black/60" />
         <Reveal className="lk-container relative max-w-4xl text-center text-white">
           <p className="lk-hero-eyebrow">Philosophy</p>

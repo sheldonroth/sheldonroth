@@ -69,7 +69,7 @@ export default function CartPage() {
                 {/* Image */}
                 <div className="relative w-32 h-40 flex-shrink-0 bg-surface">
                   {item.image && (
-                    <Image quality={85}
+                    <Image quality={75}
                       src={item.image}
                       alt={item.title}
                       fill
