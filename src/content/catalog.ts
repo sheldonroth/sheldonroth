@@ -1388,6 +1388,123 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "summer-reflection",
+    title: "Summer Reflection",
+    collection: "mountain-forest",
+    description:
+      "Snow-streaked peaks and dark spruce mirror themselves in a still alpine lake on a summer morning.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "meadow-watch",
+    title: "Meadow Watch",
+    collection: "mountain-forest",
+    description:
+      "A mule deer pauses in a wildflower meadow beneath a wall of jagged red peaks.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "the-old-maple",
+    title: "The Old Maple",
+    collection: "mountain-forest",
+    description:
+      "An ancient maple spreads its twisting limbs over a carpet of sunlit moss.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "kindred",
+    title: "Kindred",
+    collection: "wildlife",
+    description:
+      "A young kudu turns her great ears toward the camera while her companion grazes behind.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "savanna-sentinel",
+    title: "Savanna Sentinel",
+    collection: "wildlife",
+    description:
+      "A lone gemsbok stands tall in golden grass beneath flat-topped acacias.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "springbok",
+    title: "Springbok",
+    collection: "wildlife",
+    description:
+      "A springbok ram stands alert at the edge of his grazing herd.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "last-embers",
+    title: "Last Embers",
+    collection: "light-sky",
+    description:
+      "A dead tree stands silhouetted against storm clouds as the final glow of sunset burns along the horizon.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "painted-hunter",
+    title: "Painted Hunter",
+    collection: "wildlife",
+    description:
+      "An African wild dog lopes through tall grass, its patchwork coat blending with the savanna.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "emerald-climber",
+    title: "Emerald Climber",
+    collection: "wildlife",
+    description:
+      "A chameleon creeps along a slender stem, every scale of its jewelled skin in sharp relief against the sky.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "lord-of-the-grass",
+    title: "Lord of the Grass",
+    collection: "wildlife",
+    description:
+      "A young male lion rests in lush green grass, gazing out over his territory.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "rising-mist",
+    title: "Rising Mist",
+    collection: "water",
+    description:
+      "From high above, a vast river plunges into a chasm and a towering plume of spray rises over the forest.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "open-plains",
+    title: "Open Plains",
+    collection: "wildlife",
+    description:
+      "A lone bull elephant walks out of the acacia woodland onto a sea of golden grass.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "granite-tide",
+    title: "Granite Tide",
+    collection: "water",
+    description:
+      "The sea smooths to mist around rounded granite boulders glowing in soft coastal light.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {
