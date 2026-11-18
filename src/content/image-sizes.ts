@@ -140,4 +140,10 @@ export const imageSizes: Record<string, { width: number; height: number }> = {
   "mirror-dusk": { width: 3840, height: 2561 },
   "autumn-mirror": { width: 3840, height: 2382 },
   "aspen-script": { width: 2560, height: 3840 },
+  "silver-dunes": { width: 3840, height: 2560 },
+  "desert-gentleman": { width: 3840, height: 2560 },
+  "silken-stream": { width: 3840, height: 2561 },
+  "canyon-evening": { width: 3840, height: 2561 },
+  "canyon-light": { width: 3840, height: 2561 },
+  "storm-over-the-pines": { width: 2560, height: 3840 },
 };

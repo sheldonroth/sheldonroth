@@ -1334,6 +1334,60 @@ export const works: Work[] = [
     editionSize: 50,
     isNew: true,
   },
+  {
+    slug: "silver-dunes",
+    title: "Silver Dunes",
+    collection: "far-horizons",
+    description:
+      "Wind-carved dunes roll to the horizon in low light, every ripple and crest drawn in silver and shadow.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "desert-gentleman",
+    title: "Desert Gentleman",
+    collection: "wildlife",
+    description:
+      "A camel in a hand-woven muzzle poses in profile against a soft desert sky.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "silken-stream",
+    title: "Silken Stream",
+    collection: "water",
+    description:
+      "A long exposure turns a mountain stream to silk as it slips over stones between towering spruce.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "canyon-evening",
+    title: "Canyon Evening",
+    collection: "water",
+    description:
+      "The last warm light catches a line of sandstone cliffs above a broad, calm river.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "canyon-light",
+    title: "Canyon Light",
+    collection: "water",
+    description:
+      "Sunlight blazes on the far walls of a deep canyon while the river below runs cool in shadow.",
+    editionSize: 50,
+    isNew: true,
+  },
+  {
+    slug: "storm-over-the-pines",
+    title: "Storm over the Pines",
+    collection: "mountain-forest",
+    description:
+      "Storm clouds gather over a dark peak as sunlit pine forest and green meadow fall away below.",
+    editionSize: 50,
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {

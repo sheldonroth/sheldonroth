@@ -141,4 +141,10 @@ export const masterLongEdge: Record<string, number> = {
   "mirror-dusk": 7952,
   "autumn-mirror": 7952,
   "aspen-script": 6000,
+  "silver-dunes": 6000,
+  "desert-gentleman": 6000,
+  "silken-stream": 7952,
+  "canyon-evening": 7952,
+  "canyon-light": 7952,
+  "storm-over-the-pines": 6000,
 };
