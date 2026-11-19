@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import { sizeFor, works } from '@/content/catalog';
-import { EDITION_PER_SIZE } from '@/content/commerce';
-import { buildCheckoutParams, createCheckoutSession } from '@/lib/checkout';
-import { remainingFor } from '@/lib/orders';
+import { buildCheckoutParams, createCheckoutSession, priceLines } from '@/lib/checkout';
+import { soldTotals } from '@/lib/orders';
 import { checkoutEnabled, getStripe } from '@/lib/stripe';
 
 export const runtime = 'nodejs';
@@ -43,28 +42,20 @@ export async function POST(request: Request) {
     lines.set(key, { slug: work.slug, size: size.name, quantity: (prev?.quantity ?? 0) + quantity });
   }
 
-  // Edition check: never start a checkout for prints that are no longer available.
-  let remaining: Map<string, number>;
+  // Price every unit from the shared edition and the ladder; refuse sold-out or inquiry-only editions.
+  let sold: Map<string, number>;
   try {
-    remaining = await remainingFor([...lines.values()]);
+    sold = await soldTotals([...new Set([...lines.values()].map((l) => l.slug))]);
   } catch (e) {
     console.error('edition lookup failed', e);
     return NextResponse.json({ error: 'Checkout is briefly unavailable. Please try again in a moment.' }, { status: 503 });
   }
-  for (const [key, l] of lines) {
-    const left = remaining.get(key) ?? EDITION_PER_SIZE;
-    if (left < l.quantity) {
-      const title = works.find((w) => w.slug === l.slug)!.title;
-      return NextResponse.json(
-        { error: left <= 0 ? `${title} (${l.size}) is sold out.` : `Only ${left} of ${title} (${l.size}) remain.` },
-        { status: 409 },
-      );
-    }
-  }
+  const priced = priceLines([...lines.values()], sold);
+  if (!priced.ok) return NextResponse.json({ error: priced.error, code: priced.code }, { status: 409 });
 
   const origin = process.env.NEXT_PUBLIC_BASE_URL || new URL(request.url).origin;
   try {
-    const session = await createCheckoutSession(getStripe(), buildCheckoutParams([...lines.values()], origin));
+    const session = await createCheckoutSession(getStripe(), buildCheckoutParams(priced.lines, origin));
     return NextResponse.json({ url: session.url });
   } catch (error) {
     console.error('Stripe checkout error:', error);

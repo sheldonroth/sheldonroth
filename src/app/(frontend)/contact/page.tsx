@@ -3,7 +3,8 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import PageHeader from '@/components/PageHeader';
 import InquiryForm from './InquiryForm';
-import { getImage, PRINT_SIZES, sizesFor, works } from '@/content/catalog';
+import { getImage, sizesFor, works } from '@/content/catalog';
+import { ARTIST_PROOF_SIZE, PRINT_FORMATS, TIERS, sizeLabel } from '@/content/pricing';
 
 export const metadata: Metadata = {
   title: 'Inquire',
@@ -26,7 +27,17 @@ export default function ContactPage() {
           </div>
           <div id="inquire" className="order-1 lg:order-2 relative scroll-mt-[120px] border border-line bg-surface p-6 sm:p-12">
             <Suspense fallback={null}>
-              <InquiryForm works={works.map((w) => ({ slug: w.slug, title: w.title, sizes: sizesFor(w.slug).map((s) => s.name) }))} sizes={PRINT_SIZES.map((p) => p.name)} />
+              <InquiryForm
+                works={works.map((w) => ({
+                  slug: w.slug,
+                  title: w.title,
+                  sizes: [
+                    ...sizesFor(w.slug).map((s) => ({ value: s.name, label: s.dimensions })),
+                    ...(TIERS[w.tier].artistProofs ? [{ value: ARTIST_PROOF_SIZE, label: 'Artist Proof (largest size)' }] : []),
+                  ],
+                }))}
+                sizes={PRINT_FORMATS.map((f) => ({ value: f.key, label: sizeLabel(f, false) }))}
+              />
             </Suspense>
           </div>
         </div>

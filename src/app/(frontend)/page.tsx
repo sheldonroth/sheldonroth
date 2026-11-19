@@ -3,7 +3,7 @@ import Link from 'next/link';
 import HeroSlideshow from '@/components/HeroSlideshow';
 import Reveal from '@/components/Reveal';
 import WorkCard from '@/components/WorkCard';
-import { collections, getBestSellers, getCollection, getHeroWorks, getImage, getNewReleases, getWorksInCollection } from '@/content/catalog';
+import { collections, getCuratorsPicks, getCollection, getHeroWorks, getImage, getNewReleases, getWorksInCollection } from '@/content/catalog';
 
 export default function Home() {
   const slides = getHeroWorks().map((w) => ({
@@ -18,7 +18,7 @@ export default function Home() {
   const heroSlugs = new Set(slides.map((s) => s.slug));
   const signature = getWorksInCollection('signature').filter((w) => !heroSlugs.has(w.slug)).slice(0, 8);
   const newReleases = getNewReleases().slice(0, 8);
-  const bestSellers = getBestSellers().slice(0, 6);
+  const picks = getCuratorsPicks().slice(0, 6);
   const galleries = collections.filter((c) => !c.curated);
   const panorama = getWorksInCollection('panoramas').find((w) => !heroSlugs.has(w.slug))!;
   const panoImg = getImage(panorama.slug);
@@ -143,20 +143,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Best sellers */}
+      {/* Curator's picks: a curatorial selection, not a sales claim */}
       <section className="lk-section">
         <div className="lk-container">
           <div className="text-center">
-            <p className="lk-eyebrow">Collector Favourites</p>
-            <h2 className="lk-h2 mt-6">Best Sellers</h2>
+            <p className="lk-eyebrow">Chosen by the Artist</p>
+            <h2 className="lk-h2 mt-6">Curator&apos;s Picks</h2>
           </div>
           <div className="mt-14 grid grid-cols-1 gap-x-10 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
-            {bestSellers.map((w) => (
+            {picks.map((w) => (
               <WorkCard key={w.slug} work={w} />
             ))}
           </div>
           <div className="mt-14 text-center">
-            <Link href="/best-sellers" className="lk-btn lk-btn-gold">View All Best Sellers</Link>
+            <Link href="/premier" className="lk-btn lk-btn-gold">View the Premier Works</Link>
           </div>
         </div>
       </section>

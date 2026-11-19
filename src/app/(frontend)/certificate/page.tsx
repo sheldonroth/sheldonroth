@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import PolicyPage, { PolicySection } from '@/components/PolicyPage';
-import { EDITION_PER_SIZE } from '@/content/commerce';
 
 export const metadata: Metadata = {
   title: 'Certificate of Authenticity',
@@ -14,15 +13,17 @@ export default function CertificatePage() {
         <p>Each print is accompanied by a certificate of authenticity recording:</p>
         <ul className="list-disc space-y-2 pl-6">
           <li>The title of the work and the artist, Sheldon Roth</li>
-          <li>The print size and its edition number (for example, 7 / {EDITION_PER_SIZE})</li>
+          <li>The print size and its edition number (for example, 7 / 40)</li>
           <li>The materials: archival print face-mounted to acrylic</li>
           <li>The date of production and the artist&apos;s signature</li>
         </ul>
       </PolicySection>
       <PolicySection title="Limited Means Limited">
         <p>
-          Each size of each work is a separate edition of {EDITION_PER_SIZE}. Numbers are issued in order as prints are sold and are never
-          reused. When an edition is complete it is closed permanently.
+          Each work is released as one limited edition shared across all of its sizes: 20 prints for Premier works, 40 for Signature
+          Works and 75 for the Collection. Numbers are issued in order as prints are sold and are never reused. When an edition is
+          complete it is closed permanently. Premier and Signature works also have a small, separately numbered run of Artist Proofs
+          (marked AP).
         </p>
       </PolicySection>
       <PolicySection title="Keep It With the Work">

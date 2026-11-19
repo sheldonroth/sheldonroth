@@ -21,7 +21,7 @@ export default function Navigation({ galleries }: { galleries: GalleryLink[] }) 
   const workMenu = [
     { href: '/shop', label: 'View All' },
     { href: '/new-releases', label: 'New Releases' },
-    { href: '/best-sellers', label: 'Best Sellers' },
+    { href: '/premier', label: 'Premier Works' },
     ...galleries.map((c) => ({ href: `/collections/${c.slug}`, label: c.title })),
   ];
   const pathname = usePathname();
@@ -144,7 +144,7 @@ export default function Navigation({ galleries }: { galleries: GalleryLink[] }) 
               {l.label}
             </Link>
           ))}
-          <Link href="/best-sellers" tabIndex={open ? 0 : -1} className="lk-nav border-b border-line py-5 text-[#222]">Best Sellers</Link>
+          <Link href="/premier" tabIndex={open ? 0 : -1} className="lk-nav border-b border-line py-5 text-[#222]">Premier Works</Link>
           <p className="pt-6 text-[12px] font-bold uppercase tracking-[0.08em] text-[#767676]">Galleries</p>
           <div className="grid grid-cols-2 gap-x-6 pb-10 pt-2">
             {galleries.map((c) => (

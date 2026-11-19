@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { sizeFor, works } from '@/content/catalog';
+import { ARTIST_PROOF_SIZE, TIERS } from '@/content/pricing';
 import { hashIp, markNotified, notify, recentCount, saveInquiry } from '@/lib/inquiries';
 
 export const runtime = 'nodejs';
@@ -47,7 +48,12 @@ export async function POST(req: NextRequest) {
   const slug = clean(body.artwork, 120);
   const sizeName = clean(body.size, 40);
   const work = slug ? works.find((w) => w.slug === slug) : undefined;
-  const printSize = work && sizeFor(work.slug, sizeName) ? sizeName : null;
+  const fitted = work ? sizeFor(work.slug, sizeName) : undefined;
+  const printSize = fitted
+    ? fitted.dimensions
+    : work && sizeName === ARTIST_PROOF_SIZE && TIERS[work.tier].artistProofs
+      ? 'Artist Proof'
+      : null;
 
   const errors: Record<string, string> = {};
   if (name.length < 2) errors.name = 'Please enter your name.';

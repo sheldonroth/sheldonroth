@@ -1,5 +1,6 @@
 import { imageSizes } from './image-sizes';
 import { masterLongEdge } from './master-sizes';
+import { LEGACY_SIZE_NAMES, PREMIER_SLUGS, PRINT_FORMATS, TIERS, sizeLabel, type SizeKey, type Tier } from './pricing';
 
 export type CollectionSlug =
   | 'signature'
@@ -32,28 +33,32 @@ export interface Work {
   /** Every gallery this work belongs to, primary first. */
   collections: CollectionSlug[];
   description: string;
+  /** Pricing tier (see pricing.ts): derived from rank, never set by hand. */
+  tier: Tier;
+  /** Prints in the edition, shared across all sizes (set by the tier). */
   editionSize: number;
   isNew?: boolean;
-  bestSeller?: boolean;
+  /** Hand-picked for the home page "Curator's Picks" row. A curatorial choice, not a sales claim. */
+  curatorsPick?: boolean;
   /** Curated fine-art ranking, 1 = strongest. Drives display order everywhere works are listed. */
   rank: number;
   /** On the site with its own page, but kept out of the main galleries */
   webOnly?: boolean;
 }
 
+/** A work as written in the catalog below; tier and edition are added from its rank. */
+type CatalogWork = Omit<Work, 'tier' | 'editionSize'>;
+
 export interface PrintSize {
-  name: string;
-  /** long x short edge in inches */
+  /** Size key stored in carts, Stripe and the edition table, e.g. "30x20". */
+  name: SizeKey;
+  /** Display label turned for the work's orientation, e.g. `30" × 20"`. */
+  dimensions: string;
   long: number;
   short: number;
+  /** Opening (step 1) price for this work's tier. The live price comes from the ladder (see pricing.ts). */
   price: number;
 }
-
-export const PRINT_SIZES: PrintSize[] = [
-  { name: 'Gallery', long: 30, short: 20, price: 2800 },
-  { name: 'Signature', long: 45, short: 30, price: 4900 },
-  { name: 'Masterwork', long: 60, short: 40, price: 8500 },
-];
 
 export const PRINT_DETAILS = [
   'Face-mounted to anti-glare museum acrylic for depth and luminosity',
@@ -155,7 +160,7 @@ export const collections: Collection[] = [
   },
 ];
 
-const catalogWorks: Work[] = [
+const catalogWorks: CatalogWork[] = [
   {
     slug: "sunstar-valley",
     rank: 45,
@@ -164,7 +169,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains", "sky"],
     description:
       "The sun bursts over a high ridge and pours light down a deep mountain valley, layer after layer of peaks fading into the haze.",
-    editionSize: 50,
   },
   {
     slug: "alpenglow",
@@ -174,8 +178,7 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "Fresh snow and fluted ice catch the last warm light as a great summit rises into a deep blue sky.",
-    editionSize: 50,
-    bestSeller: true,
+    curatorsPick: true,
   },
   {
     slug: "above-the-clouds",
@@ -185,8 +188,7 @@ const catalogWorks: Work[] = [
     collections: ["mountains", "panoramas"],
     description:
       "Twin summits stand clear above a sea of cloud, their ridgelines sharp against an endless blue.",
-    editionSize: 50,
-    bestSeller: true,
+    curatorsPick: true,
   },
   {
     slug: "cloud-tide",
@@ -196,7 +198,6 @@ const catalogWorks: Work[] = [
     collections: ["sky"],
     description:
       "A tide of cloud spills over a sheer escarpment and dissolves into the valley below, slow as breath.",
-    editionSize: 50,
   },
   {
     slug: "glacial-jewel",
@@ -206,8 +207,7 @@ const catalogWorks: Work[] = [
     collections: ["lakes"],
     description:
       "A turquoise lake glows in a basin of red and green stone, fed by the snowfields that cradle it.",
-    editionSize: 50,
-    bestSeller: true,
+    curatorsPick: true,
   },
   {
     slug: "sky-on-fire",
@@ -217,7 +217,6 @@ const catalogWorks: Work[] = [
     collections: ["sky", "panoramas"],
     description:
       "The whole sky ignites in crimson and gold above still water, mirrored in a single burning moment.",
-    editionSize: 50,
   },
   {
     slug: "wildflower-basin",
@@ -227,7 +226,6 @@ const catalogWorks: Work[] = [
     collections: ["lakes"],
     description:
       "A carpet of magenta wildflowers runs to the foot of the peaks in a high summer basin.",
-    editionSize: 50,
   },
   {
     slug: "granite-throne",
@@ -237,8 +235,7 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "A sculpted granite spire stands enthroned above its glaciers, every ridge drawn in light and shadow.",
-    editionSize: 50,
-    bestSeller: true,
+    curatorsPick: true,
   },
   {
     slug: "glacier-frame",
@@ -248,7 +245,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "Forest and stone frame a hanging glacier as it pours from the summit snows.",
-    editionSize: 50,
   },
   {
     slug: "snow-range",
@@ -258,7 +254,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains", "panoramas"],
     description:
       "A long wall of snow-covered peaks stretches across the horizon in a sweeping panorama.",
-    editionSize: 50,
   },
   {
     slug: "sentinel",
@@ -268,7 +263,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "A lone summit rises above the cloud, a white sentinel watching over the valley.",
-    editionSize: 50,
   },
   {
     slug: "rising-pyramid",
@@ -278,7 +272,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "A perfect pyramid of rock and ice climbs out of the drifting cloud.",
-    editionSize: 50,
   },
   {
     slug: "roof-of-the-world",
@@ -288,7 +281,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains", "panoramas"],
     description:
       "The highest ridges break through the cloud in a vast panorama of rock, snow and sky.",
-    editionSize: 50,
   },
   {
     slug: "frozen-symphony",
@@ -298,7 +290,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "Towers of glacier ice rise in fluted columns, a frozen symphony of light and form.",
-    editionSize: 50,
   },
   {
     slug: "valley-of-giants",
@@ -308,7 +299,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "Giant peaks line a deep forested valley under a sky of drifting cloud.",
-    editionSize: 50,
   },
   {
     slug: "ice-spires",
@@ -318,7 +308,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "Spires of glacier ice stand guard before a skyline of jagged peaks.",
-    editionSize: 50,
   },
   {
     slug: "monarch-of-ice",
@@ -328,7 +317,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains", "panoramas"],
     description:
       "A broad monarch of a mountain wears its glaciers like a mantle of light.",
-    editionSize: 50,
   },
   {
     slug: "glaciers-edge",
@@ -338,7 +326,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "A river of ice carves its way down between forested ridges toward the valley floor.",
-    editionSize: 50,
   },
   {
     slug: "cloud-lake",
@@ -348,7 +335,6 @@ const catalogWorks: Work[] = [
     collections: ["lakes", "panoramas"],
     description:
       "A milky blue lake lies beneath rugged peaks as clouds build over the high country.",
-    editionSize: 50,
   },
   {
     slug: "rhododendron-valley",
@@ -358,7 +344,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains", "forests"],
     description:
       "Rhododendrons blaze red beneath a steep valley of snow-dusted peaks.",
-    editionSize: 50,
   },
   {
     slug: "storm-lake",
@@ -368,7 +353,6 @@ const catalogWorks: Work[] = [
     collections: ["lakes", "panoramas"],
     description:
       "Storm light falls across a high alpine lake ringed by snow-streaked ridges.",
-    editionSize: 50,
   },
   {
     slug: "bands-of-light",
@@ -378,7 +362,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "Bands of late sun sweep across rolling green ridges, sculpting every fold of the land.",
-    editionSize: 50,
   },
   {
     slug: "mist-veil",
@@ -388,7 +371,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains", "panoramas"],
     description:
       "Mist drifts over a forested ridge as the peak beyond slips in and out of view.",
-    editionSize: 50,
   },
   {
     slug: "lake-and-summit",
@@ -398,7 +380,6 @@ const catalogWorks: Work[] = [
     collections: ["lakes", "mountains"],
     description:
       "A dark mountain lake gathers the reflection of a snowy summit at dusk.",
-    editionSize: 50,
   },
   {
     slug: "heart-of-the-mountains",
@@ -408,7 +389,6 @@ const catalogWorks: Work[] = [
     collections: ["lakes"],
     description:
       "A small island of turquoise water sits at the heart of a vast mountain amphitheatre.",
-    editionSize: 50,
   },
   {
     slug: "alpine-bloom",
@@ -418,7 +398,6 @@ const catalogWorks: Work[] = [
     collections: ["forests"],
     description:
       "Wildflowers bloom along a high trail as the peaks rise behind them.",
-    editionSize: 50,
   },
   {
     slug: "snowfield-mirror",
@@ -428,7 +407,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains", "lakes"],
     description:
       "A dark volcanic crag rises above lingering snowfields under a wind-swept sky.",
-    editionSize: 50,
   },
   {
     slug: "painted-mountain",
@@ -438,7 +416,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains", "panoramas"],
     description:
       "A mountain painted in rust and gold glows above a dark green forest.",
-    editionSize: 50,
   },
   {
     slug: "emerald-ribbons",
@@ -448,7 +425,6 @@ const catalogWorks: Work[] = [
     collections: ["water"],
     description:
       "Ribbons of water cascade over mossy rock in a hidden emerald glen.",
-    editionSize: 50,
   },
   {
     slug: "blue-ribbon",
@@ -458,7 +434,6 @@ const catalogWorks: Work[] = [
     collections: ["lakes"],
     description:
       "A ribbon of deep blue water winds between steep green mountainsides.",
-    editionSize: 50,
   },
   {
     slug: "hidden-falls",
@@ -468,7 +443,6 @@ const catalogWorks: Work[] = [
     collections: ["water"],
     description:
       "A curtain of water pours through a stone grotto, softened to silk by a long exposure.",
-    editionSize: 50,
   },
   {
     slug: "liquid-jade",
@@ -478,7 +452,6 @@ const catalogWorks: Work[] = [
     collections: ["lakes"],
     description:
       "Jade-green water fills a quiet basin beneath steep alpine slopes.",
-    editionSize: 50,
   },
   {
     slug: "sapphire-basin",
@@ -488,7 +461,6 @@ const catalogWorks: Work[] = [
     collections: ["lakes"],
     description:
       "A sapphire lake rests in a high basin beneath snow-streaked peaks and a sky of streaming cloud.",
-    editionSize: 50,
   },
   {
     slug: "range-of-light",
@@ -498,7 +470,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains", "panoramas"],
     description:
       "An entire range of snowy peaks glows beneath towering summer clouds.",
-    editionSize: 50,
   },
   {
     slug: "high-country",
@@ -508,7 +479,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains", "panoramas"],
     description:
       "Snowy summits and green ridges roll away beneath a bright summer sky.",
-    editionSize: 50,
   },
   {
     slug: "eye-of-the-mountain",
@@ -518,7 +488,6 @@ const catalogWorks: Work[] = [
     collections: ["lakes"],
     description:
       "A thawing lake opens like an eye in the snow, its floating ice a pale pupil.",
-    editionSize: 50,
   },
   {
     slug: "gold-forest",
@@ -528,7 +497,6 @@ const catalogWorks: Work[] = [
     collections: ["forests"],
     description:
       "The setting sun blazes through ancient trees, turning the forest floor to gold.",
-    editionSize: 50,
   },
   {
     slug: "table-of-the-gods",
@@ -538,7 +506,6 @@ const catalogWorks: Work[] = [
     collections: ["canyons", "panoramas"],
     description:
       "A great flat-topped mountain rises above the sea, its sheer cliffs lit by evening sun.",
-    editionSize: 50,
   },
   {
     slug: "swirling-sands",
@@ -548,7 +515,6 @@ const catalogWorks: Work[] = [
     collections: ["coast"],
     description:
       "From above, white sand and turquoise water swirl together in endless patterns.",
-    editionSize: 50,
   },
   {
     slug: "coral-symphony",
@@ -558,8 +524,7 @@ const catalogWorks: Work[] = [
     collections: ["coast"],
     description:
       "Vibrant coral formations create a natural symphony of colour and texture beneath the waves — a celebration of the reef seen from above.",
-    editionSize: 50,
-    bestSeller: true,
+    curatorsPick: true,
   },
   {
     slug: "island-paradise",
@@ -569,7 +534,6 @@ const catalogWorks: Work[] = [
     collections: ["coast"],
     description:
       "A pristine island floats between azure sky and turquoise sea, the essence of paradise untouched by time.",
-    editionSize: 50,
   },
   {
     slug: "turquoise-depths",
@@ -579,8 +543,7 @@ const catalogWorks: Work[] = [
     collections: ["coast"],
     description:
       "Crystal-clear water reveals layer upon layer of turquoise, inviting the eye into a serene world below the cliffs.",
-    editionSize: 50,
-    bestSeller: true,
+    curatorsPick: true,
   },
   {
     slug: "pacific-edge",
@@ -590,7 +553,6 @@ const catalogWorks: Work[] = [
     collections: ["coast", "panoramas"],
     description:
       "Dramatic coastal rock meets the open ocean in a sweeping panorama that captures the raw energy of the shoreline.",
-    editionSize: 50,
   },
   {
     slug: "sentinel-tree",
@@ -600,7 +562,6 @@ const catalogWorks: Work[] = [
     collections: ["forests"],
     description:
       "A lone weathered tree stands sentinel over golden grassland beneath a soft, open sky.",
-    editionSize: 50,
   },
   {
     slug: "wind-script",
@@ -610,7 +571,6 @@ const catalogWorks: Work[] = [
     collections: ["canyons"],
     description:
       "The wind writes in sand, ridges of light and shadow traced across the dunes.",
-    editionSize: 50,
   },
   {
     slug: "massif-from-the-water",
@@ -620,7 +580,6 @@ const catalogWorks: Work[] = [
     collections: ["coast"],
     description:
       "A long mountain massif rises from a calm blue sea, softened by distance and haze.",
-    editionSize: 50,
   },
   {
     slug: "sea-stack",
@@ -630,7 +589,6 @@ const catalogWorks: Work[] = [
     collections: ["coast"],
     description:
       "A rugged stack of rock rises from deep blue water beneath a cloudless sky.",
-    editionSize: 50,
   },
   {
     slug: "veil-of-cloud",
@@ -640,7 +598,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "Cloud gathers around a towering peak, revealing its summit for only a moment.",
-    editionSize: 50,
     webOnly: true,
   },
   {
@@ -651,7 +608,6 @@ const catalogWorks: Work[] = [
     collections: ["sky", "panoramas"],
     description:
       "The first light of day touches a distant snowy summit above a dark, quiet land.",
-    editionSize: 50,
     webOnly: true,
   },
   {
@@ -662,7 +618,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "Inside the glacier, walls of blue ice rise like the vaults of a cathedral.",
-    editionSize: 50,
     webOnly: true,
   },
   {
@@ -673,7 +628,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "A sheer face of rock and hanging ice drops from summit to valley in one sweeping line.",
-    editionSize: 50,
     webOnly: true,
   },
   {
@@ -684,7 +638,6 @@ const catalogWorks: Work[] = [
     collections: ["lakes"],
     description:
       "Emerald water fills a high basin beneath a ring of weathered peaks.",
-    editionSize: 50,
     webOnly: true,
   },
   {
@@ -695,7 +648,6 @@ const catalogWorks: Work[] = [
     collections: ["water"],
     description:
       "Whitewater thunders through a forested gorge, wild and unrelenting.",
-    editionSize: 50,
     webOnly: true,
   },
   {
@@ -706,7 +658,6 @@ const catalogWorks: Work[] = [
     collections: ["canyons"],
     description:
       "Terraces of stone and water step down the hillside in layers of cream and gold.",
-    editionSize: 50,
     webOnly: true,
   },
   {
@@ -717,7 +668,6 @@ const catalogWorks: Work[] = [
     collections: ["forests", "panoramas"],
     description:
       "Aspens turn to gold beneath snow-dusted peaks in the first days of autumn.",
-    editionSize: 50,
     webOnly: true,
   },
   {
@@ -728,7 +678,6 @@ const catalogWorks: Work[] = [
     collections: ["coast"],
     description:
       "White sand meets clear turquoise water along a quiet, forested shore.",
-    editionSize: 50,
     webOnly: true,
   },
   {
@@ -739,7 +688,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "A green valley climbs toward rugged peaks under a bright, cloud-filled sky.",
-    editionSize: 50,
     webOnly: true,
   },
   {
@@ -750,7 +698,6 @@ const catalogWorks: Work[] = [
     collections: ["sky", "panoramas"],
     description:
       "Clouds catch fire above a darkening ridge as the last light of evening sweeps across the sky.",
-    editionSize: 50,
   },
   {
     slug: "horizon-burn",
@@ -760,7 +707,6 @@ const catalogWorks: Work[] = [
     collections: ["sky", "coast", "panoramas"],
     description:
       "A band of molten gold burns along the horizon as twilight deepens over calm water.",
-    editionSize: 50,
   },
   {
     slug: "last-light",
@@ -770,7 +716,6 @@ const catalogWorks: Work[] = [
     collections: ["sky", "panoramas"],
     description:
       "Layered ridgelines dissolve into haze beneath a sky fading from gold to rose.",
-    editionSize: 50,
   },
   {
     slug: "terraced-meadow",
@@ -780,7 +725,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "Ancient terraced fields glow green beneath towering snow peaks in clear morning light.",
-    editionSize: 50,
   },
   {
     slug: "gilded-sky",
@@ -790,7 +734,6 @@ const catalogWorks: Work[] = [
     collections: ["sky"],
     description:
       "The sky erupts in gold as the sun slips beneath a line of silhouetted trees.",
-    editionSize: 50,
   },
   {
     slug: "rose-summit",
@@ -800,7 +743,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "A great summit turns rose and copper in the soft afterglow of a high-country dusk.",
-    editionSize: 50,
   },
   {
     slug: "golden-tide",
@@ -810,7 +752,6 @@ const catalogWorks: Work[] = [
     collections: ["sky", "coast"],
     description:
       "The setting sun lays a path of gold across the sea toward a rugged, wave-washed shore.",
-    editionSize: 50,
   },
   {
     slug: "morning-mist",
@@ -820,7 +761,6 @@ const catalogWorks: Work[] = [
     collections: ["sky"],
     description:
       "Sunrise sets drifting mist aglow over still water, a lone tree standing at the shore.",
-    editionSize: 50,
   },
   {
     slug: "storm-light",
@@ -830,7 +770,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains", "panoramas"],
     description:
       "Snow-dusted peaks break through parting storm clouds above a quiet valley.",
-    editionSize: 50,
   },
   {
     slug: "canyon-song",
@@ -840,7 +779,6 @@ const catalogWorks: Work[] = [
     collections: ["water", "canyons"],
     description:
       "Turquoise water spills over mossy boulders between towering walls of layered stone.",
-    editionSize: 50,
   },
   {
     slug: "secret-grotto",
@@ -850,7 +788,6 @@ const catalogWorks: Work[] = [
     collections: ["water"],
     description:
       "A ribbon of falling water glows green beneath a stone arch deep inside a hidden canyon.",
-    editionSize: 50,
   },
   {
     slug: "golden-grove",
@@ -860,7 +797,6 @@ const catalogWorks: Work[] = [
     collections: ["forests"],
     description:
       "Pale trunks rise through a blaze of autumn gold in a quiet mountain grove.",
-    editionSize: 50,
   },
   {
     slug: "stone-spires",
@@ -870,7 +806,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "A forest of fluted stone spires climbs toward the sky, every rib and gully carved sharp by wind and ice.",
-    editionSize: 50,
   },
   {
     slug: "cloud-weave",
@@ -880,7 +815,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "Clouds weave through a vast wall of ice and rock as the high peaks emerge from the drifting mist.",
-    editionSize: 50,
   },
   {
     slug: "ice-valley",
@@ -890,7 +824,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "Cloud pours through a vast glacial valley ringed by jagged, snow-bound peaks.",
-    editionSize: 50,
   },
   {
     slug: "ocean-of-cloud",
@@ -900,7 +833,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains", "sky"],
     description:
       "Snow-clad summits stand above a still ocean of cloud that fills the valleys far below.",
-    editionSize: 50,
   },
   {
     slug: "winter-crown",
@@ -910,7 +842,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "A great pyramid of rock and ice crowns the range, its snow-laced ridges sharp against a deep blue sky.",
-    editionSize: 50,
   },
   {
     slug: "summit-cloud",
@@ -920,7 +851,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "A single cloud drifts past a soaring pyramid of rock and snow in the clear high-altitude air.",
-    editionSize: 50,
   },
   {
     slug: "spindrift",
@@ -930,7 +860,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "High winds tear a plume of spindrift from a towering wall of snow and ice.",
-    editionSize: 50,
   },
   {
     slug: "canyon-glow",
@@ -940,7 +869,6 @@ const catalogWorks: Work[] = [
     collections: ["canyons"],
     description:
       "Sunlight bursts through a sculpted sandstone arch, setting the smooth canyon walls aglow in shades of fire.",
-    editionSize: 50,
   },
   {
     slug: "sandstone-flame",
@@ -950,7 +878,6 @@ const catalogWorks: Work[] = [
     collections: ["canyons"],
     description:
       "Wind- and water-carved sandstone curls upward like a frozen flame toward a sliver of blue sky.",
-    editionSize: 50,
   },
   {
     slug: "molten-lake",
@@ -960,7 +887,6 @@ const catalogWorks: Work[] = [
     collections: ["sky", "lakes"],
     description:
       "The last light of day turns a mountain lake to molten gold beneath a sky of rose and violet.",
-    editionSize: 50,
   },
   {
     slug: "dune-lines",
@@ -970,7 +896,6 @@ const catalogWorks: Work[] = [
     collections: ["canyons"],
     description:
       "Wind-drawn ripples sweep across the flank of a great dune, rising to a crest against the evening sky.",
-    editionSize: 50,
   },
   {
     slug: "tidewater-stones",
@@ -980,7 +905,6 @@ const catalogWorks: Work[] = [
     collections: ["coast"],
     description:
       "Surf washes over a beach of smooth dark stones while a green sea cliff stands against the open ocean.",
-    editionSize: 50,
   },
   {
     slug: "three-veils",
@@ -990,7 +914,6 @@ const catalogWorks: Work[] = [
     collections: ["water"],
     description:
       "Three ribbons of white water fall through a moss-draped gorge into a still, misty pool.",
-    editionSize: 50,
   },
   {
     slug: "living-sculpture",
@@ -1000,7 +923,6 @@ const catalogWorks: Work[] = [
     collections: ["forests"],
     description:
       "The twisting limbs of an ancient maple spread beneath a glowing canopy of gold and green.",
-    editionSize: 50,
   },
   {
     slug: "sea-monolith",
@@ -1010,7 +932,6 @@ const catalogWorks: Work[] = [
     collections: ["coast", "sky"],
     description:
       "A great sea monolith stands dark against a brooding sky as the tide slips across the sand.",
-    editionSize: 50,
   },
   {
     slug: "golden-slope",
@@ -1020,7 +941,6 @@ const catalogWorks: Work[] = [
     collections: ["forests"],
     description:
       "A hillside of aspens blazes gold beneath a summit dusted with the season's first snow.",
-    editionSize: 50,
   },
   {
     slug: "autumn-cascade",
@@ -1030,7 +950,6 @@ const catalogWorks: Work[] = [
     collections: ["water"],
     description:
       "A mountain stream tumbles in silken steps over mossy boulders through a forest turning gold.",
-    editionSize: 50,
   },
   {
     slug: "mirror-lake",
@@ -1040,7 +959,6 @@ const catalogWorks: Work[] = [
     collections: ["lakes"],
     description:
       "Dark pines and golden aspens ring a glassy lake that mirrors a cloudless sky.",
-    editionSize: 50,
   },
   {
     slug: "blue-hour-shore",
@@ -1050,7 +968,6 @@ const catalogWorks: Work[] = [
     collections: ["coast"],
     description:
       "Sea stacks stand in silhouette as the last violet light of evening settles over a quiet tide.",
-    editionSize: 50,
   },
   {
     slug: "emerald-falls",
@@ -1060,7 +977,6 @@ const catalogWorks: Work[] = [
     collections: ["water"],
     description:
       "A slender waterfall plunges from a basalt cliff into a lush emerald gorge.",
-    editionSize: 50,
   },
   {
     slug: "crimson-sky",
@@ -1070,7 +986,6 @@ const catalogWorks: Work[] = [
     collections: ["sky"],
     description:
       "A storm of crimson cloud blazes above a darkened mountain ridge in the final minutes of dusk.",
-    editionSize: 50,
   },
   {
     slug: "river-strata",
@@ -1080,7 +995,6 @@ const catalogWorks: Work[] = [
     collections: ["canyons", "water", "panoramas"],
     description:
       "A silken river slides past fallen slabs beneath towering walls of layered stone.",
-    editionSize: 50,
   },
   {
     slug: "sandstone-wave",
@@ -1090,7 +1004,6 @@ const catalogWorks: Work[] = [
     collections: ["canyons"],
     description:
       "Reflected light pours through a narrow canyon, turning wind-carved sandstone into rolling waves of orange and gold.",
-    editionSize: 50,
   },
   {
     slug: "lone-vigil",
@@ -1100,7 +1013,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife", "black-and-white"],
     description:
       "A fish eagle keeps watch from the twisted arm of a dead tree, stark against a pale, empty sky.",
-    editionSize: 50,
   },
   {
     slug: "the-elder",
@@ -1110,7 +1022,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife", "black-and-white"],
     description:
       "A great bull elephant emerges from the darkness, every fold and furrow of a long life etched into its skin.",
-    editionSize: 50,
   },
   {
     slug: "above-it-all",
@@ -1120,7 +1031,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife", "black-and-white"],
     description:
       "A young giraffe turns its gaze from the shadows, its patterned neck rising out of total darkness.",
-    editionSize: 50,
   },
   {
     slug: "the-king",
@@ -1130,7 +1040,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife", "black-and-white"],
     description:
       "A lion rests in the shade of the rocks, its heavy mane framing a calm and unwavering stare.",
-    editionSize: 50,
   },
   {
     slug: "pride",
@@ -1140,7 +1049,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife", "black-and-white"],
     description:
       "A lioness presses close to her mate in a quiet moment of affection beneath the rock walls.",
-    editionSize: 50,
   },
   {
     slug: "the-hidden-horn",
@@ -1150,7 +1058,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife", "black-and-white"],
     description:
       "A cape buffalo peers through tall grass, its great sweeping horns framing a wary stare.",
-    editionSize: 50,
   },
   {
     slug: "into-the-mist",
@@ -1160,7 +1067,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife", "panoramas"],
     description:
       "A lone gemsbok steps through golden grass as morning mist swallows the plain behind it.",
-    editionSize: 50,
   },
   {
     slug: "the-watcher",
@@ -1170,7 +1076,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A leopard lounges on a weathered branch, its golden coat glowing against a deep green forest.",
-    editionSize: 50,
   },
   {
     slug: "the-huntress",
@@ -1180,7 +1085,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife", "black-and-white"],
     description:
       "A lioness pauses in the long grass, ears forward and every muscle ready.",
-    editionSize: 50,
   },
   {
     slug: "leap-of-faith",
@@ -1190,7 +1094,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife", "coast"],
     description:
       "A dolphin arcs clear of the water, its sleek body mirrored in the rippling blue sea.",
-    editionSize: 50,
   },
   {
     slug: "golden-mane",
@@ -1200,7 +1103,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A great maned lion stands in warm light before red stone, gazing out over his domain.",
-    editionSize: 50,
   },
   {
     slug: "the-heavyweight",
@@ -1210,7 +1112,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife", "black-and-white"],
     description:
       "A hippo stands squarely in the grass, its heavy frame and steady gaze filling the frame.",
-    editionSize: 50,
   },
   {
     slug: "crystal-crown",
@@ -1220,7 +1121,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "A soaring granite summit, streaked with ice and fresh snow, rises into a flawless blue sky.",
-    editionSize: 50,
   },
   {
     slug: "twin-horns",
@@ -1230,7 +1130,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "Two dark rock horns, laced with snow and ice, tear through drifting cloud high above the valley.",
-    editionSize: 50,
   },
   {
     slug: "sea-of-silence",
@@ -1240,7 +1139,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains", "sky"],
     description:
       "A snow-crowned summit floats above a still sea of cloud in the deep blue of the high mountains.",
-    editionSize: 50,
   },
   {
     slug: "cloud-crest",
@@ -1250,7 +1148,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "Cloud spills over a vast wall of ice and rock, its crest catching the bright mountain light.",
-    editionSize: 50,
   },
   {
     slug: "breath-of-the-mountain",
@@ -1260,7 +1157,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "Storm cloud boils around a hanging glacier as the mountain reveals itself for a fleeting moment.",
-    editionSize: 50,
   },
   {
     slug: "turquoise-mesa",
@@ -1270,7 +1166,6 @@ const catalogWorks: Work[] = [
     collections: ["lakes"],
     description:
       "A crown of dark cliffs rises above green alpine slopes and a lake of deep turquoise.",
-    editionSize: 50,
   },
   {
     slug: "jagged-horizon",
@@ -1280,7 +1175,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "Ridge after ridge rolls toward a skyline of jagged peaks beneath towering summer clouds.",
-    editionSize: 50,
   },
   {
     slug: "paintbrush-meadow",
@@ -1290,7 +1184,6 @@ const catalogWorks: Work[] = [
     collections: ["forests"],
     description:
       "Wildflowers blaze crimson and gold across a high meadow beneath rolling clouds and green ridges.",
-    editionSize: 50,
   },
   {
     slug: "ghost-forest",
@@ -1300,7 +1193,6 @@ const catalogWorks: Work[] = [
     collections: ["forests", "black-and-white"],
     description:
       "Bleached, twisted remains of old trees stand on a steaming mineral flat before a dark wall of pines.",
-    editionSize: 50,
   },
   {
     slug: "granite-cathedral",
@@ -1310,7 +1202,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains", "black-and-white"],
     description:
       "Jagged granite spires rise in silver light above the sage flats beneath a brooding sky.",
-    editionSize: 50,
   },
   {
     slug: "ice-blade",
@@ -1320,7 +1211,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "A sharp ridge of rock and hanging ice cuts across a clear blue mountain sky.",
-    editionSize: 50,
   },
   {
     slug: "nectar-flight",
@@ -1330,7 +1220,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A white-lined sphinx moth hovers at a spire of blue delphinium, its striped wings frozen mid-beat.",
-    editionSize: 50,
   },
   {
     slug: "river-of-stars",
@@ -1340,7 +1229,6 @@ const catalogWorks: Work[] = [
     collections: ["sky"],
     description:
       "The Milky Way arcs over a dark mountain ridge as the last trace of twilight fades from the horizon.",
-    editionSize: 50,
   },
   {
     slug: "silent-passage",
@@ -1350,7 +1238,6 @@ const catalogWorks: Work[] = [
     collections: ["canyons", "water"],
     description:
       "Smoothed to silk by a long exposure, a great river glides past boulders between towering canyon walls.",
-    editionSize: 50,
   },
   {
     slug: "wild-coast",
@@ -1360,7 +1247,6 @@ const catalogWorks: Work[] = [
     collections: ["coast"],
     description:
       "Waves fan across a dark-sand bay beneath green sea cliffs that run out into a deep blue ocean.",
-    editionSize: 50,
   },
   {
     slug: "canopy-of-gold",
@@ -1370,7 +1256,6 @@ const catalogWorks: Work[] = [
     collections: ["forests"],
     description:
       "Slender aspen trunks reach into a canopy of glowing gold leaves against a clear blue sky.",
-    editionSize: 50,
   },
   {
     slug: "white-giant",
@@ -1380,7 +1265,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "A vast dome of snow and ice crowns a range of granite needles under a deep blue sky.",
-    editionSize: 50,
   },
   {
     slug: "the-needle",
@@ -1390,7 +1274,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "A sharp summit of dark rock and snow rises above a sea of ridges and hanging glaciers.",
-    editionSize: 50,
   },
   {
     slug: "frozen-ramparts",
@@ -1400,7 +1283,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "A ridge of dark granite climbs into a great snow-covered summit, its glaciers bright in the high sun.",
-    editionSize: 50,
   },
   {
     slug: "serrated-sky",
@@ -1410,7 +1292,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "A row of jagged granite spires, dusted with snow, cuts across a clear alpine sky.",
-    editionSize: 50,
   },
   {
     slug: "firestorm",
@@ -1420,7 +1301,6 @@ const catalogWorks: Work[] = [
     collections: ["sky"],
     description:
       "Ragged clouds ignite in crimson and orange above a dark ridgeline in the final moments of sunset.",
-    editionSize: 50,
   },
   {
     slug: "jade-waters",
@@ -1430,7 +1310,6 @@ const catalogWorks: Work[] = [
     collections: ["water", "canyons"],
     description:
       "Milky turquoise water flows past moss-covered stones beneath towering red canyon walls.",
-    editionSize: 50,
   },
   {
     slug: "travertine-falls",
@@ -1440,7 +1319,6 @@ const catalogWorks: Work[] = [
     collections: ["water", "canyons"],
     description:
       "Turquoise water spills over mossy travertine ledges in a hidden red-rock canyon.",
-    editionSize: 50,
   },
   {
     slug: "silver-thread",
@@ -1450,7 +1328,6 @@ const catalogWorks: Work[] = [
     collections: ["water"],
     description:
       "A slender waterfall drops from a sculpted rock lip into a quiet stone alcove.",
-    editionSize: 50,
   },
   {
     slug: "afterglow",
@@ -1460,7 +1337,6 @@ const catalogWorks: Work[] = [
     collections: ["sky", "lakes"],
     description:
       "The sky smoulders orange behind silhouetted mountains, its glow mirrored on the dark water below.",
-    editionSize: 50,
   },
   {
     slug: "river-sunburst",
@@ -1470,7 +1346,6 @@ const catalogWorks: Work[] = [
     collections: ["water", "canyons"],
     description:
       "The sun bursts over a canyon rim as rapids tumble past smooth stones below.",
-    editionSize: 50,
   },
   {
     slug: "canyon-rampart",
@@ -1480,7 +1355,6 @@ const catalogWorks: Work[] = [
     collections: ["canyons"],
     description:
       "Layered red cliffs glow in afternoon light above a calm green river.",
-    editionSize: 50,
   },
   {
     slug: "emerald-pool",
@@ -1490,7 +1364,6 @@ const catalogWorks: Work[] = [
     collections: ["water", "canyons", "panoramas"],
     description:
       "Turquoise water pools beneath sweeping walls of polished red stone.",
-    editionSize: 50,
   },
   {
     slug: "golden-hillside",
@@ -1500,7 +1373,6 @@ const catalogWorks: Work[] = [
     collections: ["forests", "panoramas"],
     description:
       "Aspens in full autumn colour blanket a steep mountainside, a lone spruce standing dark among the gold.",
-    editionSize: 50,
   },
   {
     slug: "forest-cascade",
@@ -1510,7 +1382,6 @@ const catalogWorks: Work[] = [
     collections: ["water", "forests"],
     description:
       "A creek spills over mossy boulders in a cool, shaded mountain forest.",
-    editionSize: 50,
   },
   {
     slug: "storm-spire",
@@ -1520,7 +1391,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains", "black-and-white"],
     description:
       "A dark granite spire pierces brooding cloud above a steep, snow-streaked ridge.",
-    editionSize: 50,
   },
   {
     slug: "cloud-shadows",
@@ -1530,7 +1400,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "Summer clouds drift over range after range of high peaks, their shadows moving across the slopes.",
-    editionSize: 50,
   },
   {
     slug: "headwaters",
@@ -1540,7 +1409,6 @@ const catalogWorks: Work[] = [
     collections: ["water"],
     description:
       "A clear stream runs over a bed of rounded stones toward a distant summit beneath a bright summer sky.",
-    editionSize: 50,
   },
   {
     slug: "mirror-dusk",
@@ -1550,7 +1418,6 @@ const catalogWorks: Work[] = [
     collections: ["sky", "lakes"],
     description:
       "Fiery clouds drift above a dark mountain notch and repeat themselves in the perfectly still water of a lake at dusk.",
-    editionSize: 50,
   },
   {
     slug: "autumn-mirror",
@@ -1560,7 +1427,6 @@ const catalogWorks: Work[] = [
     collections: ["lakes"],
     description:
       "A hillside of golden aspens and a sky of drifting clouds lie doubled in a quiet beaver pond.",
-    editionSize: 50,
   },
   {
     slug: "aspen-script",
@@ -1570,7 +1436,6 @@ const catalogWorks: Work[] = [
     collections: ["forests"],
     description:
       "Dark scars and pale bark form a quiet calligraphy across a stand of aspen trunks.",
-    editionSize: 50,
   },
   {
     slug: "silver-dunes",
@@ -1580,7 +1445,6 @@ const catalogWorks: Work[] = [
     collections: ["canyons", "black-and-white"],
     description:
       "Wind-carved dunes roll to the horizon in low light, every ripple and crest drawn in silver and shadow.",
-    editionSize: 50,
   },
   {
     slug: "desert-gentleman",
@@ -1590,7 +1454,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A camel in a hand-woven muzzle poses in profile against a soft desert sky.",
-    editionSize: 50,
   },
   {
     slug: "silken-stream",
@@ -1600,7 +1463,6 @@ const catalogWorks: Work[] = [
     collections: ["water"],
     description:
       "A long exposure turns a mountain stream to silk as it slips over stones between towering spruce.",
-    editionSize: 50,
   },
   {
     slug: "canyon-evening",
@@ -1610,7 +1472,6 @@ const catalogWorks: Work[] = [
     collections: ["canyons"],
     description:
       "The last warm light catches a line of sandstone cliffs above a broad, calm river.",
-    editionSize: 50,
   },
   {
     slug: "canyon-light",
@@ -1620,7 +1481,6 @@ const catalogWorks: Work[] = [
     collections: ["canyons", "water"],
     description:
       "Sunlight blazes on the far walls of a deep canyon while the river below runs cool in shadow.",
-    editionSize: 50,
   },
   {
     slug: "storm-over-the-pines",
@@ -1630,7 +1490,6 @@ const catalogWorks: Work[] = [
     collections: ["forests"],
     description:
       "Storm clouds gather over a dark peak as sunlit pine forest and green meadow fall away below.",
-    editionSize: 50,
   },
   {
     slug: "summer-reflection",
@@ -1640,7 +1499,6 @@ const catalogWorks: Work[] = [
     collections: ["lakes"],
     description:
       "Snow-streaked peaks and dark spruce mirror themselves in a still alpine lake on a summer morning.",
-    editionSize: 50,
   },
   {
     slug: "meadow-watch",
@@ -1650,7 +1508,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A mule deer pauses in a wildflower meadow beneath a wall of jagged red peaks.",
-    editionSize: 50,
   },
   {
     slug: "the-old-maple",
@@ -1660,7 +1517,6 @@ const catalogWorks: Work[] = [
     collections: ["forests"],
     description:
       "An ancient maple spreads its twisting limbs over a carpet of sunlit moss.",
-    editionSize: 50,
   },
   {
     slug: "kindred",
@@ -1670,7 +1526,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A young kudu turns her great ears toward the camera while her companion grazes behind.",
-    editionSize: 50,
   },
   {
     slug: "savanna-sentinel",
@@ -1680,7 +1535,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A lone gemsbok stands tall in golden grass beneath flat-topped acacias.",
-    editionSize: 50,
   },
   {
     slug: "springbok",
@@ -1690,7 +1544,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A springbok ram stands alert at the edge of his grazing herd.",
-    editionSize: 50,
   },
   {
     slug: "last-embers",
@@ -1700,7 +1553,6 @@ const catalogWorks: Work[] = [
     collections: ["sky"],
     description:
       "A dead tree stands silhouetted against storm clouds as the final glow of sunset burns along the horizon.",
-    editionSize: 50,
   },
   {
     slug: "painted-hunter",
@@ -1710,7 +1562,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "An African wild dog lopes through tall grass, its patchwork coat blending with the savanna.",
-    editionSize: 50,
   },
   {
     slug: "emerald-climber",
@@ -1720,7 +1571,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A chameleon creeps along a slender stem, every scale of its jewelled skin in sharp relief against the sky.",
-    editionSize: 50,
   },
   {
     slug: "lord-of-the-grass",
@@ -1730,7 +1580,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A young male lion rests in lush green grass, gazing out over his territory.",
-    editionSize: 50,
   },
   {
     slug: "rising-mist",
@@ -1740,7 +1589,6 @@ const catalogWorks: Work[] = [
     collections: ["water", "panoramas"],
     description:
       "From high above, a vast river plunges into a chasm and a towering plume of spray rises over the forest.",
-    editionSize: 50,
   },
   {
     slug: "open-plains",
@@ -1750,7 +1598,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A lone bull elephant walks out of the acacia woodland onto a sea of golden grass.",
-    editionSize: 50,
   },
   {
     slug: "granite-tide",
@@ -1760,7 +1607,6 @@ const catalogWorks: Work[] = [
     collections: ["coast"],
     description:
       "The sea smooths to mist around rounded granite boulders glowing in soft coastal light.",
-    editionSize: 50,
   },
   {
     slug: "emerald-amphitheater",
@@ -1770,7 +1616,6 @@ const catalogWorks: Work[] = [
     collections: ["water"],
     description:
       "A slender waterfall drops into a vast bowl of basalt carpeted in moss and fern.",
-    editionSize: 50,
   },
   {
     slug: "ancient-mariner",
@@ -1780,7 +1625,6 @@ const catalogWorks: Work[] = [
     collections: ["coast"],
     description:
       "A green sea turtle glides over a reef crowded with branching coral.",
-    editionSize: 50,
   },
   {
     slug: "mountain-staircase",
@@ -1790,7 +1634,6 @@ const catalogWorks: Work[] = [
     collections: ["water"],
     description:
       "Snowmelt tumbles down a staircase of boulders below a high waterfall and dark spruce.",
-    editionSize: 50,
   },
   {
     slug: "snowmelt-run",
@@ -1800,7 +1643,6 @@ const catalogWorks: Work[] = [
     collections: ["water"],
     description:
       "A clear mountain river races over smooth stones, a distant waterfall feeding it from the forest above.",
-    editionSize: 50,
   },
   {
     slug: "granite-ribbon",
@@ -1810,7 +1652,6 @@ const catalogWorks: Work[] = [
     collections: ["water"],
     description:
       "A ribbon of falling water threads down a towering granite wall framed by pines.",
-    editionSize: 50,
   },
   {
     slug: "sapphire-caldera",
@@ -1820,7 +1661,6 @@ const catalogWorks: Work[] = [
     collections: ["lakes"],
     description:
       "Deep blue water fills an ancient volcanic caldera beneath a sky of drifting summer cloud.",
-    editionSize: 50,
   },
   {
     slug: "reef-garden",
@@ -1830,7 +1670,6 @@ const catalogWorks: Work[] = [
     collections: ["coast"],
     description:
       "A great fan of table coral spreads across the reef as small fish dart through the blue.",
-    editionSize: 50,
   },
   {
     slug: "the-great-bend",
@@ -1840,7 +1679,6 @@ const catalogWorks: Work[] = [
     collections: ["canyons", "water"],
     description:
       "A jade-green river carves a perfect horseshoe around a sandstone butte a thousand feet below.",
-    editionSize: 50,
   },
   {
     slug: "first-steps",
@@ -1850,7 +1688,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A young rhino calf stands close beside its mother on sun-baked earth.",
-    editionSize: 50,
   },
   {
     slug: "forest-jewel",
@@ -1860,7 +1697,6 @@ const catalogWorks: Work[] = [
     collections: ["water", "forests"],
     description:
       "Water spills between moss-covered boulders in a quiet corner of the forest.",
-    editionSize: 50,
   },
   {
     slug: "stone-window",
@@ -1870,7 +1706,6 @@ const catalogWorks: Work[] = [
     collections: ["canyons"],
     description:
       "A natural sandstone arch frames a distant butte under a clear desert sky.",
-    editionSize: 50,
   },
   {
     slug: "little-lion",
@@ -1880,7 +1715,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A lion cub rests in lush grass, its sibling dozing close behind.",
-    editionSize: 50,
   },
   {
     slug: "granite-valley",
@@ -1890,7 +1724,6 @@ const catalogWorks: Work[] = [
     collections: ["mountains"],
     description:
       "Great granite walls fall away into a forested valley as afternoon cloud drifts overhead.",
-    editionSize: 50,
   },
   {
     slug: "standoff",
@@ -1900,7 +1733,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A Cape buffalo bull fixes the camera with a level stare from the tall grass.",
-    editionSize: 50,
   },
   {
     slug: "river-horse",
@@ -1910,7 +1742,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A hippo strides across a grassy bank, an oxpecker riding on its back.",
-    editionSize: 50,
   },
   {
     slug: "three-of-a-kind",
@@ -1920,7 +1751,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "Three zebras stand pressed together, their stripes merging into a single bold pattern.",
-    editionSize: 50,
   },
   {
     slug: "meadow-prowler",
@@ -1930,7 +1760,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A black-backed jackal pauses among wildflowers, ears tuned to the grass ahead.",
-    editionSize: 50,
   },
   {
     slug: "midday-rest",
@@ -1940,7 +1769,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A dark-maned lion sprawls in the shade of fallen timber, eyes narrowed against the heat.",
-    editionSize: 50,
   },
   {
     slug: "ocean-fury",
@@ -1950,7 +1778,6 @@ const catalogWorks: Work[] = [
     collections: ["coast"],
     description:
       "A breaking wave explodes against a dark reef in a white burst of spray.",
-    editionSize: 50,
   },
   {
     slug: "the-lookout",
@@ -1960,7 +1787,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A pied kingfisher keeps watch from a leafy perch against a flawless blue sky.",
-    editionSize: 50,
   },
   {
     slug: "lone-lily",
@@ -1970,7 +1796,6 @@ const catalogWorks: Work[] = [
     collections: ["forests"],
     description:
       "A single white water lily rises on its slender stem above still, silvered water.",
-    editionSize: 50,
   },
   {
     slug: "gentle-giant",
@@ -1980,7 +1805,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "An elephant bull curls his trunk as he browses at the edge of the woodland.",
-    editionSize: 50,
   },
   {
     slug: "painted-earth",
@@ -1990,7 +1814,6 @@ const catalogWorks: Work[] = [
     collections: ["canyons"],
     description:
       "Steam drifts over a vast hot spring whose mineral-rich edges glow in rust and orange.",
-    editionSize: 50,
   },
   {
     slug: "fern-cathedral",
@@ -2000,7 +1823,6 @@ const catalogWorks: Work[] = [
     collections: ["forests"],
     description:
       "Ancient redwood trunks rise like columns from a deep understory of sword ferns.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2011,7 +1833,6 @@ const catalogWorks: Work[] = [
     collections: ["forests"],
     description:
       "Pale aspen trunks stand in rows across fresh snow beneath a clear winter sky.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2022,7 +1843,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A young leopard rests in tall green grass beneath a fallen branch, eyes fixed on the lens.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2033,7 +1853,6 @@ const catalogWorks: Work[] = [
     collections: ["forests"],
     description:
       "A single rose-pink camellia opens its layered petals against deep green leaves.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2044,7 +1863,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A blue wildebeest bull lies in the pale dust, his shaggy mane lit by soft afternoon light.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2055,7 +1873,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A yellow-billed hornbill perches among willowy leaves, its great curved bill catching the light.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2066,7 +1883,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "Two African penguins stand side by side in the sand, one preening the other.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2077,7 +1893,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "High in a tree, one baboon patiently grooms another, who gazes calmly back with amber eyes.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2088,7 +1903,6 @@ const catalogWorks: Work[] = [
     collections: ["canyons"],
     description:
       "Reflected light glows through the sculpted sandstone walls of a narrow slot canyon.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2099,7 +1913,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A cheetah steps across a rain-darkened track, its gaze locked on something beyond the frame.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2110,7 +1923,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "Three yellow-billed storks probe the shallows, their reflections trembling on the still water.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2121,7 +1933,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "A pale chanting goshawk banks against a flawless blue sky, wings spread wide.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2132,7 +1943,6 @@ const catalogWorks: Work[] = [
     collections: ["water", "forests"],
     description:
       "A clear stream slips between moss-covered boulders and ferns in a quiet old-growth forest.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2143,7 +1953,6 @@ const catalogWorks: Work[] = [
     collections: ["forests"],
     description:
       "Looking straight up the trunks of towering redwoods as they converge toward a pale sky.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2154,7 +1963,6 @@ const catalogWorks: Work[] = [
     collections: ["water", "forests"],
     description:
       "Tree ferns arch over a still forest pool that mirrors their feathered fronds.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2165,7 +1973,6 @@ const catalogWorks: Work[] = [
     collections: ["water"],
     description:
       "A great river plunges into a deep gorge, throwing towering clouds of spray over the forest.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2176,7 +1983,6 @@ const catalogWorks: Work[] = [
     collections: ["forests"],
     description:
       "A slender white trunk climbs into a crown of bright leaves, the sun glowing just beyond.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2187,7 +1993,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife", "coast"],
     description:
       "African penguins march across the bright sand, their long shadows trailing behind them.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2198,7 +2003,6 @@ const catalogWorks: Work[] = [
     collections: ["wildlife"],
     description:
       "An African penguin faces the lens against deep blue water, every feather crisp.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2209,7 +2013,6 @@ const catalogWorks: Work[] = [
     collections: ["water", "forests"],
     description:
       "A shallow creek winds through a narrow gorge whose walls are draped in ferns.",
-    editionSize: 50,
     isNew: true,
   },
   {
@@ -2220,7 +2023,6 @@ const catalogWorks: Work[] = [
     collections: ["forests"],
     description:
       "A hibiscus bloom flares from deep crimson to gold against dark tropical leaves.",
-    editionSize: 50,
     isNew: true,
   },
 ];
@@ -2241,8 +2043,22 @@ const ranked = [...catalogWorks].sort((a, b) => a.rank - b.rank);
 export const SIGNATURE_COUNT = 24;
 const signature = new Set(ranked.filter((w) => !w.webOnly).slice(0, SIGNATURE_COUNT).map((w) => w.slug));
 
+function tierOf(slug: string): Tier {
+  if (PREMIER_SLUGS.includes(slug)) return 'premier';
+  if (signature.has(slug)) return 'signature';
+  return 'collection';
+}
+
 /** All works, best first (by `rank`). Every listing derives from this order. */
-export const works: Work[] = ranked.map((w) => (signature.has(w.slug) ? { ...w, collections: [...w.collections, 'signature'] } : w));
+export const works: Work[] = ranked.map((w) => {
+  const tier = tierOf(w.slug);
+  return {
+    ...w,
+    collections: signature.has(w.slug) ? [...w.collections, 'signature' as CollectionSlug] : w.collections,
+    tier,
+    editionSize: TIERS[tier].edition,
+  };
+});
 
 export function getWork(slug: string) {
   return works.find((w) => w.slug === slug);
@@ -2271,26 +2087,47 @@ export function getNewReleases() {
   return works.filter((w) => w.isNew);
 }
 
-export function getBestSellers() {
-  return works.filter((w) => w.bestSeller);
+export function getCuratorsPicks() {
+  return works.filter((w) => w.curatorsPick);
+}
+
+export function getWorksInTier(tier: Tier) {
+  return works.filter((w) => w.tier === tier && !w.webOnly);
 }
 
 /** Minimum print resolution: a size is only offered when the work's master holds at least this many pixels per inch. */
 export const MIN_PRINT_PPI = 150;
 
-/** Print sizes this work's master can support at MIN_PRINT_PPI (long edge vs long edge). */
-export function sizesFor(slug: string) {
+/**
+ * Print sizes offered for a work: sizes its tier sells that the master can hold at MIN_PRINT_PPI. 36×24 is offered
+ * only when the master can't reach 45×30, so single-size works gain a second, larger size.
+ */
+export function sizesFor(slug: string): PrintSize[] {
+  const work = works.find((w) => w.slug === slug);
+  if (!work) return [];
   const portrait = isPortrait(slug);
   const master = masterLongEdge[slug] ?? 0;
-  return PRINT_SIZES.filter((s) => master >= s.long * MIN_PRINT_PPI).map((s) => ({
-    ...s,
-    dimensions: portrait ? `${s.short}" × ${s.long}"` : `${s.long}" × ${s.short}"`,
+  const prices = TIERS[work.tier].prices;
+  const fits = (long: number) => master >= long * MIN_PRINT_PPI;
+  return PRINT_FORMATS.filter((f) => prices[f.key] && fits(f.long) && (f.key !== '36x24' || !fits(45))).map((f) => ({
+    name: f.key,
+    dimensions: sizeLabel(f, portrait),
+    long: f.long,
+    short: f.short,
+    price: prices[f.key]!,
   }));
 }
 
-/** The supported size with this name, or undefined when the work can't be printed that large. */
+/** The supported size with this key (old names like "Gallery" are mapped), or undefined when not offered. */
 export function sizeFor(slug: string, name: string) {
-  return sizesFor(slug).find((s) => s.name === name);
+  const key = LEGACY_SIZE_NAMES[name] ?? name;
+  return sizesFor(slug).find((s) => s.name === key);
+}
+
+/** Lowest opening price for a work (the "From $X" on cards), or undefined when it is inquiry only. */
+export function fromPrice(slug: string) {
+  const s = sizesFor(slug);
+  return s.length ? Math.min(...s.map((x) => x.price)) : undefined;
 }
 
 export function formatPrice(price: number) {
@@ -2305,4 +2142,6 @@ export const SITE = {
   name: 'Sheldon Roth',
   title: 'Sheldon Roth Fine Art',
   url: 'https://sheldonroth.com',
+  instagram: 'https://www.instagram.com/thesheldonroth/',
+  instagramHandle: '@thesheldonroth',
 };

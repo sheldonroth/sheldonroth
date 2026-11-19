@@ -1,11 +1,21 @@
 import Link from 'next/link';
-import { collections } from '@/content/catalog';
+import { collections, SITE } from '@/content/catalog';
+import CollectorSignup from '@/components/CollectorSignup';
 
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className="bg-[#1f1f21] text-white">
       <div className="lk-container pb-6 pt-16 lg:pt-20">
+        <div className="mb-14 grid grid-cols-1 items-end gap-6 border-b border-white/15 pb-12 md:grid-cols-[1fr_auto] md:gap-16">
+          <div>
+            <h2 className="lk-footer-h mb-3">The Collector List</h2>
+            <p className="max-w-[560px] text-[14px] leading-[21px] text-white/85">
+              First access to new releases at their opening edition price, and early word on Artist Proofs. A few emails a year.
+            </p>
+          </div>
+          <CollectorSignup />
+        </div>
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <p className="lk-wordmark mb-5"><span className="font-semibold">Sheldon Roth</span> <small>Fine Art</small></p>
@@ -19,7 +29,7 @@ export default function Footer() {
                 <li key={c.slug}><Link href={`/collections/${c.slug}`} className="lk-footer-link hover:underline">{c.title}</Link></li>
               ))}
               <li><Link href="/new-releases" className="lk-footer-link hover:underline">New Releases</Link></li>
-              <li><Link href="/best-sellers" className="lk-footer-link hover:underline">Best Sellers</Link></li>
+              <li><Link href="/premier" className="lk-footer-link hover:underline">Premier Works</Link></li>
               <li><Link href="/shop" className="lk-footer-link hover:underline">All Limited Editions</Link></li>
             </ul>
           </div>
@@ -37,6 +47,7 @@ export default function Footer() {
             <h2 className="lk-footer-h mb-4">About</h2>
             <ul>
               <li><Link href="/artist" className="lk-footer-link hover:underline">The Artist</Link></li>
+              <li><a href={SITE.instagram} target="_blank" rel="noopener noreferrer" className="lk-footer-link hover:underline">Instagram @thesheldonroth</a></li>
               <li><Link href="/cart" className="lk-footer-link hover:underline">Cart</Link></li>
             </ul>
           </div>

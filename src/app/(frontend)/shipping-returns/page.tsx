@@ -33,17 +33,18 @@ export default function ShippingReturnsPage() {
       </PolicySection>
 
       <PolicySection title="Returns">
-        <Term label="Sales are final">
-          Because each print is produced to order and numbered within a limited edition, all sales are final. We cannot accept returns
-          or exchanges for a change of mind.
+        <Term label="14-day returns">
+          If the piece isn&apos;t right for your space, contact the studio within 14 days of delivery to return it. Return it in its original
+          crate and packaging, insured, with return freight paid by you. Once it arrives back undamaged, you can choose a full refund of the
+          purchase price or a full exchange credit toward any other work.
         </Term>
         <Term label="Damage in transit">
           If your artwork arrives damaged, please photograph the packaging and the piece and contact the studio within 48 hours of
           delivery. Keep all packing materials. We will arrange a replacement of the same edition number at no cost to you.
         </Term>
         <Term label="Order changes">
-          If you need to change the size or shipping address, contact the studio as soon as possible. Once production has started, an
-          order can no longer be cancelled.
+          If you need to change the size or shipping address, contact the studio as soon as possible. Before production starts, an order
+          can be changed or cancelled for a full refund; after that, the 14-day return policy above applies once it is delivered.
         </Term>
       </PolicySection>
     </PolicyPage>

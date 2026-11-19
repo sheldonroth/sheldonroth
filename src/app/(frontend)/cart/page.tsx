@@ -96,7 +96,7 @@ export default function CartPage() {
                 {/* Details */}
                 <div className="flex-1">
                   <h3 className="text-lg font-light mb-1">{item.title}</h3>
-                  <p className="text-sm text-muted mb-1">{item.size} - {item.dimensions}</p>
+                  <p className="text-sm text-muted mb-1">{item.dimensions}</p>
                   <p className="text-xs text-muted mb-3">{item.edition}</p>
                   <p className="text-lg font-light">${item.price.toLocaleString()}</p>
 

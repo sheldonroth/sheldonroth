@@ -59,11 +59,11 @@ export async function markNotified(id: number, error: string | null) {
  *  - Mailgun: MAILGUN_API_KEY + MAILGUN_DOMAIN (MAILGUN_API_BASE=https://api.eu.mailgun.net for EU accounts)
  * Returns null on success or a short reason string.
  */
-export async function notify(id: number, r: InquiryRecord): Promise<string | null> {
+export async function notify(id: number, r: InquiryRecord, subjectOverride?: string): Promise<string | null> {
   const to = process.env.INQUIRY_NOTIFY_TO;
   if (!to) return 'INQUIRY_NOTIFY_TO not set';
   const from = process.env.INQUIRY_FROM || 'Sheldon Roth Fine Art <inquiries@sheldonroth.com>';
-  const subject = `New inquiry${r.artworkTitle ? `: ${r.artworkTitle}` : ''} — ${r.name}`;
+  const subject = subjectOverride ?? `New inquiry${r.artworkTitle ? `: ${r.artworkTitle}` : ''} — ${r.name}`;
   const text = [
     `Inquiry #${id} from sheldonroth.com`,
     '',

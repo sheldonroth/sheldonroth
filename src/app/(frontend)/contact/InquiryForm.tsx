@@ -11,11 +11,13 @@ const label = 'block text-[11px] font-bold uppercase leading-[11px] tracking-[0.
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
 /** Lik-style inquiry form: underlined fields, small caps labels. Posts to /api/inquiry; no address in the client. */
-export default function InquiryForm({ works, sizes }: { works: { slug: string; title: string; sizes: string[] }[]; sizes: string[] }) {
+type SizeOption = { value: string; label: string };
+
+export default function InquiryForm({ works, sizes }: { works: { slug: string; title: string; sizes: SizeOption[] }[]; sizes: SizeOption[] }) {
   const params = useSearchParams();
   const initialWork = works.some((w) => w.slug === params.get('work')) ? (params.get('work') as string) : '';
   const sizesForWork = (slug: string) => works.find((w) => w.slug === slug)?.sizes ?? sizes;
-  const initialSize = sizesForWork(initialWork).includes(params.get('size') ?? '') ? (params.get('size') as string) : '';
+  const initialSize = sizesForWork(initialWork).some((o) => o.value === params.get('size')) ? (params.get('size') as string) : '';
   const [work, setWork] = useState(initialWork);
   const [size, setSize] = useState(initialSize);
   const sizeOptions = work ? sizesForWork(work) : sizes;
@@ -105,10 +107,10 @@ export default function InquiryForm({ works, sizes }: { works: { slug: string; t
         </label>
         <label className="block">
           <span className={label}>Print size</span>
-          <select name="size" value={sizeOptions.includes(size) ? size : ''} onChange={(e) => setSize(e.target.value)} className={field}>
+          <select name="size" value={sizeOptions.some((o) => o.value === size) ? size : ''} onChange={(e) => setSize(e.target.value)} className={field}>
             <option value="">{work && sizeOptions.length === 0 ? 'By inquiry' : 'Not sure yet'}</option>
             {sizeOptions.map((s) => (
-              <option key={s} value={s}>{s}</option>
+              <option key={s.value} value={s.value}>{s.label}</option>
             ))}
           </select>
         </label>

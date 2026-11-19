@@ -17,7 +17,7 @@ Buy buttons fall back to the inquiry form.
    order email is flagged `TAX NOT CALCULATED`.
 
 ## Settings in code (`src/content/commerce.ts`)
-- Prices: Gallery $2,800 / Signature $4,900 / Masterwork $8,500 (catalog).
+- Prices: tiered + stepped ladder in `src/content/pricing.ts` (Premier ed. 20 from $4,800, Signature ed. 40 from $3,400, Collection ed. 75 from $1,650; one edition shared across sizes; final 10% and Artist Proofs by inquiry). Checkout and `/api/editions/[slug]` price from the number sold (`site.edition_sales`, `_total` row per work).
 - Shipping: free within the US (`SHIPPING_USD` all 0); international by inquiry (`SHIP_COUNTRIES = ['US']`).
 - Tax: `STRIPE_TAX_ENABLED = true`, tax-exclusive prices, calculated from the shipping address.
   Product tax code `txcd_99999999` (General - Tangible Goods; Stripe has no specific code for physical art prints).

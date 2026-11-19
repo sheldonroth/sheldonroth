@@ -1,7 +1,7 @@
 import type Stripe from 'stripe';
 import { getImage, sizeFor, works } from '@/content/catalog';
+import { SIZE_KEYS, priceAtStep, stepForNumber } from '@/content/pricing';
 import {
-  EDITION_PER_SIZE,
   LEAD_TIME_BUSINESS_DAYS,
   PRODUCT_TAX_CODE,
   SHIP_COUNTRIES,
@@ -11,12 +11,48 @@ import {
 } from '@/content/commerce';
 import { isTaxSetupError } from '@/lib/stripe';
 
-const SIZE_ORDER = ['Gallery', 'Signature', 'Masterwork'];
+const SIZE_ORDER: string[] = [...SIZE_KEYS];
 
 export type CheckoutLine = { slug: string; size: string; quantity: number };
+/** A line priced from the ladder: every unit in it costs `unitPrice` (USD). */
+export type PricedLine = CheckoutLine & { unitPrice: number };
 
-/** Builds the Checkout Session from already-validated lines. Every price comes from the catalog, never the client. */
-export function buildCheckoutParams(lines: CheckoutLine[], origin: string): Stripe.Checkout.SessionCreateParams {
+export type PricingResult = { ok: true; lines: PricedLine[] } | { ok: false; error: string; code: 'sold_out' | 'inquiry_only' };
+
+/**
+ * Prices validated lines from the stepped ladder. `sold` is prints sold per work (all sizes). Units of the same work
+ * take consecutive edition numbers across its lines, so an order that crosses a step is split at the step. Units that
+ * fall in the final, inquiry-only step (or past the edition) are refused.
+ */
+export function priceLines(lines: CheckoutLine[], sold: Map<string, number>): PricingResult {
+  const next = new Map<string, number>();
+  const out: PricedLine[] = [];
+  for (const l of lines) {
+    const work = works.find((w) => w.slug === l.slug)!;
+    const size = sizeFor(work.slug, l.size)!;
+    let n = next.get(work.slug) ?? (sold.get(work.slug) ?? 0) + 1;
+    for (let i = 0; i < l.quantity; i++, n++) {
+      const step = stepForNumber(work.editionSize, n);
+      if (!step) return { ok: false, code: 'sold_out', error: `The edition of ${work.title} is sold out.` };
+      if (step.inquiryOnly) {
+        return {
+          ok: false,
+          code: 'inquiry_only',
+          error: `The final editions of ${work.title} are offered by inquiry. Please contact the studio.`,
+        };
+      }
+      const unitPrice = priceAtStep(size.price, step);
+      const last = out[out.length - 1];
+      if (last && last.slug === work.slug && last.size === size.name && last.unitPrice === unitPrice) last.quantity++;
+      else out.push({ slug: work.slug, size: size.name, quantity: 1, unitPrice });
+    }
+    next.set(work.slug, n);
+  }
+  return { ok: true, lines: out };
+}
+
+/** Builds the Checkout Session from lines priced by `priceLines`. Prices never come from the client. */
+export function buildCheckoutParams(lines: PricedLine[], origin: string): Stripe.Checkout.SessionCreateParams {
   const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = lines.map((l) => {
     const work = works.find((w) => w.slug === l.slug)!;
     const size = sizeFor(work.slug, l.size)!;
@@ -24,11 +60,11 @@ export function buildCheckoutParams(lines: CheckoutLine[], origin: string): Stri
       quantity: l.quantity,
       price_data: {
         currency: 'usd',
-        unit_amount: Math.round(size.price * 100),
+        unit_amount: Math.round(l.unitPrice * 100),
         tax_behavior: 'exclusive',
         product_data: {
-          name: `${work.title} — ${size.name}`,
-          description: `${size.dimensions} · Face-mounted acrylic · Limited edition of ${EDITION_PER_SIZE} · Signed and numbered`,
+          name: `${work.title} — ${size.dimensions}`,
+          description: `${size.dimensions} · Face-mounted acrylic · Limited edition of ${work.editionSize} across all sizes · Signed and numbered`,
           images: [new URL(getImage(work.slug).src, origin).toString()],
           tax_code: PRODUCT_TAX_CODE,
           metadata: { slug: work.slug, size: size.name, dimensions: size.dimensions },
@@ -41,6 +77,8 @@ export function buildCheckoutParams(lines: CheckoutLine[], origin: string): Stri
   const largest = lines.map((l) => l.size).sort((a, b) => SIZE_ORDER.indexOf(b) - SIZE_ORDER.indexOf(a))[0];
   const shippingCents = Math.round((SHIPPING_USD[largest] ?? 0) * 100);
 
+  // No payment_method_types: Stripe's dynamic payment methods show whatever is enabled in the Dashboard (cards, wallets,
+  // and Affirm / Klarna once switched on there).
   return {
     mode: 'payment',
     line_items: lineItems,
@@ -66,7 +104,7 @@ export function buildCheckoutParams(lines: CheckoutLine[], origin: string): Stri
       },
     ],
     custom_text: {
-      submit: { message: 'Each print is made to order and ships in 2–4 weeks. Sales are final except for damage in transit.' },
+      submit: { message: 'Each print is made to order and ships in 2–4 weeks. Returns are accepted within 14 days of delivery (see Shipping & Returns).' },
     },
     metadata: { order_type: 'fine_art_print', site: 'sheldonroth.com' },
   };

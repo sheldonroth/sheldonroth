@@ -22,6 +22,8 @@ const nextConfig: NextConfig = {
       { source: '/collections/mountain-forest', destination: '/collections/lakes', permanent: true },
       { source: '/collections/light-sky', destination: '/collections/sky', permanent: true },
       { source: '/collections/far-horizons', destination: '/collections/panoramas', permanent: true },
+      // Best Sellers was retired before any sales (2026-11-19); Premier Works replaces it.
+      { source: '/best-sellers', destination: '/premier', permanent: false },
       ...removed.map((slug) => ({ source: `/shop/${slug}`, destination: '/shop', permanent: true })),
     ];
   },

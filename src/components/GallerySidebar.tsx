@@ -6,7 +6,7 @@ export default function GallerySidebar({ active }: { active?: string }) {
   const items = [
     { href: '/shop', slug: 'all', title: 'View All' },
     { href: '/new-releases', slug: 'new-releases', title: 'New Releases' },
-    { href: '/best-sellers', slug: 'best-sellers', title: 'Best Sellers' },
+    { href: '/premier', slug: 'premier', title: 'Premier Works' },
     ...collections.map((c) => ({ href: `/collections/${c.slug}`, slug: c.slug, title: c.title })),
   ];
   return (

@@ -11,9 +11,12 @@ import {
   getWorksInCollection,
   getCollectionsForWork,
   PRINT_DETAILS,
+  SITE,
   sizesFor,
   works,
 } from '@/content/catalog';
+import { TIERS } from '@/content/pricing';
+import { FINANCING_AT_CHECKOUT, SHIP_COUNTRIES } from '@/content/commerce';
 
 export const dynamicParams = false;
 
@@ -27,7 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!work) return { title: 'Artwork Not Found' };
   const img = getImage(work.slug);
   return {
-    title: `${work.title} — Limited Edition ${work.editionSize}`,
+    title: `${work.title} — ${work.tier === 'collection' ? '' : `${TIERS[work.tier].label} · `}Limited Edition of ${work.editionSize}`,
     description: work.description,
     openGraph: { title: `${work.title} by Sheldon Roth`, description: work.description, images: [{ url: img.src, width: img.width, height: img.height }] },
   };
@@ -48,18 +51,90 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
   const prev = works[(index - 1 + works.length) % works.length];
   const next = works[(index + 1) % works.length];
 
+  const sizes = sizesFor(work.slug);
+  const spec = TIERS[work.tier];
+  const url = `${SITE.url}/shop/${work.slug}`;
+  const imageUrl = `${SITE.url}${image.src}`;
+  const largest = sizes[sizes.length - 1];
+  // Structured data: the artwork (VisualArtwork) and what is for sale (Product with one Offer per size at the
+  // opening price). Prices rise with the published ladder; the page always shows the live price.
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'VisualArtwork',
+        '@id': `${url}#artwork`,
+        name: work.title,
+        description: work.description,
+        image: imageUrl,
+        url,
+        artform: 'Photograph',
+        artMedium: 'Lumachrome HD photographic print face-mounted to acrylic',
+        artworkSurface: 'Acrylic',
+        artEdition: spec.edition,
+        creator: { '@type': 'Person', name: 'Sheldon Roth', url: `${SITE.url}/artist`, sameAs: [SITE.instagram] },
+        ...(largest ? { width: { '@type': 'Distance', name: `${largest.long} in` }, height: { '@type': 'Distance', name: `${largest.short} in` } } : {}),
+      },
+      ...(sizes.length
+        ? [
+            {
+              '@type': 'Product',
+              '@id': `${url}#product`,
+              name: `${work.title} — Limited Edition Photograph`,
+              description: work.description,
+              image: imageUrl,
+              url,
+              sku: work.slug,
+              category: 'Fine Art Photography Prints',
+              brand: { '@type': 'Brand', name: 'Sheldon Roth Fine Art' },
+              subjectOf: { '@id': `${url}#artwork` },
+              offers: sizes.map((s) => ({
+                '@type': 'Offer',
+                name: s.dimensions,
+                sku: `${work.slug}-${s.name}`,
+                price: s.price,
+                priceCurrency: 'USD',
+                availability: 'https://schema.org/InStock',
+                itemCondition: 'https://schema.org/NewCondition',
+                url,
+                seller: { '@type': 'Organization', name: 'Sheldon Roth Fine Art' },
+                shippingDetails: {
+                  '@type': 'OfferShippingDetails',
+                  shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
+                  shippingDestination: SHIP_COUNTRIES.map((c) => ({ '@type': 'DefinedRegion', addressCountry: c })),
+                },
+                hasMerchantReturnPolicy: {
+                  '@type': 'MerchantReturnPolicy',
+                  applicableCountry: 'US',
+                  returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+                  merchantReturnDays: 14,
+                  returnFees: 'https://schema.org/ReturnShippingFees',
+                  returnMethod: 'https://schema.org/ReturnByMail',
+                },
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       <ProductClient
         work={{
           slug: work.slug,
           title: work.title,
           description: work.description,
+          tier: work.tier,
+          tierLabel: spec.label,
           editionSize: work.editionSize,
+          artistProofs: spec.artistProofs,
+          financing: FINANCING_AT_CHECKOUT,
           collectionTitle: collection.title,
           collectionSlug: collection.slug,
           image,
-          sizes: sizesFor(work.slug),
+          sizes,
           details: PRINT_DETAILS,
         }}
       />

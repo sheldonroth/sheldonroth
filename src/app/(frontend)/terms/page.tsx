@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import PolicyPage, { PolicySection } from '@/components/PolicyPage';
-import { EDITION_PER_SIZE } from '@/content/commerce';
 
 export const metadata: Metadata = { title: 'Terms of Sale', description: 'Terms of sale and use for Sheldon Roth Fine Art.' };
 
@@ -20,21 +19,23 @@ export default function TermsPage() {
       </PolicySection>
       <PolicySection title="Limited Editions">
         <p>
-          Each work is offered in three sizes, and each size is its own limited edition of {EDITION_PER_SIZE}. Every print is numbered
-          within its edition and accompanied by a certificate of authenticity. Once a size sells out, no further prints of that work are
-          made at that size.
+          Each work is released as one limited edition shared across all of its sizes (Premier 20, Signature 40, Collection 75), plus a
+          small Artist Proof run for Premier and Signature works. Every print is numbered within its edition and accompanied by a
+          certificate of authenticity. Once an edition sells out, no further prints of that work are made in any size.
         </p>
       </PolicySection>
       <PolicySection title="Orders, Pricing and Payment">
         <p>
-          Prices are in US dollars. Payment is taken securely by Stripe at checkout; we never see or store your card number. An order is
+          Prices are in US dollars. Edition prices rise in published steps as each edition sells; the price shown on the work&apos;s page
+          when you check out is the price you pay. Price steps reflect remaining availability only and are not a statement about future
+          or resale value. Payment is taken securely by Stripe at checkout; we never see or store your card number. An order is
           accepted when payment is confirmed. If a price or edition count on the site is ever wrong, we will contact you and you may
           cancel for a full refund before production begins. Shipping within the US is free. Sales tax is calculated at checkout from the shipping address and charged where required by law.
         </p>
       </PolicySection>
       <PolicySection title="Production, Shipping and Returns">
         <p>
-          Prints are made to order. Production times, shipping and our returns policy (sales are final except for damage in transit) are
+          Prints are made to order. Production times, shipping and our 14-day returns policy are
           set out on the <Link href="/shipping-returns" className="text-accent hover:underline">Shipping &amp; Returns</Link> page and form
           part of these terms.
         </p>

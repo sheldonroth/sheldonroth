@@ -2,28 +2,28 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import Reveal from '@/components/Reveal';
-import { getImage } from '@/content/catalog';
+import { getImage, SITE } from '@/content/catalog';
 
 export const metadata: Metadata = {
   title: 'The Artist',
-  description: 'Sheldon Roth — photographer, entrepreneur and visual engineer, based in the American West.',
+  description: 'Sheldon Roth photographs high peaks, wild water and wildlife, waiting for the moments when light transforms a scene, and releases each image as a limited edition face-mounted to acrylic.',
 };
 
 const chapters = [
   {
     n: '01',
-    title: 'Discovery',
-    body: 'Every image begins with exploration — understanding a place, its weather and its light, and the story waiting to be told.',
+    title: 'Waiting for the Light',
+    body: 'Most of the work is patience: scouting a place, learning how its weather moves, and returning until light, subject and composition finally line up. Many visits end without a frame worth keeping.',
   },
   {
     n: '02',
-    title: 'Capture',
-    body: 'Patience is everything. Sometimes it means waiting hours, or returning again and again, until light, subject and composition align.',
+    title: 'One Moment, One Frame',
+    body: 'Each photograph is a single real moment in the field — the alpenglow on a ridge, a dolphin clearing the water, a leopard turning its head. Finishing brings out depth and tone without inventing a scene that was never there.',
   },
   {
     n: '03',
-    title: 'Refinement',
-    body: 'Careful finishing brings out the full depth of each frame while keeping the honesty and emotion of the original moment.',
+    title: 'Made to Glow',
+    body: 'Every edition is printed as an archival Lumachrome HD print and face-mounted to anti-glare museum acrylic, which lets light pass through the image and back, so colour and depth seem lit from within. A size is only offered when the original file holds the detail for it.',
   },
 ];
 
@@ -39,7 +39,7 @@ export default function ArtistPage() {
         <div className="absolute inset-x-0 bottom-0 px-5 pb-[70px] text-center text-white md:pb-[90px]">
           <p className="lk-hero-eyebrow fade-up">The Artist</p>
           <h1 className="lk-hero-title fade-up mt-4" style={{ animationDelay: '120ms' }}>Sheldon Roth</h1>
-          <p className="lk-hero-eyebrow fade-up mt-5" style={{ animationDelay: '240ms' }}>Photographer · Visual Engineer</p>
+          <p className="lk-hero-eyebrow fade-up mt-5" style={{ animationDelay: '240ms' }}>Fine Art Photographer</p>
         </div>
       </section>
 
@@ -50,17 +50,24 @@ export default function ArtistPage() {
             <h2 className="lk-h2 mt-6">Chasing light that lasts only a moment</h2>
             <div className="mt-8 space-y-5">
               <p className="lk-body">
-                Sheldon Roth is an entrepreneur with a diverse portfolio of businesses — and, behind the camera, a visual storyteller.
-                Beyond the business lies a person deeply rooted in community, content creation and empathy.
+                Sheldon Roth photographs high peaks and glacier ice, turquoise alpine lakes, reefs and restless coastlines, golden savanna
+                and the wildlife that lives there. His subject is the brief moment when light changes a place — the minutes of alpenglow
+                after sunset, the break in a storm, the instant an animal looks back.
               </p>
               <p className="lk-body">
-                Through his lens, he captures moments that transcend the ordinary, transforming fleeting instants into timeless works of
-                art. His photographs span towering peaks and glacier ice, turquoise alpine lakes and wildflower basins, reefs and restless
-                coastlines, golden savanna and wind-written dunes.
+                Those moments rarely announce themselves. His process is slow on purpose: walking the same ground in different seasons,
+                waiting out weather, and coming back until the scene he imagined actually happens in front of the lens.
               </p>
               <p className="lk-body">
-                Based in the American West, he releases every image as a limited edition — printed large, face-mounted to acrylic and
-                signed by hand.
+                He releases only the frames he believes can hold a wall, each as a strictly limited edition — printed large, face-mounted
+                to acrylic, signed and numbered, with a certificate of authenticity.
+              </p>
+              <p className="lk-body">
+                Follow new work from the field on Instagram at{' '}
+                <a href={SITE.instagram} target="_blank" rel="noopener noreferrer" className="text-accent-dark underline underline-offset-4">
+                  {SITE.instagramHandle}
+                </a>
+                .
               </p>
             </div>
           </Reveal>
@@ -105,11 +112,12 @@ export default function ArtistPage() {
         <Reveal className="lk-container max-w-2xl py-[60px] text-center lg:py-[100px]">
           <h2 className="lk-h2">Work with Sheldon</h2>
           <p className="lk-body mx-auto mt-6 max-w-lg">
-            Commissioning a piece, licensing an image, or looking for the right work for your space? He’d love to hear from you.
+            Looking for the right work for your space, a size that isn’t listed, or an Artist Proof? Sheldon reads every inquiry personally.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
             <Link href="/contact" className="lk-btn lk-btn-solid">Inquire</Link>
             <Link href="/collections" className="lk-btn lk-btn-gold">View the Galleries</Link>
+            <a href={SITE.instagram} target="_blank" rel="noopener noreferrer" className="lk-btn lk-btn-gold">Instagram</a>
           </div>
         </Reveal>
       </section>

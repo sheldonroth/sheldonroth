@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { formatPrice, getImage, sizesFor, type Work } from '@/content/catalog';
+import { formatPrice, fromPrice, getImage, type Work } from '@/content/catalog';
+import { TIERS } from '@/content/pricing';
 
 /**
  * Grid card after lik.com's collection grid: a light grey mat (#edecec) with the photograph contained in a
@@ -21,6 +22,8 @@ export default function WorkCard({
   showCollection?: boolean;
 }) {
   const img = getImage(work.slug);
+  const from = fromPrice(work.slug);
+  const badge = work.tier === 'collection' ? null : TIERS[work.tier].label;
   return (
     <Link href={`/shop/${work.slug}`} className={`group block h-full px-[7%] pb-9 pt-[14%] text-center transition-colors duration-300 ${tone === 'dark' ? 'bg-[#202022] hover:bg-[#2a2a2c]' : 'bg-[#edecec] hover:bg-[#e6e5e3]'}`}>
       <div className="relative flex aspect-[1/0.97] items-center justify-center">
@@ -37,8 +40,11 @@ export default function WorkCard({
       </div>
       <div className="mt-8">
         <h2 className={`lk-card-title ${tone === 'dark' ? '!text-[#c9b48a]' : ''}`}>{work.title}</h2>
-        <p className={`lk-card-edition mt-3 ${tone === 'dark' ? '!text-[#bdbdbd]' : ''}`}>Limited Edition</p>
-        <p className={`lk-price mt-1 ${tone === 'dark' ? '!text-[#c9b48a]' : ''}`}>{sizesFor(work.slug)[0] ? formatPrice(sizesFor(work.slug)[0].price) : 'Price on request'}</p>
+        <p className={`lk-card-edition mt-3 ${tone === 'dark' ? '!text-[#bdbdbd]' : ''}`}>
+          {badge ? <span className={tone === 'dark' ? 'text-[#c9b48a]' : 'text-accent-dark'}>{badge} · </span> : null}
+          Edition of {work.editionSize}
+        </p>
+        <p className={`lk-price mt-1 ${tone === 'dark' ? '!text-[#c9b48a]' : ''}`}>{from ? `From ${formatPrice(from)}` : 'Price on request'}</p>
       </div>
     </Link>
   );

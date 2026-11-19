@@ -13,7 +13,7 @@ const faqs = [
       },
       {
         q: 'What sizes are available?',
-        a: 'Most works are offered in three sizes: Gallery (30 × 20 in), Signature (45 × 30 in) and Masterwork (60 × 40 in), turned for portrait images. A size is only offered when the original file holds enough detail for it, so some works come in fewer sizes. Each product page lists what is available.',
+        a: 'Works are offered from 24 × 16 in up to 60 × 40 in (24 × 16, 30 × 20, 36 × 24, 45 × 30 and 60 × 40), turned for portrait images. A size is only offered when the original file holds enough detail for it at 150 pixels per inch or more, so some works come in fewer sizes. Each product page lists what is available and has a "See it on your wall" view to check the scale.',
       },
       {
         q: 'Are the prints signed?',
@@ -21,7 +21,11 @@ const faqs = [
       },
       {
         q: 'What is a limited edition?',
-        a: 'Each size of each work is a separate edition of 50 prints, numbered in order as they are sold. Once a size sells out it is closed permanently and no further prints are made at that size.',
+        a: 'Each work is one edition shared across all of its sizes: 20 prints for Premier works, 40 for Signature Works and 75 for the Collection. Prints are numbered in order as they are sold, and once the edition is complete it is closed permanently in every size. Premier and Signature works also have a small, separately numbered run of Artist Proofs, offered by inquiry.',
+      },
+      {
+        q: 'Why do prices change as an edition sells?',
+        a: 'Each edition is priced in five published steps. The first quarter of an edition is offered at the opening price, then the price rises by 20%, 40% and 70% of the opening price as the edition sells, and the final 10% (at twice the opening price) is offered by inquiry. Every product page shows the current step and when the price next rises. The steps reflect how many prints remain, not a prediction of future or resale value.',
       },
     ],
   },
@@ -38,7 +42,7 @@ const faqs = [
       },
       {
         q: 'Can I return a print?',
-        a: 'Because each print is made to order and numbered, sales are final. If your artwork arrives damaged, contact the studio within 48 hours with photos and we will replace it. See Shipping & Returns for details.',
+        a: 'Yes. Contact the studio within 14 days of delivery and return the piece in its original crate and packaging, insured, with return freight paid by you. You can choose a full refund of the purchase price or a full exchange credit toward another work. If your artwork arrives damaged, contact the studio within 48 hours with photos and we will replace it at no cost. See Shipping & Returns for details.',
       },
     ],
   },

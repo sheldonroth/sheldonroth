@@ -3,7 +3,7 @@
  * Uses the same least-privilege role as inquiries (INQUIRIES_DATABASE_URL). Never import from client components.
  */
 import { neon } from '@neondatabase/serverless';
-import { EDITION_PER_SIZE, PRINT_PACKAGE } from '@/content/commerce';
+import { PRINT_PACKAGE } from '@/content/commerce';
 import { getWork } from '@/content/catalog';
 import { masterLongEdge } from '@/content/master-sizes';
 
@@ -13,26 +13,30 @@ function db() {
   return neon(url);
 }
 
-/** Prints sold per size for one work. Throws when the database is unreachable (callers then hide the counter). */
-export async function soldBySize(slug: string): Promise<Record<string, number>> {
-  const sql = db();
-  const rows = (await sql`select size_name, sold from site.edition_sales where work_slug = ${slug}`) as { size_name: string; sold: number }[];
-  return Object.fromEntries(rows.map((r) => [r.size_name, Number(r.sold)]));
-}
+/**
+ * Editions are shared across all sizes of a work. site.edition_sales keeps one row per (work, size) for the record and
+ * a `_total` row per work that is the authoritative counter (it is incremented atomically, so edition numbers never
+ * repeat).
+ */
+export const TOTAL_ROW = '_total';
 
-/** Remaining prints for each requested (slug, size). */
-export async function remainingFor(keys: { slug: string; size: string }[]): Promise<Map<string, number>> {
+/** Prints sold per work (all sizes together). Throws when the database is unreachable (callers then hide the counter). */
+export async function soldTotals(slugs: string[]): Promise<Map<string, number>> {
   const sql = db();
-  const slugs = [...new Set(keys.map((k) => k.slug))];
-  const rows = (await sql`select work_slug, size_name, edition_size, sold from site.edition_sales where work_slug = any(${slugs})`) as {
-    work_slug: string; size_name: string; edition_size: number; sold: number;
+  const rows = (await sql`select work_slug, size_name, sold from site.edition_sales where work_slug = any(${slugs})`) as {
+    work_slug: string; size_name: string; sold: number;
   }[];
   const out = new Map<string, number>();
-  for (const k of keys) {
-    const r = rows.find((x) => x.work_slug === k.slug && x.size_name === k.size);
-    out.set(`${k.slug}|${k.size}`, r ? Number(r.edition_size) - Number(r.sold) : EDITION_PER_SIZE);
+  for (const slug of slugs) {
+    const mine = rows.filter((r) => r.work_slug === slug);
+    const total = mine.find((r) => r.size_name === TOTAL_ROW);
+    out.set(slug, total ? Number(total.sold) : mine.reduce((n, r) => n + Number(r.sold), 0));
   }
   return out;
+}
+
+export async function soldTotal(slug: string): Promise<number> {
+  return (await soldTotals([slug])).get(slug) ?? 0;
 }
 
 export interface OrderItem {
@@ -42,6 +46,8 @@ export interface OrderItem {
   dimensions: string;
   quantity: number;
   unitAmount: number; // cents
+  /** Edition size (shared across sizes) at the time of sale. */
+  edition?: number;
   editionNumbers?: number[];
 }
 
@@ -93,17 +99,23 @@ export async function recordPaidOrder(o: PaidOrder): Promise<{ id: number; items
   const items: OrderItem[] = [];
   const oversold: string[] = [];
   for (const it of o.items) {
+    const edition = getWork(it.slug)?.editionSize ?? 0;
+    // Per-size record, then the shared per-work counter, which issues the edition numbers.
+    await sql`
+      insert into site.edition_sales (work_slug, size_name, edition_size, sold)
+      values (${it.slug}, ${it.size}, ${edition}, ${it.quantity})
+      on conflict (work_slug, size_name) do update set sold = site.edition_sales.sold + excluded.sold, updated_at = now()`;
     const rows = (await sql`
       insert into site.edition_sales (work_slug, size_name, edition_size, sold)
-      values (${it.slug}, ${it.size}, ${EDITION_PER_SIZE}, ${it.quantity})
+      values (${it.slug}, ${TOTAL_ROW}, ${edition}, ${it.quantity})
       on conflict (work_slug, size_name) do update set sold = site.edition_sales.sold + excluded.sold, updated_at = now()
       returning sold, edition_size`) as { sold: number; edition_size: number }[];
     const sold = Number(rows[0].sold);
     const size = Number(rows[0].edition_size);
     const first = sold - it.quantity + 1;
     const editionNumbers = Array.from({ length: it.quantity }, (_, i) => first + i);
-    if (sold > size) oversold.push(`${it.title} (${it.size}): ${sold} sold of ${size}`);
-    items.push({ ...it, editionNumbers });
+    if (sold > size) oversold.push(`${it.title}: ${sold} sold of ${size}`);
+    items.push({ ...it, edition, editionNumbers });
   }
   await sql`update site.orders set items = ${JSON.stringify(items)}::jsonb where id = ${id}`;
   return { id, items, oversold };
@@ -135,7 +147,7 @@ export function orderEmailText(id: number, o: PaidOrder, items: OrderItem[], ove
     ...items.map(
       (it) =>
         `- ${it.title} — ${it.size} ${it.dimensions} × ${it.quantity} @ ${money(it.unitAmount, o.currency)}` +
-        `  (edition no. ${it.editionNumbers?.join(', ') ?? '?'} of ${EDITION_PER_SIZE})`,
+        `  (edition no. ${it.editionNumbers?.join(', ') ?? '?'} of ${it.edition ?? '?'})`,
     ),
     `Subtotal: ${money(o.amountSubtotal, o.currency)}`,
     `Shipping: ${money(o.amountShipping, o.currency)}`,
@@ -158,9 +170,9 @@ export function orderEmailText(id: number, o: PaidOrder, items: OrderItem[], ove
       '',
       `Item ${n + 1}: "${it.title}"`,
       `  File: ${it.slug} print master${master ? ` (${master} px long edge)` : ''} — send the approved master if NAP doesn't already have it`,
-      `  Size: ${it.dimensions} (${it.size})`,
+      `  Size: ${it.dimensions}`,
       `  Quantity: ${it.quantity}`,
-      `  Edition: ${it.editionNumbers?.map((e) => `${e}/${EDITION_PER_SIZE}`).join(', ') ?? '?'} — please write the edition number with the signature`,
+      `  Edition: ${it.editionNumbers?.map((e) => `${e}/${it.edition ?? '?'}`).join(', ') ?? '?'} — please write the edition number with the signature`,
       '  Package:',
       ...PRINT_PACKAGE.map((p) => `    - ${p}`),
       work ? `  Reference image: https://sheldonroth.com/works/${it.slug}.jpg` : '',
