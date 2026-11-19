@@ -23,10 +23,15 @@ export const SHIP_COUNTRIES = ['US'] as const;
  * the rate). 0 = free shipping (approved by Sheldon 2026-11-18: free shipping within the US; international by inquiry).
  */
 export const SHIPPING_USD: Record<string, number> = {
+  '24x12': 0,
   '24x16': 0,
+  '30x15': 0,
   '30x20': 0,
+  '36x18': 0,
   '36x24': 0,
   '45x30': 0,
+  '48x24': 0,
+  '60x30': 0,
   '60x40': 0,
 };
 export const SHIPPING_LABEL = 'Free insured shipping (US, signature required)';
@@ -57,7 +62,7 @@ export const PRINT_PACKAGE = [
   'Lumachrome HD print',
   'TruLife Antiglare acrylic face, 1/8" (3 mm), polished edges',
   'Acrylic backer (lifetime warranty)',
-  'Floater: 3/4" composite on 24×16, 30×20 and 36×24; 1-1/4" composite on 45×30 and 60×40 (confirm 24×16 and 36×24 with NAP)',
+  'Floater: 3/4" composite on 24×12, 24×16, 30×15, 30×20, 36×18 and 36×24; 1-1/4" composite on 45×30, 48×24, 60×30 and 60×40 (confirm 24×12, 24×16, 36×18 and 36×24 with NAP)',
   'French cleat hanging',
   'Signature and edition number (confirm method: gold autopen bottom right, or Sheldon signs)',
   'Certificate of authenticity',

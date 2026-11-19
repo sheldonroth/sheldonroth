@@ -1,6 +1,6 @@
 import { imageSizes } from './image-sizes';
 import { masterLongEdge } from './master-sizes';
-import { LEGACY_SIZE_NAMES, PREMIER_SLUGS, PRINT_FORMATS, TIERS, sizeLabel, type SizeKey, type Tier } from './pricing';
+import { LEGACY_SIZE_NAMES, PREMIER_SLUGS, PRINT_FORMATS, PRINT_FORMATS_2X1, TIERS, sizeLabel, type SizeKey, type Tier } from './pricing';
 
 export type CollectionSlug =
   | 'signature'
@@ -172,7 +172,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "alpenglow",
-    rank: 128,
+    rank: 132,
     title: "Alpenglow",
     collection: "mountains",
     collections: ["mountains"],
@@ -211,7 +211,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "sky-on-fire",
-    rank: 120,
+    rank: 124,
     title: "Sky on Fire",
     collection: "sky",
     collections: ["sky", "panoramas"],
@@ -220,7 +220,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "wildflower-basin",
-    rank: 112,
+    rank: 116,
     title: "Wildflower Basin",
     collection: "lakes",
     collections: ["lakes"],
@@ -229,7 +229,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "granite-throne",
-    rank: 125,
+    rank: 129,
     title: "Granite Throne",
     collection: "mountains",
     collections: ["mountains"],
@@ -239,7 +239,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "glacier-frame",
-    rank: 167,
+    rank: 171,
     title: "Glacier Frame",
     collection: "mountains",
     collections: ["mountains"],
@@ -248,7 +248,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "snow-range",
-    rank: 191,
+    rank: 195,
     title: "Snow Range",
     collection: "mountains",
     collections: ["mountains", "panoramas"],
@@ -266,7 +266,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "rising-pyramid",
-    rank: 146,
+    rank: 150,
     title: "Rising Pyramid",
     collection: "mountains",
     collections: ["mountains"],
@@ -275,7 +275,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "roof-of-the-world",
-    rank: 59,
+    rank: 60,
     title: "Roof of the World",
     collection: "mountains",
     collections: ["mountains", "panoramas"],
@@ -284,7 +284,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "frozen-symphony",
-    rank: 56,
+    rank: 57,
     title: "Frozen Symphony",
     collection: "mountains",
     collections: ["mountains"],
@@ -293,7 +293,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "valley-of-giants",
-    rank: 149,
+    rank: 153,
     title: "Valley of Giants",
     collection: "mountains",
     collections: ["mountains"],
@@ -311,7 +311,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "monarch-of-ice",
-    rank: 155,
+    rank: 159,
     title: "Monarch of Ice",
     collection: "mountains",
     collections: ["mountains", "panoramas"],
@@ -320,7 +320,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "glaciers-edge",
-    rank: 85,
+    rank: 88,
     title: "Glacier's Edge",
     collection: "mountains",
     collections: ["mountains"],
@@ -338,7 +338,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "rhododendron-valley",
-    rank: 194,
+    rank: 198,
     title: "Rhododendron Valley",
     collection: "mountains",
     collections: ["mountains", "forests"],
@@ -347,7 +347,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "storm-lake",
-    rank: 64,
+    rank: 65,
     title: "Storm Lake",
     collection: "lakes",
     collections: ["lakes", "panoramas"],
@@ -356,7 +356,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "bands-of-light",
-    rank: 62,
+    rank: 63,
     title: "Bands of Light",
     collection: "mountains",
     collections: ["mountains"],
@@ -365,7 +365,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "mist-veil",
-    rank: 197,
+    rank: 201,
     title: "Mist Veil",
     collection: "mountains",
     collections: ["mountains", "panoramas"],
@@ -374,7 +374,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "lake-and-summit",
-    rank: 52,
+    rank: 53,
     title: "Lake and Summit",
     collection: "lakes",
     collections: ["lakes", "mountains"],
@@ -392,7 +392,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "alpine-bloom",
-    rank: 180,
+    rank: 184,
     title: "Alpine Bloom",
     collection: "forests",
     collections: ["forests"],
@@ -401,7 +401,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "snowfield-mirror",
-    rank: 113,
+    rank: 117,
     title: "Snowfield Mirror",
     collection: "mountains",
     collections: ["mountains", "lakes"],
@@ -410,7 +410,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "painted-mountain",
-    rank: 65,
+    rank: 66,
     title: "Painted Mountain",
     collection: "mountains",
     collections: ["mountains", "panoramas"],
@@ -419,7 +419,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "emerald-ribbons",
-    rank: 184,
+    rank: 188,
     title: "Emerald Ribbons",
     collection: "water",
     collections: ["water"],
@@ -437,7 +437,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "hidden-falls",
-    rank: 89,
+    rank: 92,
     title: "Hidden Falls",
     collection: "water",
     collections: ["water"],
@@ -446,7 +446,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "liquid-jade",
-    rank: 61,
+    rank: 62,
     title: "Liquid Jade",
     collection: "lakes",
     collections: ["lakes"],
@@ -464,7 +464,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "range-of-light",
-    rank: 161,
+    rank: 165,
     title: "Range of Light",
     collection: "mountains",
     collections: ["mountains", "panoramas"],
@@ -473,7 +473,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "high-country",
-    rank: 176,
+    rank: 180,
     title: "High Country",
     collection: "mountains",
     collections: ["mountains", "panoramas"],
@@ -482,7 +482,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "eye-of-the-mountain",
-    rank: 153,
+    rank: 157,
     title: "Eye of the Mountain",
     collection: "lakes",
     collections: ["lakes"],
@@ -491,7 +491,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "gold-forest",
-    rank: 86,
+    rank: 89,
     title: "Gold Forest",
     collection: "forests",
     collections: ["forests"],
@@ -500,7 +500,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "table-of-the-gods",
-    rank: 169,
+    rank: 173,
     title: "Table of the Gods",
     collection: "canyons",
     collections: ["canyons", "panoramas"],
@@ -528,7 +528,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "island-paradise",
-    rank: 91,
+    rank: 94,
     title: "Island Paradise",
     collection: "coast",
     collections: ["coast"],
@@ -537,7 +537,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "turquoise-depths",
-    rank: 203,
+    rank: 207,
     title: "Turquoise Depths",
     collection: "coast",
     collections: ["coast"],
@@ -547,7 +547,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "pacific-edge",
-    rank: 201,
+    rank: 205,
     title: "Pacific Edge",
     collection: "coast",
     collections: ["coast", "panoramas"],
@@ -565,7 +565,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "wind-script",
-    rank: 96,
+    rank: 100,
     title: "Wind Script",
     collection: "canyons",
     collections: ["canyons"],
@@ -574,7 +574,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "massif-from-the-water",
-    rank: 195,
+    rank: 199,
     title: "Massif from the Water",
     collection: "coast",
     collections: ["coast"],
@@ -583,7 +583,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "sea-stack",
-    rank: 189,
+    rank: 193,
     title: "Sea Stack",
     collection: "coast",
     collections: ["coast"],
@@ -592,7 +592,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "veil-of-cloud",
-    rank: 131,
+    rank: 135,
     title: "Veil of Cloud",
     collection: "mountains",
     collections: ["mountains"],
@@ -602,7 +602,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "first-light",
-    rank: 172,
+    rank: 176,
     title: "First Light",
     collection: "sky",
     collections: ["sky", "panoramas"],
@@ -612,7 +612,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "blue-cathedral",
-    rank: 188,
+    rank: 192,
     title: "Blue Cathedral",
     collection: "mountains",
     collections: ["mountains"],
@@ -622,7 +622,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "sheer-majesty",
-    rank: 95,
+    rank: 99,
     title: "Sheer Majesty",
     collection: "mountains",
     collections: ["mountains"],
@@ -632,7 +632,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "emerald-basin",
-    rank: 99,
+    rank: 103,
     title: "Emerald Basin",
     collection: "lakes",
     collections: ["lakes"],
@@ -642,7 +642,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "wild-water",
-    rank: 181,
+    rank: 185,
     title: "Wild Water",
     collection: "water",
     collections: ["water"],
@@ -652,7 +652,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "travertine",
-    rank: 190,
+    rank: 194,
     title: "Travertine",
     collection: "canyons",
     collections: ["canyons"],
@@ -662,7 +662,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "autumn-majesty",
-    rank: 177,
+    rank: 181,
     title: "Autumn Majesty",
     collection: "forests",
     collections: ["forests", "panoramas"],
@@ -672,7 +672,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "crystal-shores",
-    rank: 186,
+    rank: 190,
     title: "Crystal Shores",
     collection: "coast",
     collections: ["coast"],
@@ -682,7 +682,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "high-valley",
-    rank: 185,
+    rank: 189,
     title: "High Valley",
     collection: "mountains",
     collections: ["mountains"],
@@ -692,7 +692,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "ember-sky",
-    rank: 148,
+    rank: 152,
     title: "Ember Sky",
     collection: "sky",
     collections: ["sky", "panoramas"],
@@ -701,7 +701,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "horizon-burn",
-    rank: 199,
+    rank: 203,
     title: "Horizon Burn",
     collection: "sky",
     collections: ["sky", "coast", "panoramas"],
@@ -710,7 +710,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "last-light",
-    rank: 183,
+    rank: 187,
     title: "Last Light",
     collection: "sky",
     collections: ["sky", "panoramas"],
@@ -719,7 +719,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "terraced-meadow",
-    rank: 134,
+    rank: 138,
     title: "Terraced Meadow",
     collection: "mountains",
     collections: ["mountains"],
@@ -728,7 +728,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "gilded-sky",
-    rank: 193,
+    rank: 197,
     title: "Gilded Sky",
     collection: "sky",
     collections: ["sky"],
@@ -737,7 +737,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "rose-summit",
-    rank: 71,
+    rank: 73,
     title: "Rose Summit",
     collection: "mountains",
     collections: ["mountains"],
@@ -746,7 +746,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "golden-tide",
-    rank: 187,
+    rank: 191,
     title: "Golden Tide",
     collection: "sky",
     collections: ["sky", "coast"],
@@ -755,7 +755,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "morning-mist",
-    rank: 196,
+    rank: 200,
     title: "Morning Mist",
     collection: "sky",
     collections: ["sky"],
@@ -764,7 +764,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "storm-light",
-    rank: 143,
+    rank: 147,
     title: "Storm Light",
     collection: "mountains",
     collections: ["mountains", "panoramas"],
@@ -800,7 +800,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "stone-spires",
-    rank: 164,
+    rank: 168,
     title: "Stone Spires",
     collection: "mountains",
     collections: ["mountains"],
@@ -809,7 +809,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "cloud-weave",
-    rank: 137,
+    rank: 141,
     title: "Cloud Weave",
     collection: "mountains",
     collections: ["mountains"],
@@ -827,7 +827,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "ocean-of-cloud",
-    rank: 82,
+    rank: 85,
     title: "Ocean of Cloud",
     collection: "mountains",
     collections: ["mountains", "sky"],
@@ -836,7 +836,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "winter-crown",
-    rank: 53,
+    rank: 54,
     title: "Winter Crown",
     collection: "mountains",
     collections: ["mountains"],
@@ -845,7 +845,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "summit-cloud",
-    rank: 119,
+    rank: 123,
     title: "Summit Cloud",
     collection: "mountains",
     collections: ["mountains"],
@@ -854,7 +854,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "spindrift",
-    rank: 109,
+    rank: 113,
     title: "Spindrift",
     collection: "mountains",
     collections: ["mountains"],
@@ -872,7 +872,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "sandstone-flame",
-    rank: 87,
+    rank: 90,
     title: "Sandstone Flame",
     collection: "canyons",
     collections: ["canyons"],
@@ -890,7 +890,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "dune-lines",
-    rank: 90,
+    rank: 93,
     title: "Dune Lines",
     collection: "canyons",
     collections: ["canyons"],
@@ -899,7 +899,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "tidewater-stones",
-    rank: 57,
+    rank: 58,
     title: "Tidewater Stones",
     collection: "coast",
     collections: ["coast"],
@@ -908,7 +908,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "three-veils",
-    rank: 92,
+    rank: 95,
     title: "Three Veils",
     collection: "water",
     collections: ["water"],
@@ -935,7 +935,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "golden-slope",
-    rank: 126,
+    rank: 130,
     title: "Golden Slope",
     collection: "forests",
     collections: ["forests"],
@@ -944,7 +944,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "autumn-cascade",
-    rank: 144,
+    rank: 148,
     title: "Autumn Cascade",
     collection: "water",
     collections: ["water"],
@@ -953,7 +953,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "mirror-lake",
-    rank: 133,
+    rank: 137,
     title: "Mirror Lake",
     collection: "lakes",
     collections: ["lakes"],
@@ -962,7 +962,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "blue-hour-shore",
-    rank: 114,
+    rank: 118,
     title: "Blue Hour Shore",
     collection: "coast",
     collections: ["coast"],
@@ -989,7 +989,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "river-strata",
-    rank: 111,
+    rank: 115,
     title: "River Strata",
     collection: "canyons",
     collections: ["canyons", "water", "panoramas"],
@@ -1061,7 +1061,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "into-the-mist",
-    rank: 123,
+    rank: 127,
     title: "Into the Mist",
     collection: "wildlife",
     collections: ["wildlife", "panoramas"],
@@ -1075,11 +1075,11 @@ const catalogWorks: CatalogWork[] = [
     collection: "wildlife",
     collections: ["wildlife"],
     description:
-      "A leopard lounges on a weathered branch, its golden coat glowing against a deep green forest.",
+      "A leopard lounges on a weathered branch, one paw trailing down the trunk, its golden coat glowing against a deep green forest.",
   },
   {
     slug: "the-huntress",
-    rank: 156,
+    rank: 160,
     title: "The Huntress",
     collection: "wildlife",
     collections: ["wildlife", "black-and-white"],
@@ -1097,7 +1097,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "golden-mane",
-    rank: 68,
+    rank: 70,
     title: "Golden Mane",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1106,7 +1106,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "the-heavyweight",
-    rank: 84,
+    rank: 87,
     title: "The Heavyweight",
     collection: "wildlife",
     collections: ["wildlife", "black-and-white"],
@@ -1115,7 +1115,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "crystal-crown",
-    rank: 152,
+    rank: 156,
     title: "Crystal Crown",
     collection: "mountains",
     collections: ["mountains"],
@@ -1124,7 +1124,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "twin-horns",
-    rank: 182,
+    rank: 186,
     title: "Twin Horns",
     collection: "mountains",
     collections: ["mountains"],
@@ -1133,7 +1133,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "sea-of-silence",
-    rank: 116,
+    rank: 120,
     title: "Sea of Silence",
     collection: "mountains",
     collections: ["mountains", "sky"],
@@ -1142,7 +1142,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "cloud-crest",
-    rank: 202,
+    rank: 206,
     title: "Cloud Crest",
     collection: "mountains",
     collections: ["mountains"],
@@ -1151,7 +1151,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "breath-of-the-mountain",
-    rank: 158,
+    rank: 162,
     title: "Breath of the Mountain",
     collection: "mountains",
     collections: ["mountains"],
@@ -1160,7 +1160,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "turquoise-mesa",
-    rank: 142,
+    rank: 146,
     title: "Turquoise Mesa",
     collection: "lakes",
     collections: ["lakes"],
@@ -1169,7 +1169,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "jagged-horizon",
-    rank: 140,
+    rank: 144,
     title: "Jagged Horizon",
     collection: "mountains",
     collections: ["mountains"],
@@ -1178,7 +1178,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "paintbrush-meadow",
-    rank: 163,
+    rank: 167,
     title: "Paintbrush Meadow",
     collection: "forests",
     collections: ["forests"],
@@ -1187,7 +1187,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "ghost-forest",
-    rank: 198,
+    rank: 202,
     title: "Ghost Forest",
     collection: "forests",
     collections: ["forests", "black-and-white"],
@@ -1196,7 +1196,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "granite-cathedral",
-    rank: 173,
+    rank: 177,
     title: "Granite Cathedral",
     collection: "mountains",
     collections: ["mountains", "black-and-white"],
@@ -1205,7 +1205,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "ice-blade",
-    rank: 200,
+    rank: 204,
     title: "Ice Blade",
     collection: "mountains",
     collections: ["mountains"],
@@ -1232,7 +1232,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "silent-passage",
-    rank: 70,
+    rank: 72,
     title: "Silent Passage",
     collection: "canyons",
     collections: ["canyons", "water"],
@@ -1241,7 +1241,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "wild-coast",
-    rank: 192,
+    rank: 196,
     title: "Wild Coast",
     collection: "coast",
     collections: ["coast"],
@@ -1250,7 +1250,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "canopy-of-gold",
-    rank: 147,
+    rank: 151,
     title: "Canopy of Gold",
     collection: "forests",
     collections: ["forests"],
@@ -1259,7 +1259,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "white-giant",
-    rank: 170,
+    rank: 174,
     title: "White Giant",
     collection: "mountains",
     collections: ["mountains"],
@@ -1268,7 +1268,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "the-needle",
-    rank: 122,
+    rank: 126,
     title: "The Needle",
     collection: "mountains",
     collections: ["mountains"],
@@ -1277,7 +1277,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "frozen-ramparts",
-    rank: 74,
+    rank: 76,
     title: "Frozen Ramparts",
     collection: "mountains",
     collections: ["mountains"],
@@ -1295,7 +1295,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "firestorm",
-    rank: 105,
+    rank: 109,
     title: "Firestorm",
     collection: "sky",
     collections: ["sky"],
@@ -1304,7 +1304,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "jade-waters",
-    rank: 60,
+    rank: 61,
     title: "Jade Waters",
     collection: "water",
     collections: ["water", "canyons"],
@@ -1322,7 +1322,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "silver-thread",
-    rank: 138,
+    rank: 142,
     title: "Silver Thread",
     collection: "water",
     collections: ["water"],
@@ -1331,7 +1331,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "afterglow",
-    rank: 139,
+    rank: 143,
     title: "Afterglow",
     collection: "sky",
     collections: ["sky", "lakes"],
@@ -1349,7 +1349,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "canyon-rampart",
-    rank: 80,
+    rank: 83,
     title: "Canyon Rampart",
     collection: "canyons",
     collections: ["canyons"],
@@ -1358,7 +1358,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "emerald-pool",
-    rank: 63,
+    rank: 64,
     title: "Emerald Pool",
     collection: "water",
     collections: ["water", "canyons", "panoramas"],
@@ -1367,7 +1367,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "golden-hillside",
-    rank: 110,
+    rank: 114,
     title: "Golden Hillside",
     collection: "forests",
     collections: ["forests", "panoramas"],
@@ -1376,7 +1376,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "forest-cascade",
-    rank: 168,
+    rank: 172,
     title: "Forest Cascade",
     collection: "water",
     collections: ["water", "forests"],
@@ -1385,7 +1385,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "storm-spire",
-    rank: 106,
+    rank: 110,
     title: "Storm Spire",
     collection: "mountains",
     collections: ["mountains", "black-and-white"],
@@ -1394,7 +1394,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "cloud-shadows",
-    rank: 103,
+    rank: 107,
     title: "Cloud Shadows",
     collection: "mountains",
     collections: ["mountains"],
@@ -1403,7 +1403,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "headwaters",
-    rank: 127,
+    rank: 131,
     title: "Headwaters",
     collection: "water",
     collections: ["water"],
@@ -1412,7 +1412,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "mirror-dusk",
-    rank: 151,
+    rank: 155,
     title: "Mirror Dusk",
     collection: "sky",
     collections: ["sky", "lakes"],
@@ -1421,7 +1421,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "autumn-mirror",
-    rank: 136,
+    rank: 140,
     title: "Autumn Mirror",
     collection: "lakes",
     collections: ["lakes"],
@@ -1430,7 +1430,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "aspen-script",
-    rank: 171,
+    rank: 175,
     title: "Aspen Script",
     collection: "forests",
     collections: ["forests"],
@@ -1439,7 +1439,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "silver-dunes",
-    rank: 135,
+    rank: 139,
     title: "Silver Dunes",
     collection: "canyons",
     collections: ["canyons", "black-and-white"],
@@ -1448,7 +1448,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "desert-gentleman",
-    rank: 132,
+    rank: 136,
     title: "Desert Gentleman",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1457,7 +1457,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "silken-stream",
-    rank: 79,
+    rank: 82,
     title: "Silken Stream",
     collection: "water",
     collections: ["water"],
@@ -1466,7 +1466,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "canyon-evening",
-    rank: 178,
+    rank: 182,
     title: "Canyon Evening",
     collection: "canyons",
     collections: ["canyons"],
@@ -1475,7 +1475,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "canyon-light",
-    rank: 129,
+    rank: 133,
     title: "Canyon Light",
     collection: "canyons",
     collections: ["canyons", "water"],
@@ -1484,7 +1484,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "storm-over-the-pines",
-    rank: 77,
+    rank: 80,
     title: "Storm over the Pines",
     collection: "forests",
     collections: ["forests"],
@@ -1493,7 +1493,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "summer-reflection",
-    rank: 83,
+    rank: 86,
     title: "Summer Reflection",
     collection: "lakes",
     collections: ["lakes"],
@@ -1520,7 +1520,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "kindred",
-    rank: 69,
+    rank: 71,
     title: "Kindred",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1529,16 +1529,16 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "savanna-sentinel",
-    rank: 100,
+    rank: 104,
     title: "Savanna Sentinel",
     collection: "wildlife",
-    collections: ["wildlife"],
+    collections: ["wildlife", "panoramas"],
     description:
-      "A lone gemsbok stands tall in golden grass beneath flat-topped acacias.",
+      "A lone gemsbok stands tall in golden grass beneath flat-topped acacias, the open savanna stretching wide around it.",
   },
   {
     slug: "springbok",
-    rank: 78,
+    rank: 81,
     title: "Springbok",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1547,7 +1547,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "last-embers",
-    rank: 117,
+    rank: 121,
     title: "Last Embers",
     collection: "sky",
     collections: ["sky"],
@@ -1565,7 +1565,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "emerald-climber",
-    rank: 54,
+    rank: 55,
     title: "Emerald Climber",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1574,7 +1574,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "lord-of-the-grass",
-    rank: 101,
+    rank: 105,
     title: "Lord of the Grass",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1583,7 +1583,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "rising-mist",
-    rank: 159,
+    rank: 163,
     title: "Rising Mist",
     collection: "water",
     collections: ["water", "panoramas"],
@@ -1592,7 +1592,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "open-plains",
-    rank: 115,
+    rank: 119,
     title: "Open Plains",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1601,7 +1601,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "granite-tide",
-    rank: 102,
+    rank: 106,
     title: "Granite Tide",
     collection: "coast",
     collections: ["coast"],
@@ -1619,7 +1619,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "ancient-mariner",
-    rank: 98,
+    rank: 102,
     title: "Ancient Mariner",
     collection: "coast",
     collections: ["coast"],
@@ -1628,7 +1628,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "mountain-staircase",
-    rank: 104,
+    rank: 108,
     title: "Mountain Staircase",
     collection: "water",
     collections: ["water"],
@@ -1637,7 +1637,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "snowmelt-run",
-    rank: 76,
+    rank: 78,
     title: "Snowmelt Run",
     collection: "water",
     collections: ["water"],
@@ -1655,7 +1655,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "sapphire-caldera",
-    rank: 67,
+    rank: 69,
     title: "Sapphire Caldera",
     collection: "lakes",
     collections: ["lakes"],
@@ -1664,7 +1664,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "reef-garden",
-    rank: 94,
+    rank: 98,
     title: "Reef Garden",
     collection: "coast",
     collections: ["coast"],
@@ -1682,7 +1682,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "first-steps",
-    rank: 81,
+    rank: 84,
     title: "First Steps",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1691,7 +1691,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "forest-jewel",
-    rank: 107,
+    rank: 111,
     title: "Forest Jewel",
     collection: "water",
     collections: ["water", "forests"],
@@ -1700,7 +1700,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "stone-window",
-    rank: 160,
+    rank: 164,
     title: "Stone Window",
     collection: "canyons",
     collections: ["canyons"],
@@ -1709,7 +1709,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "little-lion",
-    rank: 55,
+    rank: 56,
     title: "Little Lion",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1718,7 +1718,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "granite-valley",
-    rank: 179,
+    rank: 183,
     title: "Granite Valley",
     collection: "mountains",
     collections: ["mountains"],
@@ -1736,7 +1736,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "river-horse",
-    rank: 75,
+    rank: 77,
     title: "River Horse",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1745,7 +1745,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "three-of-a-kind",
-    rank: 88,
+    rank: 91,
     title: "Three of a Kind",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1754,7 +1754,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "meadow-prowler",
-    rank: 108,
+    rank: 112,
     title: "Meadow Prowler",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1763,7 +1763,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "midday-rest",
-    rank: 165,
+    rank: 169,
     title: "Midday Rest",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1772,7 +1772,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "ocean-fury",
-    rank: 157,
+    rank: 161,
     title: "Ocean Fury",
     collection: "coast",
     collections: ["coast"],
@@ -1781,7 +1781,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "the-lookout",
-    rank: 121,
+    rank: 125,
     title: "The Lookout",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1790,7 +1790,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "lone-lily",
-    rank: 141,
+    rank: 145,
     title: "Lone Lily",
     collection: "forests",
     collections: ["forests"],
@@ -1799,7 +1799,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "gentle-giant",
-    rank: 145,
+    rank: 149,
     title: "Gentle Giant",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1808,7 +1808,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "painted-earth",
-    rank: 166,
+    rank: 170,
     title: "Painted Earth",
     collection: "canyons",
     collections: ["canyons"],
@@ -1817,7 +1817,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "fern-cathedral",
-    rank: 97,
+    rank: 101,
     title: "Fern Cathedral",
     collection: "forests",
     collections: ["forests"],
@@ -1827,7 +1827,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "winter-quiet",
-    rank: 174,
+    rank: 178,
     title: "Winter Quiet",
     collection: "forests",
     collections: ["forests"],
@@ -1847,7 +1847,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "first-bloom",
-    rank: 118,
+    rank: 122,
     title: "First Bloom",
     collection: "forests",
     collections: ["forests"],
@@ -1857,7 +1857,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "the-old-warrior",
-    rank: 154,
+    rank: 158,
     title: "The Old Warrior",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1877,7 +1877,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "tuxedo-pair",
-    rank: 58,
+    rank: 59,
     title: "Tuxedo Pair",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1897,7 +1897,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "amber-chamber",
-    rank: 93,
+    rank: 97,
     title: "Amber Chamber",
     collection: "canyons",
     collections: ["canyons"],
@@ -1917,7 +1917,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "wading-party",
-    rank: 175,
+    rank: 179,
     title: "Wading Party",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1927,7 +1927,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "on-the-wing",
-    rank: 124,
+    rank: 128,
     title: "On the Wing",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -1957,7 +1957,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "fern-pool",
-    rank: 73,
+    rank: 75,
     title: "Fern Pool",
     collection: "water",
     collections: ["water", "forests"],
@@ -1977,7 +1977,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "birch-sun",
-    rank: 150,
+    rank: 154,
     title: "Reaching for the Sun",
     collection: "forests",
     collections: ["forests"],
@@ -1987,7 +1987,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "beach-patrol",
-    rank: 72,
+    rank: 74,
     title: "Beach Patrol",
     collection: "wildlife",
     collections: ["wildlife", "coast"],
@@ -1997,7 +1997,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "penguin-portrait",
-    rank: 66,
+    rank: 67,
     title: "Formal Attire",
     collection: "wildlife",
     collections: ["wildlife"],
@@ -2007,7 +2007,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "fern-gorge",
-    rank: 162,
+    rank: 166,
     title: "Fern Gorge",
     collection: "water",
     collections: ["water", "forests"],
@@ -2017,7 +2017,7 @@ const catalogWorks: CatalogWork[] = [
   },
   {
     slug: "tropic-flame",
-    rank: 130,
+    rank: 134,
     title: "Tropic Flame",
     collection: "forests",
     collections: ["forests"],
@@ -2025,6 +2025,47 @@ const catalogWorks: CatalogWork[] = [
       "A hibiscus bloom flares from deep crimson to gold against dark tropical leaves.",
     isNew: true,
   },
+  {
+    slug: "through-the-branches",
+    rank: 68,
+    title: "Through the Branches",
+    collection: "sky",
+    collections: ["sky"],
+    description:
+      "Bare, branching trees stand in silhouette as the sun bursts through their limbs, flooding the sky with gold.",
+    isNew: true,
+  },
+  {
+    slug: "lilac-breasted-roller",
+    rank: 52,
+    title: "Lilac-breasted Roller",
+    collection: "wildlife",
+    collections: ["wildlife"],
+    description:
+      "A lilac-breasted roller perches at the tip of a slender branch, its rose, turquoise and chestnut plumage sharp against a clear blue sky.",
+    isNew: true,
+  },
+  {
+    slug: "sunlit-reef",
+    rank: 96,
+    title: "Sunlit Reef",
+    collection: "coast",
+    collections: ["coast"],
+    description:
+      "A living wall of coral rises toward the sunlit surface as small fish drift through the blue.",
+    isNew: true,
+  },
+  {
+    slug: "golden-pavilion",
+    rank: 79,
+    title: "The Golden Pavilion",
+    collection: "forests",
+    collections: ["forests"],
+    description:
+      "A vermilion bridge leads to a gilded pavilion, its tiered roofs rising against a pale sky.",
+    isNew: true,
+  },
+
 ];
 
 export function getImage(slug: string) {
@@ -2099,8 +2140,15 @@ export function getWorksInTier(tier: Tier) {
 export const MIN_PRINT_PPI = 150;
 
 /**
- * Print sizes offered for a work: sizes its tier sells that the master can hold at MIN_PRINT_PPI. 36×24 is offered
- * only when the master can't reach 45×30, so single-size works gain a second, larger size.
+ * Works offered in 2:1 widescreen print sizes (same long-edge prices as the 3:2 formats) so the image is not cropped
+ * or stretched. Other 2:1 works can be added here as they are remastered.
+ */
+const TWO_BY_ONE = new Set(['savanna-sentinel']);
+
+/**
+ * Print sizes offered for a work: sizes its tier sells that the master can hold at MIN_PRINT_PPI. The mid size
+ * (36×24, or 36×18 for 2:1 works) is offered only when the master can't reach the next size up, so single-size
+ * works gain a second, larger size.
  */
 export function sizesFor(slug: string): PrintSize[] {
   const work = works.find((w) => w.slug === slug);
@@ -2109,7 +2157,11 @@ export function sizesFor(slug: string): PrintSize[] {
   const master = masterLongEdge[slug] ?? 0;
   const prices = TIERS[work.tier].prices;
   const fits = (long: number) => master >= long * MIN_PRINT_PPI;
-  return PRINT_FORMATS.filter((f) => prices[f.key] && fits(f.long) && (f.key !== '36x24' || !fits(45))).map((f) => ({
+  const widescreen = TWO_BY_ONE.has(slug);
+  const formats = widescreen ? PRINT_FORMATS_2X1 : PRINT_FORMATS;
+  const midKey: SizeKey = widescreen ? '36x18' : '36x24';
+  const nextLong = widescreen ? 48 : 45;
+  return formats.filter((f) => prices[f.key] && fits(f.long) && (f.key !== midKey || !fits(nextLong))).map((f) => ({
     name: f.key,
     dimensions: sizeLabel(f, portrait),
     long: f.long,

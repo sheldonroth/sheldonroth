@@ -10,7 +10,7 @@
 export type Tier = 'premier' | 'signature' | 'collection';
 
 /** Size keys are stored in carts, Stripe metadata and site.edition_sales, so never rename one once sold. */
-export const SIZE_KEYS = ['24x16', '30x20', '36x24', '45x30', '60x40'] as const;
+export const SIZE_KEYS = ['24x12', '24x16', '30x15', '30x20', '36x18', '36x24', '45x30', '48x24', '60x30', '60x40'] as const;
 export type SizeKey = (typeof SIZE_KEYS)[number];
 
 export interface PrintFormat {
@@ -26,6 +26,15 @@ export const PRINT_FORMATS: PrintFormat[] = [
   { key: '36x24', long: 36, short: 24 },
   { key: '45x30', long: 45, short: 30 },
   { key: '60x40', long: 60, short: 40 },
+];
+
+/** 2:1 widescreen formats, used for works cropped to that aspect (same long-edge prices as the 3:2 sizes). */
+export const PRINT_FORMATS_2X1: PrintFormat[] = [
+  { key: '24x12', long: 24, short: 12 },
+  { key: '30x15', long: 30, short: 15 },
+  { key: '36x18', long: 36, short: 18 },
+  { key: '48x24', long: 48, short: 24 },
+  { key: '60x30', long: 60, short: 30 },
 ];
 
 /** Old size names (before 2026-11-19) mapped to their new keys, so carts saved in a browser still check out. */
@@ -46,19 +55,19 @@ export const TIERS: Record<Tier, TierSpec> = {
     label: 'Premier',
     edition: 20,
     artistProofs: 2,
-    prices: { '30x20': 4800, '36x24': 6200, '45x30': 8500, '60x40': 14500 },
+    prices: { '30x15': 4800, '30x20': 4800, '36x18': 6200, '36x24': 6200, '45x30': 8500, '48x24': 8500, '60x30': 14500, '60x40': 14500 },
   },
   signature: {
     label: 'Signature',
     edition: 40,
     artistProofs: 4,
-    prices: { '30x20': 3400, '36x24': 4400, '45x30': 5900, '60x40': 9800 },
+    prices: { '30x15': 3400, '30x20': 3400, '36x18': 4400, '36x24': 4400, '45x30': 5900, '48x24': 5900, '60x30': 9800, '60x40': 9800 },
   },
   collection: {
     label: 'Collection',
     edition: 75,
     artistProofs: 0,
-    prices: { '24x16': 1650, '30x20': 2400, '36x24': 3200, '45x30': 4200, '60x40': 7200 },
+    prices: { '24x12': 1650, '24x16': 1650, '30x15': 2400, '30x20': 2400, '36x18': 3200, '36x24': 3200, '45x30': 4200, '48x24': 4200, '60x30': 7200, '60x40': 7200 },
   },
 };
 
