@@ -26,12 +26,14 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    // Full-res photography, capped at 2560 wide for speed. Full-bleed/hero images use q80, grids/cards q75.
+    // No Vercel Image Optimization (it returns 402 on this plan). A custom loader points <Image> at
+    // pre-sized static JPEGs in public/works/w640|w1200|w2048 (scripts/make-image-sizes.py), with the
+    // full 3840px file only for requests wider than 2048. Grids/cards get 640/1200, heroes 2048 or full.
+    loader: 'custom',
+    loaderFile: './src/lib/image-loader.ts',
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 2560],
     imageSizes: [32, 64, 128, 256, 384, 512],
     qualities: [75, 80],
-    formats: ['image/avif', 'image/webp'],
-    minimumCacheTTL: 31536000,
     remotePatterns: [
       {
         protocol: 'https',
