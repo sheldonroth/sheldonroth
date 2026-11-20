@@ -1,5 +1,15 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { hashIp, markNotified, notify, recentCount, saveInquiry } from '@/lib/inquiries';
+import {
+  alreadyOnCollectorList,
+  collectorWelcomeText,
+  COLLECTOR_WELCOME_SUBJECT,
+  hashIp,
+  markNotified,
+  notify,
+  recentCount,
+  saveInquiry,
+  sendToVisitor,
+} from '@/lib/inquiries';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -50,10 +60,16 @@ export async function POST(req: NextRequest) {
       userAgent: clean(req.headers.get('user-agent'), 300) || null,
       referer: clean(req.headers.get('referer'), 300) || null,
     };
+    const returning = await alreadyOnCollectorList(email).catch(() => true);
     const id = await saveInquiry(record);
     const err = await notify(id, record, `New collector list signup — ${email}`);
     await markNotified(id, err).catch(() => {});
     if (err) console.warn(`collector signup ${id} stored; notification not sent: ${err}`);
+    // A short welcome from Sheldon, once per address.
+    if (!returning) {
+      const welcomeErr = await sendToVisitor(email, COLLECTOR_WELCOME_SUBJECT, collectorWelcomeText(name || null));
+      if (welcomeErr) console.warn(`collector signup ${id}: welcome email not sent: ${welcomeErr}`);
+    }
     return NextResponse.json({ ok: true });
   } catch (e) {
     console.error('collector signup failed', e);

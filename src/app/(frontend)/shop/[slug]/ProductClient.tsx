@@ -57,6 +57,14 @@ export default function ProductClient({ work }: { work: ProductData }) {
   const portrait = work.image.height > work.image.width;
   const size = work.sizes[selected] as SizeOption | undefined;
 
+  // ?size=30x20 (Google Shopping and other deep links) preselects that size after hydration.
+  useEffect(() => {
+    const wanted = new URLSearchParams(window.location.search).get('size');
+    const i = wanted ? work.sizes.findIndex((s) => s.name === wanted) : -1;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time sync from the URL, unavailable during static render
+    if (i > 0) setSelected(i);
+  }, [work.sizes]);
+
   // Live edition status and server-computed prices.
   useEffect(() => {
     let cancelled = false;

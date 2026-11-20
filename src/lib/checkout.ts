@@ -103,6 +103,12 @@ export function buildCheckoutParams(lines: PricedLine[], origin: string): Stripe
         },
       },
     ],
+    // Trade (20%) and gift certificate codes are entered here; Sheldon controls every code in the Stripe Dashboard.
+    allow_promotion_codes: true,
+    // Abandoned checkout recovery: an expired session gets a recovery URL (sent by Stripe's abandoned cart emails to
+    // buyers who opted in to promotional email below). Prices are re-quoted from the ladder only on a new checkout.
+    after_expiration: { recovery: { enabled: true, allow_promotion_codes: true } },
+    consent_collection: { promotions: 'auto' },
     custom_text: {
       submit: { message: 'Each print is made to order and ships in 2–4 weeks. Returns are accepted within 14 days of delivery (see Shipping & Returns).' },
     },
@@ -116,14 +122,35 @@ export function buildCheckoutParams(lines: PricedLine[], origin: string): Stripe
  */
 export async function createCheckoutSession(stripe: Pick<Stripe, 'checkout'>, params: Stripe.Checkout.SessionCreateParams) {
   try {
-    return await stripe.checkout.sessions.create(params);
+    return await createWithOptionalFeatures(stripe, params);
   } catch (error) {
     if (!params.automatic_tax?.enabled || !isTaxSetupError(error)) throw error;
     console.error('Stripe Tax unavailable, creating checkout without tax:', (error as Error).message);
-    return stripe.checkout.sessions.create({
+    return createWithOptionalFeatures(stripe, {
       ...params,
       automatic_tax: { enabled: false },
       metadata: { ...params.metadata, tax_status: 'not_calculated' },
     });
+  }
+}
+
+/** True when Stripe refused one of the optional recovery / marketing-consent settings (never block a sale for them). */
+export function isOptionalFeatureError(error: unknown): boolean {
+  const e = error as { type?: string; param?: string; message?: string } | null;
+  if (!e || (e.type && e.type !== 'StripeInvalidRequestError')) return false;
+  // e.g. "To set `consent_collection.promotions`, please visit dashboard.stripe.com/settings/checkout to agree to the Terms".
+  return /^(consent_collection|after_expiration)/.test(e.param ?? '') || /consent_collection|after_expiration/.test(e.message ?? '');
+}
+
+async function createWithOptionalFeatures(stripe: Pick<Stripe, 'checkout'>, params: Stripe.Checkout.SessionCreateParams) {
+  try {
+    return await stripe.checkout.sessions.create(params);
+  } catch (error) {
+    if (!isOptionalFeatureError(error)) throw error;
+    console.error('Checkout recovery/consent refused, creating checkout without them:', (error as Error).message);
+    const rest = { ...params };
+    delete rest.consent_collection;
+    delete rest.after_expiration;
+    return stripe.checkout.sessions.create(rest);
   }
 }

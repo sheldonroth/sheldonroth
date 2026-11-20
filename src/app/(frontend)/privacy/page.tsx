@@ -16,11 +16,16 @@ export default function PrivacyPage() {
           To limit spam, the inquiry form stores a one-way hash of your IP address rather than the address itself. Your cart is kept in your
           own browser. The site does not use advertising or third-party tracking cookies.
         </p>
+        <p>
+          To understand which pages are useful and how fast they load, the site uses Vercel Web Analytics and Speed Insights. They set no
+          cookies, do not identify you or follow you across other sites, and report only aggregated visit and performance counts.
+        </p>
       </PolicySection>
       <PolicySection title="How We Use It">
         <p>
           Only to reply to you, to make, ship and support your order, to keep records required by law, and to prevent fraud. We do not send
-          marketing email unless you ask us to, and we never sell your information.
+          marketing email unless you ask us to (by joining the Collector List, or by opting in at checkout), and we never sell your
+          information.
         </p>
       </PolicySection>
       <PolicySection title="Who We Share It With">

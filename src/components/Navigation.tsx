@@ -13,6 +13,7 @@ const links = [
   { href: '/collections', label: 'The Galleries' },
   { href: '/new-releases', label: 'New Releases' },
   { href: '/artist', label: 'The Artist' },
+  { href: '/gift', label: 'Gifts' },
   { href: '/contact', label: 'Inquire' },
 ];
 

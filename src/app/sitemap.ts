@@ -16,6 +16,8 @@ const pages = [
   '/guides/sizing-large-format-photography',
   '/guides/limited-edition-photography-pricing',
   '/faq',
+  '/trade',
+  '/gift',
   '/shipping-returns',
   '/care-instructions',
   '/certificate',

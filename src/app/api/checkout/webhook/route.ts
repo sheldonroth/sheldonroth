@@ -3,6 +3,7 @@ import type Stripe from 'stripe';
 import { getWork } from '@/content/catalog';
 import { markOrderNotified, notifyOrder, recordPaidOrder, type OrderItem, type PaidOrder } from '@/lib/orders';
 import { getStripe } from '@/lib/stripe';
+import { fulfilGift } from '@/lib/gifts';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -30,6 +31,17 @@ export async function POST(req: Request) {
   }
   const session = event.data.object as Stripe.Checkout.Session;
   if (session.payment_status !== 'paid') return NextResponse.json({ received: true, pending: true });
+
+  // Gift certificates are not prints: no edition numbers, no print order. Fulfilment is idempotent on the session.
+  if (session.metadata?.order_type === 'gift_certificate') {
+    try {
+      const result = await fulfilGift(stripe, session);
+      return NextResponse.json({ received: true, gift: result.ok });
+    } catch (e) {
+      console.error('gift fulfilment failed', e);
+      return NextResponse.json({ error: 'Processing failed' }, { status: 500 });
+    }
+  }
 
   try {
     const order = await toPaidOrder(stripe, session);

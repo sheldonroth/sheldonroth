@@ -38,6 +38,8 @@ export default function Footer() {
             <ul>
               <li><Link href="/contact" className="lk-footer-link hover:underline">Inquire</Link></li>
               <li><Link href="/guides" className="lk-footer-link hover:underline">Collector Guides</Link></li>
+              <li><Link href="/gift" className="lk-footer-link hover:underline">Gift Certificates</Link></li>
+              <li><Link href="/trade" className="lk-footer-link hover:underline">Trade Program</Link></li>
               <li><Link href="/faq" className="lk-footer-link hover:underline">FAQ</Link></li>
               <li><Link href="/shipping-returns" className="lk-footer-link hover:underline">Shipping &amp; Returns</Link></li>
               <li><Link href="/care-instructions" className="lk-footer-link hover:underline">Caring for Your Art</Link></li>

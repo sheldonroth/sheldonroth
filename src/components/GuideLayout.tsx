@@ -44,6 +44,10 @@ export default function GuideLayout({
             <Link href="/guides" className="lk-btn lk-btn-gold">All Guides</Link>
             <Link href="/contact" className="lk-btn lk-btn-gold">Inquire</Link>
           </div>
+          <p className="lk-body mx-auto mt-10 max-w-[640px]">
+            Interior designer or art consultant?{' '}
+            <Link href="/trade" className="text-accent-dark underline underline-offset-4">The trade program</Link> offers 20% off every edition.
+          </p>
         </div>
       </section>
     </>

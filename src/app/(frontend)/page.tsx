@@ -6,6 +6,7 @@ import WorkCard from '@/components/WorkCard';
 import { collections, getCuratorsPicks, getCollection, getHeroWorks, getImage, getNewReleases, getWorksInCollection } from '@/content/catalog';
 import { focalStyle } from '@/content/focal-points';
 import { JsonLd, personOrganizationGraph } from '@/lib/schema';
+import { holidaySeason } from '@/content/gifts';
 
 export default function Home() {
   const slides = getHeroWorks().map((w) => ({
@@ -48,6 +49,23 @@ export default function Home() {
           </Reveal>
         </div>
       </section>
+
+      {/* Holiday gifting (shown until HOLIDAY_GIFT_UNTIL in gifts.ts) */}
+      {holidaySeason() && (
+        <section className="border-t border-line bg-surface">
+          <div className="lk-container py-14 text-center lg:py-16">
+            <p className="lk-eyebrow">Holiday Gifting</p>
+            <h2 className="lk-h2 mt-6">Give a limited edition</h2>
+            <p className="lk-body mx-auto mt-6 max-w-[680px]">
+              Prints are made to order and take 2–4 weeks plus shipping, so one ordered now may not arrive before December 25. A digital gift
+              certificate arrives by email within minutes, and they choose the work.
+            </p>
+            <div className="mt-8">
+              <Link href="/gift" className="lk-btn lk-btn-gold">Gift Certificates</Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Signature works (lik.com "Premier Images") */}
       <section className="lk-section border-t border-line">

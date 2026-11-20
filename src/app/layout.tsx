@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Barlow } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
 // Lik.com sets everything in DIN 2014 (Adobe Fonts, commercial). Barlow is the closest free (OFL) DIN-style match.
@@ -47,6 +49,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" suppressHydrationWarning>
       <body className={`${din.variable} antialiased`} suppressHydrationWarning>
         {children}
+        {/* Cookie-free, privacy-friendly Vercel Web Analytics and Speed Insights (no consent banner needed). */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

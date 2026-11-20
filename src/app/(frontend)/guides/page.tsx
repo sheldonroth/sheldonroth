@@ -76,6 +76,11 @@ export default function GuidesPage() {
           </a>
           .
         </p>
+        <p className="lk-body mx-auto mt-6 max-w-[640px] text-center">
+          Placing work for a client? The{' '}
+          <Link href="/trade" className="text-accent-dark underline underline-offset-4">trade program</Link> gives interior designers and art
+          consultants 20% off every limited edition.
+        </p>
       </section>
     </>
   );

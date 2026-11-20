@@ -103,3 +103,50 @@ export async function notify(id: number, r: InquiryRecord, subjectOverride?: str
     return `send failed: ${String(e).slice(0, 200)}`;
   }
 }
+
+/** True when this address already signed up for the Collector List (so the welcome email goes out only once). */
+export async function alreadyOnCollectorList(email: string): Promise<boolean> {
+  const sql = db();
+  const rows = (await sql`select 1 from site.inquiries where lower(email) = ${email.toLowerCase()} and message like 'Collector list signup%' limit 1`) as unknown[];
+  return rows.length > 0;
+}
+
+/**
+ * Sends one plain-text email to a site visitor (Resend only) from INQUIRY_FROM. No reply-to is set, so replies go to
+ * the sending address and Sheldon's own address is never shown. Returns null on success or a short reason string.
+ */
+export async function sendToVisitor(to: string, subject: string, text: string): Promise<string | null> {
+  if (!process.env.RESEND_API_KEY) return 'RESEND_API_KEY not set';
+  const from = process.env.INQUIRY_FROM || 'Sheldon Roth Fine Art <inquiries@sheldonroth.com>';
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ from, to: [to], subject, text }),
+    });
+    if (res.ok) return null;
+    const detail = await res.json().then((j: { message?: string }) => j?.message ?? '').catch(() => '');
+    return `resend ${res.status}${detail ? `: ${String(detail).slice(0, 200)}` : ''}`;
+  } catch (e) {
+    return `send failed: ${String(e).slice(0, 200)}`;
+  }
+}
+
+export const COLLECTOR_WELCOME_SUBJECT = 'Welcome to the Collector List';
+
+export function collectorWelcomeText(name: string | null) {
+  const first = name?.trim().split(/\s+/)[0];
+  return [
+    first ? `Hi ${first},` : 'Hello,',
+    '',
+    "Thank you for joining the Collector List. I'm glad you're here.",
+    '',
+    "A few times a year I'll write when a new work is released, so you can have first access at its opening edition price, and when Artist Proofs become available. That's all. No noise in between.",
+    '',
+    'If you would like to see what is on the walls now, the full collection is here:',
+    'https://sheldonroth.com/shop',
+    '',
+    'Thanks,',
+    'Sheldon',
+  ].join('\n');
+}
