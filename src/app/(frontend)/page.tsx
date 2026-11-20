@@ -4,6 +4,7 @@ import HeroSlideshow from '@/components/HeroSlideshow';
 import Reveal from '@/components/Reveal';
 import WorkCard from '@/components/WorkCard';
 import { collections, getCuratorsPicks, getCollection, getHeroWorks, getImage, getNewReleases, getWorksInCollection } from '@/content/catalog';
+import { focalStyle } from '@/content/focal-points';
 import { JsonLd, personOrganizationGraph } from '@/lib/schema';
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
     editionSize: w.editionSize,
     src: getImage(w.slug).src,
     blurb: w.description,
+    focal: focalStyle(w.slug),
   }));
 
   const heroSlugs = new Set(slides.map((s) => s.slug));
@@ -84,8 +86,8 @@ export default function Home() {
       </section>
 
       {/* Feature panorama */}
-      <section className="lk-hero-h relative overflow-hidden lg:mx-10">
-        <Image quality={80} src={panoImg.src} alt={`${panorama.title} by Sheldon Roth`} fill sizes="100vw" className="object-cover" />
+      <section className="focal-box lk-hero-h relative overflow-hidden lg:mx-10">
+        <Image quality={80} src={panoImg.src} alt={`${panorama.title} by Sheldon Roth`} fill sizes="100vw" style={focalStyle(panorama.slug)} className="focal-img object-cover" />
         <div className="lk-scrim absolute inset-0" />
         <div className="absolute inset-x-0 bottom-0 px-5 pb-16 text-center text-white md:pb-20">
           <p className="lk-hero-eyebrow">Featured Panorama</p>
@@ -107,8 +109,8 @@ export default function Home() {
             {galleries.map((c) => {
               const img = getImage(c.cover);
               return (
-                <Link key={c.slug} href={`/collections/${c.slug}`} className="group relative block aspect-[4/5] overflow-hidden bg-black">
-                  <Image quality={75} src={img.src} alt={`${c.title} gallery`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw" className="zoom-img object-cover" />
+                <Link key={c.slug} href={`/collections/${c.slug}`} className="focal-box group relative block aspect-[4/5] overflow-hidden bg-black">
+                  <Image quality={75} src={img.src} alt={`${c.title} gallery`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw" style={focalStyle(c.cover)} className="focal-img zoom-img object-cover" />
                   <div className="lk-scrim absolute inset-0" />
                   <div className="absolute inset-x-0 bottom-0 p-8 text-center text-white">
                     <h3 className="lk-h2-sm">{c.title}</h3>
@@ -124,8 +126,8 @@ export default function Home() {
       {/* Artist */}
       <section className="bg-surface">
         <div className="lk-container grid grid-cols-1 items-center gap-10 py-[60px] md:grid-cols-2 lg:gap-20 lg:py-[120px]">
-          <div className="relative aspect-[4/5] overflow-hidden md:aspect-[4/5]">
-            <Image quality={75} src={artistImage.src} alt="Sentinel by Sheldon Roth" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+          <div className="focal-box relative aspect-[4/5] overflow-hidden md:aspect-[4/5]">
+            <Image quality={75} src={artistImage.src} alt="Sentinel by Sheldon Roth" fill sizes="(max-width: 768px) 100vw, 50vw" style={focalStyle('sentinel')} className="focal-img object-cover" />
           </div>
           <Reveal>
             <p className="lk-eyebrow">The Artist</p>

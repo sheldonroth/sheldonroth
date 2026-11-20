@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, type CSSProperties } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -11,6 +11,8 @@ export interface HeroSlide {
   editionSize: number;
   src: string;
   blurb: string;
+  /** Focal-point CSS variables from focalStyle(), so the subject stays centred at every screen size. */
+  focal?: CSSProperties;
 }
 
 const INTERVAL = 7000;
@@ -45,8 +47,8 @@ export default function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
         const near = active || i === (index + 1) % slides.length || i === (index - 1 + slides.length) % slides.length;
         if (!near) return null;
         return (
-          <div key={s.slug} className={`absolute inset-0 transition-opacity duration-[1400ms] ease-in-out ${active ? 'opacity-100' : 'opacity-0'}`} aria-hidden={!active}>
-            <Image quality={80} src={s.src} alt={`${s.title} by Sheldon Roth`} fill priority={i === 0} sizes="100vw" className={`object-cover ${active ? 'kenburns' : ''}`} />
+          <div key={s.slug} className={`focal-box absolute inset-0 transition-opacity duration-[1400ms] ease-in-out ${active ? 'opacity-100' : 'opacity-0'}`} aria-hidden={!active}>
+            <Image quality={80} src={s.src} alt={`${s.title} by Sheldon Roth`} fill priority={i === 0} sizes="100vw" style={s.focal} className={`focal-img object-cover ${active ? 'kenburns' : ''}`} />
           </div>
         );
       })}

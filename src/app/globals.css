@@ -137,6 +137,30 @@ body {
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 
+/* ---------- Focal points (src/content/focal-points.ts) ----------
+   A cover-cropped image centres its subject's focal point in the frame at every screen size. The frame
+   (.focal-box) is a size container; the image's rendered cover size is worked out from its pixel size
+   (--iw/--ih) and the point is centred, clamped so no empty edge shows. Browsers without container units
+   fall back to plain percentage object-position on the same point. */
+.focal-box { container-type: size; }
+.focal-img {
+  --fx: var(--fx-l, 50);
+  --fy: var(--fy-l, 50);
+  object-position: calc(var(--fx) * 1%) calc(var(--fy) * 1%);
+  transform-origin: calc(var(--fx) * 1%) calc(var(--fy) * 1%);
+}
+@media (orientation: portrait) {
+  .focal-img { --fx: var(--fx-p, var(--fx-l, 50)); --fy: var(--fy-p, var(--fy-l, 50)); }
+}
+@supports (width: 1cqw) {
+  .focal-img {
+    --s: max(100cqw / var(--iw, 1), 100cqh / var(--ih, 1));
+    --ox: clamp(100cqw - var(--iw, 1) * var(--s), 50cqw - var(--iw, 1) * var(--s) * var(--fx) / 100, 0px);
+    --oy: clamp(100cqh - var(--ih, 1) * var(--s), 50cqh - var(--ih, 1) * var(--s) * var(--fy) / 100, 0px);
+    object-position: var(--ox) var(--oy);
+    transform-origin: calc(var(--ox) + var(--iw, 1) * var(--s) * var(--fx) / 100) calc(var(--oy) + var(--ih, 1) * var(--s) * var(--fy) / 100);
+  }
+}
 /* Lik hero scrim, measured: linear-gradient(to top, rgba(0,0,0,.6), rgba(0,0,0,.3), rgba(0,0,0,0)) */
 .lk-scrim { background: linear-gradient(to top, rgba(0,0,0,.6), rgba(0,0,0,.3), rgba(0,0,0,0)); }
 .lk-scrim-top { background: linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,0)); }
