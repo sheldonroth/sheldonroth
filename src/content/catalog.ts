@@ -74,7 +74,7 @@ export const collections: Collection[] = [
     title: 'Signature Works',
     tagline: 'The defining images',
     description:
-      'The photographs that define the collection — rare light, extraordinary encounters and wild places at their most powerful. The strongest works in the portfolio, each released in a strictly limited edition.',
+      'The photographs that define the collection — rare light, extraordinary encounters and wild places at their most powerful. The strongest works in the portfolio, each released as a strictly limited edition and face-mounted to museum acrylic. These are the images collectors most often live with at large format.',
     cover: 'leap-of-faith',
     curated: true,
   },
@@ -83,7 +83,7 @@ export const collections: Collection[] = [
     title: 'Mountains',
     tagline: 'Summits, glaciers and alpenglow',
     description:
-      'Razor ridges above the cloud, rivers of ancient ice and the last warm light on fresh snow — the high peaks in all their scale and silence.',
+      'Razor ridges above the cloud, rivers of ancient ice and the last warm light on fresh snow — the high peaks in all their scale and silence. These large-format landscape photographs are printed as archival Lumachrome acrylic editions, made to hold a wall without losing the detail of ice, rock and air.',
     cover: 'ice-spires',
   },
   {
@@ -91,7 +91,7 @@ export const collections: Collection[] = [
     title: 'Lakes & Reflections',
     tagline: 'Still water beneath the peaks',
     description:
-      'Turquoise tarns cradled in stone, mirror-calm water at dusk and sapphire basins ringed by snow — the quiet jewels of the high country.',
+      'Turquoise tarns cradled in stone, mirror-calm water at dusk and sapphire basins ringed by snow — the quiet jewels of the high country. Still water and reflection reward a large print, where colour and fine detail can be read across a room.',
     cover: 'cloud-lake',
   },
   {
@@ -99,7 +99,7 @@ export const collections: Collection[] = [
     title: 'Waterfalls & Rivers',
     tagline: 'The living energy of moving water',
     description:
-      'Falls pouring through hidden grottos, jade rivers winding between canyon walls and streams tumbling through moss — water in constant, graceful motion.',
+      'Falls pouring through hidden grottos, jade rivers winding between canyon walls and streams tumbling through moss — water in constant, graceful motion. Each work is a limited-edition acrylic print, chosen for the way moving water holds light.',
     cover: 'canyon-song',
   },
   {
@@ -107,7 +107,7 @@ export const collections: Collection[] = [
     title: 'Canyons & Desert',
     tagline: 'Stone sculpted by time',
     description:
-      'Slot canyons glowing like embers, sweeping river bends and wind-written dunes — rock and sand shaped over millennia by water, wind and light.',
+      'Slot canyons glowing like embers, sweeping river bends and wind-written dunes — rock and sand shaped over millennia by water, wind and light. These desert and canyon photographs are released as signed, limited editions, often at the larger sizes that let the stone’s colour and curve fill a wall.',
     cover: 'sandstone-wave',
   },
   {
@@ -115,7 +115,7 @@ export const collections: Collection[] = [
     title: 'Forests & Flora',
     tagline: 'The quiet majesty of growing things',
     description:
-      'Ancient maples, cathedral groves and aspens turned to gold, with single blooms caught in perfect light — the forest and its flowers at their most luminous.',
+      'Ancient maples, cathedral groves and aspens turned to gold, with single blooms caught in perfect light — the forest and its flowers at their most luminous. Printed face-mounted to acrylic, the work keeps the quiet depth of the canopy and the fine texture of bark, moss and petal.',
     cover: 'living-sculpture',
   },
   {
@@ -123,7 +123,7 @@ export const collections: Collection[] = [
     title: 'Coast & Ocean',
     tagline: 'Colour, clarity and the power of the sea',
     description:
-      'Sea stacks at dusk, reefs and islands seen from above, crystal shallows and restless surf — the endless moods of the ocean.',
+      'Sea stacks at dusk, reefs and islands seen from above, crystal shallows and restless surf — the endless moods of the ocean. This gallery includes coastal landscapes and underwater fine art prints, each a limited edition made for large-format acrylic display.',
     cover: 'sea-monolith',
   },
   {
@@ -131,7 +131,7 @@ export const collections: Collection[] = [
     title: 'Sky & Light',
     tagline: 'Fleeting moments of fire and gold',
     description:
-      'Skies set ablaze, stars wheeling over dark ridges and seas of cloud catching the dawn — the rare moments when light transforms everything.',
+      'Skies set ablaze, stars wheeling over dark ridges and seas of cloud catching the dawn — the rare moments when light transforms everything. These photographs of fleeting light are printed as archival acrylic editions, so the colour of a brief sky can hold a room.',
     cover: 'river-of-stars',
   },
   {
@@ -139,7 +139,7 @@ export const collections: Collection[] = [
     title: 'Wildlife',
     tagline: 'Portraits of the wild',
     description:
-      'A leopard watching from the shadows, lions at rest and elephants emerging from darkness — intimate portraits of the great animals of the wild.',
+      'A leopard watching from the shadows, lions at rest and elephants emerging from darkness — intimate portraits of the great animals of the wild. Each wildlife fine art photograph is a signed, limited edition, printed at a size that preserves the texture of fur, feather and the look that met the lens.',
     cover: 'the-watcher',
   },
   {
@@ -147,7 +147,7 @@ export const collections: Collection[] = [
     title: 'Black & White',
     tagline: 'Form, texture and shadow',
     description:
-      'Stripped of colour, gesture and texture take centre stage — the raw character of the wild and the high peaks in pure monochrome.',
+      'Stripped of colour, gesture and texture take centre stage — the raw character of the wild and the high peaks in pure monochrome. These black-and-white editions are printed with the same Lumachrome acrylic process, so form and shadow remain sharp at large format.',
     cover: 'pride',
   },
   {
@@ -155,7 +155,7 @@ export const collections: Collection[] = [
     title: 'Panoramas',
     tagline: 'The horizon, end to end',
     description:
-      'Sweeping vistas that carry the horizon across the wall — mountain ranges, lakes and burning skies captured in their full breadth.',
+      'Sweeping vistas that carry the horizon across the wall — mountain ranges, lakes and burning skies captured in their full breadth. Selected works are offered in 2:1 panoramic sizes, such as 36 × 18 in, made for wide walls where a standard 3:2 print would crop the view.',
     cover: 'above-the-clouds',
   },
 ];

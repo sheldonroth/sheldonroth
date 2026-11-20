@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import PageHeader from '@/components/PageHeader';
 import Reveal from '@/components/Reveal';
 import { collections, getImage, getWorksInCollection } from '@/content/catalog';
+import { JsonLd, collectionsIndexJsonLd } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'Galleries',
@@ -13,10 +14,11 @@ export const metadata: Metadata = {
 export default function CollectionsPage() {
   return (
     <>
+      <JsonLd data={collectionsIndexJsonLd(collections)} />
       <PageHeader
         eyebrow="The Galleries"
         title="Explore the Collections"
-        intro="Begin with the Signature Works, then wander by subject — high peaks and still lakes, falling water and sculpted stone, forests, the sea, fleeting light and the great animals of the wild."
+        intro="Begin with the Signature Works, then wander by subject — high peaks and still lakes, falling water and sculpted stone, forests, the sea, fleeting light and the great animals of the wild. Every photograph is a signed, limited-edition Lumachrome print, face-mounted to museum acrylic and made for the wall."
       />
       <section className="lk-container pb-20 lg:pb-[120px]">
         <div className="grid grid-cols-1 gap-[34px] sm:grid-cols-2 lg:grid-cols-3">

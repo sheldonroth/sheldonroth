@@ -37,6 +37,7 @@ export default function Footer() {
             <h2 className="lk-footer-h mb-4">Collector Services</h2>
             <ul>
               <li><Link href="/contact" className="lk-footer-link hover:underline">Inquire</Link></li>
+              <li><Link href="/guides" className="lk-footer-link hover:underline">Collector Guides</Link></li>
               <li><Link href="/faq" className="lk-footer-link hover:underline">FAQ</Link></li>
               <li><Link href="/shipping-returns" className="lk-footer-link hover:underline">Shipping &amp; Returns</Link></li>
               <li><Link href="/care-instructions" className="lk-footer-link hover:underline">Caring for Your Art</Link></li>

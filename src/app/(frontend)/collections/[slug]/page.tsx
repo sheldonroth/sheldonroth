@@ -6,6 +6,7 @@ import CollectionBanner from '@/components/CollectionBanner';
 import GalleryGrid from '@/components/GalleryGrid';
 import GallerySidebar from '@/components/GallerySidebar';
 import { collections, getCollection, getImage, getWorksInCollection } from '@/content/catalog';
+import { JsonLd, collectionPageJsonLd } from '@/lib/schema';
 
 export const dynamicParams = false;
 
@@ -34,6 +35,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
 
   return (
     <>
+      <JsonLd data={collectionPageJsonLd(collection, items)} />
       {/* Wide inset banner, centred title + intro, then the collection list and grey-mat grid, as on lik.com */}
       <CollectionBanner src={getImage(collection.cover).src} alt={`${collection.title} gallery`} />
 

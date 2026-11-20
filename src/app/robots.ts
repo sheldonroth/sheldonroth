@@ -1,8 +1,13 @@
 import type { MetadataRoute } from 'next';
 
+const disallow = ['/api/', '/admin', '/cart', '/checkout/'];
+
+/** Standard search crawlers and AI search crawlers, each given the same allow/disallow rules. */
+const crawlers = ['*', 'Googlebot', 'Bingbot', 'OAI-SearchBot', 'GPTBot', 'PerplexityBot', 'ClaudeBot', 'Applebot'];
+
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [{ userAgent: '*', allow: '/', disallow: ['/api/', '/admin', '/cart', '/checkout/'] }],
+    rules: crawlers.map((userAgent) => ({ userAgent, allow: '/', disallow })),
     sitemap: 'https://sheldonroth.com/sitemap.xml',
   };
 }

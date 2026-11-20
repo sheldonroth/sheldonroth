@@ -4,6 +4,7 @@ import HeroSlideshow from '@/components/HeroSlideshow';
 import Reveal from '@/components/Reveal';
 import WorkCard from '@/components/WorkCard';
 import { collections, getCuratorsPicks, getCollection, getHeroWorks, getImage, getNewReleases, getWorksInCollection } from '@/content/catalog';
+import { JsonLd, personOrganizationGraph } from '@/lib/schema';
 
 export default function Home() {
   const slides = getHeroWorks().map((w) => ({
@@ -26,6 +27,7 @@ export default function Home() {
 
   return (
     <>
+      <JsonLd data={personOrganizationGraph()} />
       <HeroSlideshow slides={slides} />
 
       {/* Intro */}
