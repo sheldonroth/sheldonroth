@@ -29,7 +29,7 @@ export const focalPoints: Record<string, FocalPoint> = {
   'above-the-clouds': { x: 58, y: 45 }, // twin summits
   'ice-spires': { x: 58, y: 48 }, // peaks framed by the ice
   'sea-monolith': { x: 50, y: 45 }, // sea stack
-  'river-of-stars': { x: 50, y: 42 }, // Milky Way core over the horizon
+  'molten-lake': { x: 50, y: 50 }, // sunset lake, Sky gallery cover
   sentinel: { x: 62, y: 58 }, // summit
 };
 

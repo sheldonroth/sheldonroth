@@ -132,7 +132,7 @@ export const collections: Collection[] = [
     tagline: 'Fleeting moments of fire and gold',
     description:
       'Skies set ablaze, stars wheeling over dark ridges and seas of cloud catching the dawn — the rare moments when light transforms everything. These photographs of fleeting light are printed as archival acrylic editions, so the colour of a brief sky can hold a room.',
-    cover: 'river-of-stars',
+    cover: 'molten-lake',
   },
   {
     slug: 'wildlife',
@@ -208,15 +208,6 @@ const catalogWorks: CatalogWork[] = [
     description:
       "A turquoise lake glows in a basin of red and green stone, fed by the snowfields that cradle it.",
     curatorsPick: true,
-  },
-  {
-    slug: "sky-on-fire",
-    rank: 136,
-    title: "Sky on Fire",
-    collection: "sky",
-    collections: ["sky", "panoramas"],
-    description:
-      "The whole sky ignites in crimson and gold above still water, mirrored in a single burning moment.",
   },
   {
     slug: "wildflower-basin",
@@ -418,15 +409,6 @@ const catalogWorks: CatalogWork[] = [
       "A mountain painted in rust and gold glows above a dark green forest.",
   },
   {
-    slug: "emerald-ribbons",
-    rank: 200,
-    title: "Emerald Ribbons",
-    collection: "water",
-    collections: ["water"],
-    description:
-      "Ribbons of water cascade over mossy rock in a hidden emerald glen.",
-  },
-  {
     slug: "blue-ribbon",
     rank: 46,
     title: "Blue Ribbon",
@@ -536,16 +518,6 @@ const catalogWorks: CatalogWork[] = [
       "A pristine island floats between azure sky and turquoise sea, the essence of paradise untouched by time.",
   },
   {
-    slug: "turquoise-depths",
-    rank: 219,
-    title: "Turquoise Depths",
-    collection: "coast",
-    collections: ["coast"],
-    description:
-      "Crystal-clear water reveals layer upon layer of turquoise, inviting the eye into a serene world below the cliffs.",
-    curatorsPick: true,
-  },
-  {
     slug: "pacific-edge",
     rank: 217,
     title: "Pacific Edge",
@@ -564,15 +536,6 @@ const catalogWorks: CatalogWork[] = [
       "A lone weathered tree stands sentinel over golden grassland beneath a soft, open sky.",
   },
   {
-    slug: "wind-script",
-    rank: 111,
-    title: "Wind Script",
-    collection: "canyons",
-    collections: ["canyons"],
-    description:
-      "The wind writes in sand, ridges of light and shadow traced across the dunes.",
-  },
-  {
     slug: "massif-from-the-water",
     rank: 211,
     title: "Massif from the Water",
@@ -580,15 +543,6 @@ const catalogWorks: CatalogWork[] = [
     collections: ["coast"],
     description:
       "A long mountain massif rises from a calm blue sea, softened by distance and haze.",
-  },
-  {
-    slug: "sea-stack",
-    rank: 205,
-    title: "Sea Stack",
-    collection: "coast",
-    collections: ["coast"],
-    description:
-      "A rugged stack of rock rises from deep blue water beneath a cloudless sky.",
   },
   {
     slug: "veil-of-cloud",
@@ -700,24 +654,6 @@ const catalogWorks: CatalogWork[] = [
       "Clouds catch fire above a darkening ridge as the last light of evening sweeps across the sky.",
   },
   {
-    slug: "horizon-burn",
-    rank: 215,
-    title: "Horizon Burn",
-    collection: "sky",
-    collections: ["sky", "coast", "panoramas"],
-    description:
-      "A band of molten gold burns along the horizon as twilight deepens over calm water.",
-  },
-  {
-    slug: "last-light",
-    rank: 199,
-    title: "Last Light",
-    collection: "sky",
-    collections: ["sky", "panoramas"],
-    description:
-      "Layered ridgelines dissolve into haze beneath a sky fading from gold to rose.",
-  },
-  {
     slug: "terraced-meadow",
     rank: 150,
     title: "Terraced Meadow",
@@ -725,15 +661,6 @@ const catalogWorks: CatalogWork[] = [
     collections: ["mountains"],
     description:
       "Ancient terraced fields glow green beneath towering snow peaks in clear morning light.",
-  },
-  {
-    slug: "gilded-sky",
-    rank: 209,
-    title: "Gilded Sky",
-    collection: "sky",
-    collections: ["sky"],
-    description:
-      "The sky erupts in gold as the sun slips beneath a line of silhouetted trees.",
   },
   {
     slug: "rose-summit",
@@ -752,15 +679,6 @@ const catalogWorks: CatalogWork[] = [
     collections: ["sky", "coast"],
     description:
       "The setting sun lays a path of gold across the sea toward a rugged, wave-washed shore.",
-  },
-  {
-    slug: "morning-mist",
-    rank: 212,
-    title: "Morning Mist",
-    collection: "sky",
-    collections: ["sky"],
-    description:
-      "Sunrise sets drifting mist aglow over still water, a lone tree standing at the shore.",
   },
   {
     slug: "storm-light",
@@ -835,15 +753,6 @@ const catalogWorks: CatalogWork[] = [
       "Snow-clad summits stand above a still ocean of cloud that fills the valleys far below.",
   },
   {
-    slug: "winter-crown",
-    rank: 61,
-    title: "Winter Crown",
-    collection: "mountains",
-    collections: ["mountains"],
-    description:
-      "A great pyramid of rock and ice crowns the range, its snow-laced ridges sharp against a deep blue sky.",
-  },
-  {
     slug: "summit-cloud",
     rank: 135,
     title: "Summit Cloud",
@@ -896,15 +805,6 @@ const catalogWorks: CatalogWork[] = [
     collections: ["canyons"],
     description:
       "Wind-drawn ripples sweep across the flank of a great dune, rising to a crest against the evening sky.",
-  },
-  {
-    slug: "tidewater-stones",
-    rank: 65,
-    title: "Tidewater Stones",
-    collection: "coast",
-    collections: ["coast"],
-    description:
-      "Surf washes over a beach of smooth dark stones while a green sea cliff stands against the open ocean.",
   },
   {
     slug: "three-veils",
@@ -977,15 +877,6 @@ const catalogWorks: CatalogWork[] = [
     collections: ["water"],
     description:
       "A slender waterfall plunges from a basalt cliff into a lush emerald gorge.",
-  },
-  {
-    slug: "crimson-sky",
-    rank: 22,
-    title: "Crimson Sky",
-    collection: "sky",
-    collections: ["sky"],
-    description:
-      "A storm of crimson cloud blazes above a darkened mountain ridge in the final minutes of dusk.",
   },
   {
     slug: "river-strata",
@@ -1078,15 +969,6 @@ const catalogWorks: CatalogWork[] = [
       "A leopard lounges on a weathered branch, one paw trailing down the trunk, its golden coat glowing against a deep green forest.",
   },
   {
-    slug: "the-huntress",
-    rank: 172,
-    title: "The Huntress",
-    collection: "wildlife",
-    collections: ["wildlife", "black-and-white"],
-    description:
-      "A lioness pauses in the long grass, ears forward and every muscle ready.",
-  },
-  {
     slug: "leap-of-faith",
     rank: 1,
     title: "Leap of Faith",
@@ -1094,15 +976,6 @@ const catalogWorks: CatalogWork[] = [
     collections: ["wildlife", "coast"],
     description:
       "A dolphin arcs clear of the water, its sleek body mirrored in the rippling blue sea.",
-  },
-  {
-    slug: "golden-mane",
-    rank: 79,
-    title: "Golden Mane",
-    collection: "wildlife",
-    collections: ["wildlife"],
-    description:
-      "A great maned lion stands in warm light before red stone, gazing out over his domain.",
   },
   {
     slug: "the-heavyweight",
@@ -1204,15 +1077,6 @@ const catalogWorks: CatalogWork[] = [
       "Jagged granite spires rise in silver light above the sage flats beneath a brooding sky.",
   },
   {
-    slug: "ice-blade",
-    rank: 216,
-    title: "Ice Blade",
-    collection: "mountains",
-    collections: ["mountains"],
-    description:
-      "A sharp ridge of rock and hanging ice cuts across a clear blue mountain sky.",
-  },
-  {
     slug: "nectar-flight",
     rank: 51,
     title: "Nectar Flight",
@@ -1220,15 +1084,6 @@ const catalogWorks: CatalogWork[] = [
     collections: ["wildlife"],
     description:
       "A white-lined sphinx moth hovers at a spire of blue delphinium, its striped wings frozen mid-beat.",
-  },
-  {
-    slug: "river-of-stars",
-    rank: 14,
-    title: "River of Stars",
-    collection: "sky",
-    collections: ["sky"],
-    description:
-      "The Milky Way arcs over a dark mountain ridge as the last trace of twilight fades from the horizon.",
   },
   {
     slug: "silent-passage",
@@ -1400,24 +1255,6 @@ const catalogWorks: CatalogWork[] = [
     collections: ["mountains"],
     description:
       "Summer clouds drift over range after range of high peaks, their shadows moving across the slopes.",
-  },
-  {
-    slug: "headwaters",
-    rank: 143,
-    title: "Headwaters",
-    collection: "water",
-    collections: ["water"],
-    description:
-      "A clear stream runs over a bed of rounded stones toward a distant summit beneath a bright summer sky.",
-  },
-  {
-    slug: "mirror-dusk",
-    rank: 167,
-    title: "Mirror Dusk",
-    collection: "sky",
-    collections: ["sky", "lakes"],
-    description:
-      "Fiery clouds drift above a dark mountain notch and repeat themselves in the perfectly still water of a lake at dusk.",
   },
   {
     slug: "autumn-mirror",
@@ -1717,15 +1554,6 @@ const catalogWorks: CatalogWork[] = [
       "A lion cub rests in lush grass, its sibling dozing close behind.",
   },
   {
-    slug: "granite-valley",
-    rank: 195,
-    title: "Granite Valley",
-    collection: "mountains",
-    collections: ["mountains"],
-    description:
-      "Great granite walls fall away into a forested valley as afternoon cloud drifts overhead.",
-  },
-  {
     slug: "standoff",
     rank: 52,
     title: "Standoff",
@@ -1760,15 +1588,6 @@ const catalogWorks: CatalogWork[] = [
     collections: ["wildlife"],
     description:
       "A black-backed jackal pauses among wildflowers, ears tuned to the grass ahead.",
-  },
-  {
-    slug: "midday-rest",
-    rank: 181,
-    title: "Midday Rest",
-    collection: "wildlife",
-    collections: ["wildlife"],
-    description:
-      "A dark-maned lion sprawls in the shade of fallen timber, eyes narrowed against the heat.",
   },
   {
     slug: "ocean-fury",
@@ -1846,26 +1665,6 @@ const catalogWorks: CatalogWork[] = [
     isNew: true,
   },
   {
-    slug: "first-bloom",
-    rank: 134,
-    title: "First Bloom",
-    collection: "forests",
-    collections: ["forests"],
-    description:
-      "A single rose-pink camellia opens its layered petals against deep green leaves.",
-    isNew: true,
-  },
-  {
-    slug: "the-old-warrior",
-    rank: 170,
-    title: "The Old Warrior",
-    collection: "wildlife",
-    collections: ["wildlife"],
-    description:
-      "A blue wildebeest bull lies in the pale dust, his shaggy mane lit by soft afternoon light.",
-    isNew: true,
-  },
-  {
     slug: "golden-beak",
     rank: 57,
     title: "Golden Beak",
@@ -1876,16 +1675,6 @@ const catalogWorks: CatalogWork[] = [
     isNew: true,
   },
   {
-    slug: "tuxedo-pair",
-    rank: 66,
-    title: "Tuxedo Pair",
-    collection: "wildlife",
-    collections: ["wildlife"],
-    description:
-      "Two African penguins stand side by side in the sand, one preening the other.",
-    isNew: true,
-  },
-  {
     slug: "grooming-hour",
     rank: 44,
     title: "Grooming Hour",
@@ -1893,16 +1682,6 @@ const catalogWorks: CatalogWork[] = [
     collections: ["wildlife"],
     description:
       "High in a tree, one baboon patiently grooms another, who gazes calmly back with amber eyes.",
-    isNew: true,
-  },
-  {
-    slug: "amber-chamber",
-    rank: 108,
-    title: "Amber Chamber",
-    collection: "canyons",
-    collections: ["canyons"],
-    description:
-      "Reflected light glows through the sculpted sandstone walls of a narrow slot canyon.",
     isNew: true,
   },
   {
@@ -1926,16 +1705,6 @@ const catalogWorks: CatalogWork[] = [
     isNew: true,
   },
   {
-    slug: "on-the-wing",
-    rank: 140,
-    title: "On the Wing",
-    collection: "wildlife",
-    collections: ["wildlife"],
-    description:
-      "A pale chanting goshawk banks against a flawless blue sky, wings spread wide.",
-    isNew: true,
-  },
-  {
     slug: "moss-cascade",
     rank: 41,
     title: "Moss Cascade",
@@ -1953,26 +1722,6 @@ const catalogWorks: CatalogWork[] = [
     collections: ["forests"],
     description:
       "Looking straight up the trunks of towering redwoods as they converge toward a pale sky.",
-    isNew: true,
-  },
-  {
-    slug: "fern-pool",
-    rank: 84,
-    title: "Fern Pool",
-    collection: "water",
-    collections: ["water", "forests"],
-    description:
-      "Tree ferns arch over a still forest pool that mirrors their feathered fronds.",
-    isNew: true,
-  },
-  {
-    slug: "thundering-mist",
-    rank: 49,
-    title: "Thundering Mist",
-    collection: "water",
-    collections: ["water"],
-    description:
-      "A great river plunges into a deep gorge, throwing towering clouds of spray over the forest.",
     isNew: true,
   },
   {
@@ -2016,16 +1765,6 @@ const catalogWorks: CatalogWork[] = [
     isNew: true,
   },
   {
-    slug: "tropic-flame",
-    rank: 146,
-    title: "Tropic Flame",
-    collection: "forests",
-    collections: ["forests"],
-    description:
-      "A hibiscus bloom flares from deep crimson to gold against dark tropical leaves.",
-    isNew: true,
-  },
-  {
     slug: "through-the-branches",
     rank: 77,
     title: "Through the Branches",
@@ -2053,16 +1792,6 @@ const catalogWorks: CatalogWork[] = [
     collections: ["coast"],
     description:
       "A living wall of coral rises toward the sunlit surface as small fish drift through the blue.",
-    isNew: true,
-  },
-  {
-    slug: "golden-pavilion",
-    rank: 89,
-    title: "The Golden Pavilion",
-    collection: "forests",
-    collections: ["forests"],
-    description:
-      "A vermilion bridge leads to a gilded pavilion, its tiered roofs rising against a pale sky.",
     isNew: true,
   },
 
@@ -2176,16 +1905,6 @@ const catalogWorks: CatalogWork[] = [
       "From high above, a ring of coral cradles a turquoise lagoon among the scattered reefs of a vast blue sea.",
     isNew: true,
   },
-  {
-    slug: "city-of-embers",
-    rank: 121,
-    title: "City of Embers",
-    collection: "sky",
-    collections: ["sky"],
-    description:
-      "Towers fall into silhouette along the waterfront as the sky burns pink and orange at dusk.",
-    isNew: true,
-  },
 ];
 
 export function getImage(slug: string) {
@@ -2281,7 +2000,6 @@ const MAX_PRINT_LONG: Record<string, number> = {
   'emerald-canopy': 30,
   'the-smoke-that-thunders': 24,
   'jewel-of-the-reef': 24,
-  'city-of-embers': 20,
   'through-the-branches': 30,
 };
 

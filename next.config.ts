@@ -14,6 +14,38 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     const removed = ['tropical-sunset', 'aspen-cascade', 'crystal-lagoon', 'shipwreck-at-dawn', 'mountain-majesty', 'still-water'];
+    const cut2026: [string, string][] = [
+      ['horizon-burn', 'sky'],
+      ['turquoise-depths', 'coast'],
+      ['fern-pool', 'water'],
+      ['the-huntress', 'wildlife'],
+      ['tropic-flame', 'forests'],
+      ['on-the-wing', 'wildlife'],
+      ['ice-blade', 'mountains'],
+      ['headwaters', 'water'],
+      ['granite-valley', 'mountains'],
+      ['last-light', 'sky'],
+      ['sea-stack', 'coast'],
+      ['gilded-sky', 'sky'],
+      ['first-bloom', 'forests'],
+      ['mirror-dusk', 'sky'],
+      ['sky-on-fire', 'sky'],
+      ['the-old-warrior', 'wildlife'],
+      ['emerald-ribbons', 'water'],
+      ['morning-mist', 'sky'],
+      ['midday-rest', 'wildlife'],
+      ['river-of-stars', 'sky'],
+      ['golden-mane', 'wildlife'],
+      ['city-of-embers', 'sky'],
+      ['winter-crown', 'mountains'],
+      ['golden-pavilion', 'forests'],
+      ['crimson-sky', 'sky'],
+      ['tuxedo-pair', 'wildlife'],
+      ['amber-chamber', 'canyons'],
+      ['tidewater-stones', 'coast'],
+      ['wind-script', 'canyons'],
+      ['thundering-mist', 'water'],
+    ];
     return [
       // Old gallery slugs from before the Lik-style reorganisation
       { source: '/collections/tropics', destination: '/collections/coast', permanent: true },
@@ -25,6 +57,8 @@ const nextConfig: NextConfig = {
       // Best Sellers was retired before any sales (2026-11-19); Premier Works replaces it.
       { source: '/best-sellers', destination: '/premier', permanent: false },
       ...removed.map((slug) => ({ source: `/shop/${slug}`, destination: '/shop', permanent: true })),
+      // Cut in the 2026-11-20 catalog audit (no sales or inquiries): send old links to the work's gallery.
+      ...cut2026.map(([slug, gallery]) => ({ source: `/shop/${slug}`, destination: `/collections/${gallery}`, permanent: true })),
     ];
   },
   images: {
