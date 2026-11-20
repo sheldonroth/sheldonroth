@@ -61,6 +61,15 @@ body {
 /* Lik heroes are 70% of the viewport height at every width (630px at 1440x900, 1008px at 2560x1440) */
 .lk-hero-h { height: 70vh; min-height: 480px; max-height: 1200px; }
 .lk-hero-h { height: 70svh; }
+/* Phones in landscape are shorter than the 480px floor: fill the visible screen (svh excludes Safari's toolbars) so the
+   subject is not pushed below the fold, and tighten the hero copy so it doesn't sit on top of the subject. */
+@media (orientation: landscape) and (max-height: 520px) {
+  .lk-hero-h { height: 100svh; min-height: 300px; }
+  .lk-hero-copy { padding-bottom: 46px; }
+  .lk-hero-copy .lk-hero-eyebrow { font-size: 11px; line-height: 11px; }
+  .lk-hero-copy .lk-hero-title { font-size: 28px; margin-top: 8px; }
+  .lk-hero-copy > div > p:last-child { margin-top: 10px; }
+}
 
 /* ---------- Typography ---------- */
 .lk-nav { font-size: 16px; line-height: 16px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
@@ -156,9 +165,14 @@ body {
   .focal-img {
     --s: max(100cqw / var(--iw, 1), 100cqh / var(--ih, 1));
     --ox: clamp(100cqw - var(--iw, 1) * var(--s), 50cqw - var(--iw, 1) * var(--s) * var(--fx) / 100, 0px);
-    --oy: clamp(100cqh - var(--ih, 1) * var(--s), 50cqh - var(--ih, 1) * var(--s) * var(--fy) / 100, 0px);
+    --oy: clamp(100cqh - var(--ih, 1) * var(--s), var(--cy, 50cqh) - var(--ih, 1) * var(--s) * var(--fy) / 100, 0px);
     object-position: var(--ox) var(--oy);
     transform-origin: calc(var(--ox) + var(--iw, 1) * var(--s) * var(--fx) / 100) calc(var(--oy) + var(--ih, 1) * var(--s) * var(--fy) / 100);
+  }
+  /* On short landscape screens the header and hero copy cover the top and bottom of the frame, so the subject is
+     centred in the clear band between them rather than in the box. */
+  @media (orientation: landscape) and (max-height: 520px) {
+    .lk-hero-h .focal-img, .lk-hero-h.focal-box .focal-img { --cy: 44cqh; }
   }
 }
 /* Lik hero scrim, measured: linear-gradient(to top, rgba(0,0,0,.6), rgba(0,0,0,.3), rgba(0,0,0,0)) */

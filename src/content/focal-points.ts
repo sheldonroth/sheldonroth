@@ -16,8 +16,8 @@ export interface FocalPoint {
 
 export const focalPoints: Record<string, FocalPoint> = {
   // The two lead images: keep the dolphin's whole arc and the leopard's face in frame.
-  'leap-of-faith': { x: 44, y: 42, portrait: { x: 50, y: 42 } }, // dolphin body, fin to beak; phones lean to the head
-  'the-watcher': { x: 40, y: 46, portrait: { x: 35, y: 45 } }, // leopard on the limb; phones keep the face and shoulders
+  'leap-of-faith': { x: 44, y: 42, portrait: { x: 54, y: 42 } }, // dolphin body, fin to beak; phones centre fin-to-beak so the Ken Burns zoom never clips the beak
+  'the-watcher': { x: 40, y: 44, portrait: { x: 30, y: 42 } }, // leopard on the limb; phones centre the face with the shoulders leading off right
   // Rest of the home hero
   'cloud-lake': { x: 60, y: 55 }, // peak and lake shore
   'canyon-song': { x: 48, y: 58 }, // cascades below the canyon walls

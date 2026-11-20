@@ -55,7 +55,7 @@ export default function HeroSlideshow({ slides }: { slides: HeroSlide[] }) {
 
       <div className="lk-scrim pointer-events-none absolute inset-0" />
 
-      <div className="absolute inset-x-0 bottom-0 px-5 pb-[70px] text-center text-white md:pb-[90px]">
+      <div className="lk-hero-copy absolute inset-x-0 bottom-0 px-5 pb-[70px] text-center text-white md:pb-[90px]">
         <div key={current.slug}>
           <p className="lk-hero-eyebrow fade-up">{current.collection}</p>
           <h1 className="lk-hero-title fade-up mx-auto mt-4 max-w-3xl" style={{ animationDelay: '120ms' }}>{current.title}</h1>
