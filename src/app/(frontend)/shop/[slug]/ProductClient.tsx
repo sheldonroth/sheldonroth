@@ -193,7 +193,7 @@ export default function ProductClient({ work }: { work: ProductData }) {
               {size && (
                 <p className="lk-small mt-2">
                   Free shipping within the US · Tax calculated at checkout
-                  {work.financing && ' · Pay over time available at checkout'}
+                  {work.financing && ' · Pay over time with Klarna at checkout'}
                 </p>
               )}
 

@@ -9,11 +9,11 @@
  */
 
 /**
- * Set to true once Affirm and/or Klarna are switched on in the Stripe Dashboard (Settings → Payment methods). Checkout
- * already uses dynamic payment methods, so they appear automatically; this flag only shows the "pay over time" note
- * on product pages, so the site never promises financing that checkout doesn't offer.
+ * Shows the "pay over time with Klarna" note on product pages. Checkout already uses dynamic payment methods, so
+ * Klarna appears automatically now that it is enabled in the Stripe Dashboard (live, Sheldon Roth Enterprises).
+ * Affirm is not enabled (it still requires action), so the note names Klarna only.
  */
-export const FINANCING_AT_CHECKOUT = false;
+export const FINANCING_AT_CHECKOUT = true;
 
 /** Countries Stripe Checkout will ship to. International orders go through an inquiry until freight rates are set. */
 export const SHIP_COUNTRIES = ['US'] as const;

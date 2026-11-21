@@ -1,9 +1,8 @@
 # Marketing features (added 2026-11-20)
 
 ## Analytics
-`<Analytics />` and `<SpeedInsights />` (cookie-free) are in `src/app/layout.tsx`. Speed Insights is on for the project.
-Web Analytics must be switched on once in Vercel: Project → Analytics → Enable (free on Hobby, with limits), or
-`vercel project web-analytics enable sheldonroth --scope sheldonroths-projects` in a terminal.
+`<Analytics />` and `<SpeedInsights />` (cookie-free) are in `src/app/layout.tsx`. Speed Insights and Web Analytics are
+both enabled for the project (Hobby plan).
 
 ## Abandoned checkout recovery (src/lib/checkout.ts)
 Print checkouts set `allow_promotion_codes`, `after_expiration.recovery` (with promo codes) and

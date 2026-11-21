@@ -78,7 +78,7 @@ export function buildCheckoutParams(lines: PricedLine[], origin: string): Stripe
   const shippingCents = Math.round((SHIPPING_USD[largest] ?? 0) * 100);
 
   // No payment_method_types: Stripe's dynamic payment methods show whatever is enabled in the Dashboard (cards, wallets,
-  // and Affirm / Klarna once switched on there).
+  // and Klarna). Affirm is not enabled, so it will not appear.
   return {
     mode: 'payment',
     line_items: lineItems,
