@@ -1869,6 +1869,16 @@ const catalogWorks: CatalogWork[] = [
       "From high above, a ring of coral cradles a turquoise lagoon among the scattered reefs of a vast blue sea.",
     isNew: true,
   },
+  {
+    slug: "golden-stride",
+    rank: 49,
+    title: "Golden Stride",
+    collection: "wildlife",
+    collections: ["wildlife"],
+    description:
+      "A lone gemsbok walks the dawn plain, a dark silhouette in gold haze, its long horns drawn as one line.",
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {

@@ -34,6 +34,7 @@ export const masterLongEdge: Record<string, number> = {
   "gold-forest": 6000,
   "golden-grove": 11648,
   "golden-slope": 11651,
+  "golden-stride": 10596,
   "golden-tide": 6000,
   "granite-cathedral": 3732,
   "granite-throne": 11198,

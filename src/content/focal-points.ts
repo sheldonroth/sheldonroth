@@ -31,6 +31,7 @@ export const focalPoints: Record<string, FocalPoint> = {
   'sea-monolith': { x: 50, y: 45 }, // sea stack
   'molten-lake': { x: 50, y: 50 }, // sunset lake, Sky gallery cover
   sentinel: { x: 62, y: 58 }, // summit
+  'golden-stride': { x: 38, y: 58 }, // gemsbok walking right, left of centre
 };
 
 export function getFocal(slug: string): FocalPoint {

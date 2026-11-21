@@ -72,6 +72,7 @@ export const imageSizes: Record<string, { width: number; height: number }> = {
   "living-sculpture": { width: 3840, height: 2561 },
   "sea-monolith": { width: 3840, height: 2031 },
   "golden-slope": { width: 3840, height: 2217 },
+  "golden-stride": { width: 3840, height: 2560 },
   "autumn-cascade": { width: 3840, height: 2160 },
   "mirror-lake": { width: 3840, height: 2160 },
   "blue-hour-shore": { width: 3840, height: 2546 },
