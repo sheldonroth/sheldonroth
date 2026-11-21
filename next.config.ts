@@ -45,6 +45,10 @@ const nextConfig: NextConfig = {
       ['tidewater-stones', 'coast'],
       ['wind-script', 'canyons'],
       ['thundering-mist', 'water'],
+      ['mist-veil', 'mountains'],
+      ['pacific-edge', 'coast'],
+      ['cloud-crest', 'mountains'],
+      ['rising-mist', 'water'],
     ];
     return [
       // Old gallery slugs from before the Lik-style reorganisation

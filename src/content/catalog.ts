@@ -355,15 +355,6 @@ const catalogWorks: CatalogWork[] = [
       "Bands of late sun sweep across rolling green ridges, sculpting every fold of the land.",
   },
   {
-    slug: "mist-veil",
-    rank: 213,
-    title: "Mist Veil",
-    collection: "mountains",
-    collections: ["mountains", "panoramas"],
-    description:
-      "Mist drifts over a forested ridge as the peak beyond slips in and out of view.",
-  },
-  {
     slug: "lake-and-summit",
     rank: 60,
     title: "Lake and Summit",
@@ -516,15 +507,6 @@ const catalogWorks: CatalogWork[] = [
     collections: ["coast"],
     description:
       "A pristine island floats between azure sky and turquoise sea, the essence of paradise untouched by time.",
-  },
-  {
-    slug: "pacific-edge",
-    rank: 217,
-    title: "Pacific Edge",
-    collection: "coast",
-    collections: ["coast", "panoramas"],
-    description:
-      "Dramatic coastal rock meets the open ocean in a sweeping panorama that captures the raw energy of the shoreline.",
   },
   {
     slug: "sentinel-tree",
@@ -1014,15 +996,6 @@ const catalogWorks: CatalogWork[] = [
       "A snow-crowned summit floats above a still sea of cloud in the deep blue of the high mountains.",
   },
   {
-    slug: "cloud-crest",
-    rank: 218,
-    title: "Cloud Crest",
-    collection: "mountains",
-    collections: ["mountains"],
-    description:
-      "Cloud spills over a vast wall of ice and rock, its crest catching the bright mountain light.",
-  },
-  {
     slug: "breath-of-the-mountain",
     rank: 174,
     title: "Breath of the Mountain",
@@ -1417,15 +1390,6 @@ const catalogWorks: CatalogWork[] = [
     collections: ["wildlife"],
     description:
       "A young male lion rests in lush green grass, gazing out over his territory.",
-  },
-  {
-    slug: "rising-mist",
-    rank: 175,
-    title: "Rising Mist",
-    collection: "water",
-    collections: ["water", "panoramas"],
-    description:
-      "From high above, a vast river plunges into a chasm and a towering plume of spray rises over the forest.",
   },
   {
     slug: "open-plains",
