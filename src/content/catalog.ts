@@ -1879,6 +1879,16 @@ const catalogWorks: CatalogWork[] = [
       "A lone gemsbok walks the dawn plain, a dark silhouette in gold haze, its long horns drawn as one line.",
     isNew: true,
   },
+  {
+    slug: "canyon-mirror",
+    rank: 61,
+    title: "Canyon Mirror",
+    collection: "canyons",
+    collections: ["canyons", "water"],
+    description:
+      "From the river, still dark water mirrors the sunlit walls of the Grand Canyon, a great butte standing in the distance under a deep blue sky.",
+    isNew: true,
+  },
 ];
 
 export function getImage(slug: string) {

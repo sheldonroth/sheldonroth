@@ -32,6 +32,7 @@ export const focalPoints: Record<string, FocalPoint> = {
   'molten-lake': { x: 50, y: 50 }, // sunset lake, Sky gallery cover
   sentinel: { x: 62, y: 58 }, // summit
   'golden-stride': { x: 38, y: 58 }, // gemsbok walking right, left of centre
+  'canyon-mirror': { x: 50, y: 52 }, // central butte and the river below
 };
 
 export function getFocal(slug: string): FocalPoint {

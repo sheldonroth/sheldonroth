@@ -13,6 +13,7 @@ export const masterLongEdge: Record<string, number> = {
   "blue-ribbon": 10490,
   "breath-of-the-mountain": 11664,
   "canyon-glow": 13198,
+  "canyon-mirror": 7952,
   "canyon-song": 13200,
   "cloud-lake": 11657,
   "cloud-tide": 6000,

@@ -65,6 +65,7 @@ export const imageSizes: Record<string, { width: number; height: number }> = {
   "summit-cloud": { width: 3840, height: 2692 },
   "spindrift": { width: 3840, height: 2880 },
   "canyon-glow": { width: 3840, height: 2561 },
+  "canyon-mirror": { width: 3840, height: 2560 },
   "sandstone-flame": { width: 2563, height: 3840 },
   "molten-lake": { width: 3840, height: 2594 },
   "dune-lines": { width: 3840, height: 2160 },
