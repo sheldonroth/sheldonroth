@@ -10,7 +10,7 @@ export function JsonLd({ data }: { data: unknown }) {
   );
 }
 
-/** Shared Person + Organisation entities for the home and artist pages. */
+/** Shared Person + Organisation entities, rendered sitewide on the frontend layout. */
 export function personOrganizationGraph() {
   const organization = {
     '@type': 'Organization',

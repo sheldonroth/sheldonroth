@@ -86,7 +86,7 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
               url,
               sku: work.slug,
               category: 'Fine Art Photography Prints',
-              brand: { '@type': 'Brand', name: 'Sheldon Roth Fine Art' },
+              brand: { '@type': 'Brand', name: 'Sheldon Roth' },
               subjectOf: { '@id': `${url}#artwork` },
               offers: sizes.map((s) => ({
                 '@type': 'Offer',

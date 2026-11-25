@@ -3,7 +3,6 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import Reveal from '@/components/Reveal';
 import { getImage, SITE } from '@/content/catalog';
-import { JsonLd, personOrganizationGraph } from '@/lib/schema';
 
 export const metadata: Metadata = {
   title: 'The Artist',
@@ -34,7 +33,6 @@ export default function ArtistPage() {
   const wide = getImage('snow-range');
   return (
     <>
-      <JsonLd data={personOrganizationGraph()} />
       <section className="lk-hero-h relative w-full overflow-hidden bg-black">
         <Image src={hero.src} alt="Frozen Symphony by Sheldon Roth" fill priority quality={80} sizes="100vw" className="object-cover" />
         <div className="lk-scrim absolute inset-0" />

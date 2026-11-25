@@ -5,7 +5,6 @@ import Reveal from '@/components/Reveal';
 import WorkCard from '@/components/WorkCard';
 import { collections, getCuratorsPicks, getCollection, getHeroWorks, getImage, getNewReleases, getWorksInCollection } from '@/content/catalog';
 import { focalStyle } from '@/content/focal-points';
-import { JsonLd, personOrganizationGraph } from '@/lib/schema';
 import { holidaySeason } from '@/content/gifts';
 
 export default function Home() {
@@ -30,7 +29,6 @@ export default function Home() {
 
   return (
     <>
-      <JsonLd data={personOrganizationGraph()} />
       <HeroSlideshow slides={slides} />
 
       {/* Intro */}
