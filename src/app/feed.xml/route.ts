@@ -2,6 +2,7 @@ import { getImage, isPortrait, sizesFor, SITE, works, getCollection } from '@/co
 import { editionStatus } from '@/content/pricing';
 import { LEAD_TIME_BUSINESS_DAYS } from '@/content/commerce';
 import { soldTotals } from '@/lib/orders';
+import { feedDescription, feedProductDetails, feedProductHighlights, feedSizeLabel } from '@/lib/merchant-feed';
 
 export const runtime = 'nodejs';
 // Rebuilt at most hourly, so prices follow the edition ladder as prints sell.
@@ -10,10 +11,21 @@ export const revalidate = 3600;
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 const tag = (name: string, value: string | number) => `<${name}>${esc(String(value))}</${name}>`;
 
+function productDetail(section: string, name: string, value: string) {
+  return (
+    '<g:product_detail>' +
+    tag('g:section_name', section) +
+    tag('g:attribute_name', name) +
+    tag('g:attribute_value', value) +
+    '</g:product_detail>'
+  );
+}
+
 /**
  * Google Merchant Center product feed (RSS 2.0 + g: namespace). One item per work and size, grouped by work, at the live
  * ladder price; the link preselects that size so the landing page shows the same price. Works whose next print is in
- * the inquiry-only step, or sold out, are left out.
+ * the inquiry-only step, or sold out, are left out. Descriptions and optional attributes are built from catalog and
+ * published materials copy only.
  */
 export async function GET() {
   let sold = new Map<string, number>();
@@ -32,21 +44,18 @@ export async function GET() {
     const image = `${SITE.url}${getImage(work.slug).src}`;
     const gallery = getCollection(work.collection)?.title ?? 'Fine Art';
     const orientation = isPortrait(work.slug) ? 'portrait' : 'landscape';
+    const ctx = { gallery, orientation } as const;
     for (const size of sizes) {
       const price = status.prices[size.name];
       if (!price) continue;
-      const dims = size.dimensions.replace(/"/g, ' in').replace(/\s+/g, ' ').trim();
+      const dims = feedSizeLabel(size.dimensions);
       items.push(
         [
           '<item>',
           tag('g:id', `${work.slug}-${size.name}`),
           tag('g:item_group_id', work.slug),
           tag('title', `${work.title} by Sheldon Roth — ${dims} Limited Edition Acrylic Photo Print`),
-          tag(
-            'description',
-            `${work.description} Lumachrome HD photographic print face-mounted to 1/8 in acrylic, ${dims}, ${orientation}. ` +
-              `Limited edition of ${work.editionSize} across all sizes, signed and numbered, with a certificate of authenticity. Made to order.`,
-          ),
+          tag('description', feedDescription(work, size, ctx)),
           tag('link', `${SITE.url}/shop/${work.slug}?size=${size.name}`),
           tag('g:image_link', image),
           tag('g:availability', 'in_stock'),
@@ -59,6 +68,8 @@ export async function GET() {
           tag('g:size', dims),
           tag('g:material', 'Acrylic'),
           tag('g:is_bundle', 'no'),
+          ...feedProductDetails(work, size, ctx).map((d) => productDetail(d.section, d.name, d.value)),
+          ...feedProductHighlights(work).map((h) => tag('g:product_highlight', h)),
           '<g:shipping><g:country>US</g:country><g:service>Insured, signature required</g:service><g:price>0.00 USD</g:price></g:shipping>',
           tag('g:min_handling_time', LEAD_TIME_BUSINESS_DAYS.min),
           tag('g:max_handling_time', LEAD_TIME_BUSINESS_DAYS.max),
