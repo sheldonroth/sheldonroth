@@ -12,6 +12,15 @@ const nextConfig: NextConfig = {
       'lodash',
     ],
   },
+  // Preview branch (preview-cinematic): the home page plays the cinematic experience, and nothing outside
+  // production is indexed so the preview never competes with sheldonroth.com in search.
+  async rewrites() {
+    return { beforeFiles: [{ source: '/', destination: '/experience' }], afterFiles: [], fallback: [] };
+  },
+  async headers() {
+    if (process.env.VERCEL_ENV === 'production') return [];
+    return [{ source: '/:path*', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] }];
+  },
   async redirects() {
     const removed = ['tropical-sunset', 'aspen-cascade', 'crystal-lagoon', 'shipwreck-at-dawn', 'mountain-majesty', 'still-water'];
     const cut2026: [string, string][] = [
