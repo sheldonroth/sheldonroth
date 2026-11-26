@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { Cinema, type TransitionKind } from './cinema-gl';
+import { markExperienceSeen } from './seen';
 import s from './experience.module.css';
 
 export interface Chapter {
@@ -22,6 +23,7 @@ export interface Chapter {
 
 const NAME = 'SHELDON ROTH';
 const CLOSING = 'collection';
+const AUTO_ENTER_SECONDS = 12;
 const TRANSITIONS: TransitionKind[] = [1, 2, 3];
 const pad = (n: number) => String(n).padStart(2, '0');
 const sized = (slug: string, w: number) => `/works/w${w}/${slug}.jpg`;
@@ -48,6 +50,11 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
   const [lastWork, setLastWork] = useState(N - 1);
   const [hint, setHint] = useState(true);
   const [stageStyle, setStageStyle] = useState<CSSProperties>({});
+  // The caption is HTML above the canvas and changes only by fading out, swapping, and fading in.
+  const [cap, setCap] = useState(0);
+  const [capOn, setCapOn] = useState(false);
+  const [leaving, setLeaving] = useState(false);
+  const [countdown, setCountdown] = useState<number | null>(null);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const cinemaRef = useRef<Cinema | null>(null);
@@ -57,6 +64,17 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
   const indexRef = useRef(0);
   const startRef = useRef(0);
   indexRef.current = index;
+
+  /** Hand off to the normal home page (the live site). A hard navigation, so "/" is served as the home, not the intro. */
+  const enterSite = useCallback(
+    (to = '/') => {
+      markExperienceSeen();
+      setCountdown(null);
+      setLeaving(true);
+      window.setTimeout(() => window.location.assign(to), reduced ? 80 : 750);
+    },
+    [reduced],
+  );
 
   const slugToIndex = useCallback(
     (hash: string) => {
@@ -176,7 +194,9 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
     const id = window.setTimeout(
       () => {
         setPhase('show');
+        markExperienceSeen();
         const start = Math.min(startRef.current, N - 1);
+        setCap(start);
         cinemaRef.current?.show(start, 1, true);
         lockUntil.current = performance.now() + 1200;
       },
@@ -205,6 +225,45 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
     [N, phase, reduced, lastWork],
   );
 
+  // Caption: fade the old text out, swap it while invisible, fade the new text in. No blur, scale or warp.
+  useEffect(() => {
+    if (phase !== 'show' || index >= N) return;
+    if (index === cap && capOn) return;
+    setCapOn(false);
+    const id = window.setTimeout(() => {
+      setCap(index);
+      setCapOn(true);
+    }, reduced ? 120 : 420);
+    return () => window.clearTimeout(id);
+  }, [index, phase, N, reduced]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // On the closing wall: count down to the site, unless the visitor does anything.
+  useEffect(() => {
+    if (index !== N || leaving) {
+      setCountdown(null);
+      return;
+    }
+    let left = AUTO_ENTER_SECONDS;
+    setCountdown(left);
+    const stop = () => setCountdown(null);
+    const evs = ['wheel', 'touchstart', 'keydown', 'pointerdown', 'scroll'];
+    const wall = wallRef.current;
+    evs.forEach((e) => window.addEventListener(e, stop, { passive: true, once: true }));
+    wall?.addEventListener('scroll', stop, { passive: true, once: true });
+    const id = window.setInterval(() => {
+      left -= 1;
+      if (left <= 0) {
+        window.clearInterval(id);
+        enterSite();
+      } else setCountdown(left);
+    }, 1000);
+    return () => {
+      window.clearInterval(id);
+      evs.forEach((e) => window.removeEventListener(e, stop));
+      wall?.removeEventListener('scroll', stop);
+    };
+  }, [index, N, leaving, enterSite]);
+
   // Hash per work, kept in step with the view (and followed when edited by hand).
   useEffect(() => {
     if (phase !== 'show') return;
@@ -229,7 +288,13 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
       const cur = indexRef.current;
       const onWall = cur === N;
       if (['ArrowRight', 'PageDown', ' '].includes(e.key) || (e.key === 'ArrowDown' && !onWall)) {
-        if (onWall) return;
+        if (onWall) {
+          if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            enterSite();
+          }
+          return;
+        }
         e.preventDefault();
         go(cur + 1, true);
       } else if (e.key === 'ArrowLeft' || ((e.key === 'ArrowUp' || e.key === 'PageUp') && (!onWall || atWallTop()))) {
@@ -273,6 +338,7 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
       if (Math.abs(d) < 45) return;
       if (cur === N) {
         if (horiz && dx > 0) go(cur - 1, true);
+        else if (horiz && dx < -90) enterSite();
         else if (!horiz && dy > 0 && atWallTop()) go(cur - 1, true);
         return;
       }
@@ -293,7 +359,7 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
       window.removeEventListener('touchend', onEnd);
       window.removeEventListener('touchmove', onMove);
     };
-  }, [go, N]);
+  }, [go, N, enterSite]);
 
   // The close: the full-screen scene shrinks into its framed print on the wall, cropped to the print's shape.
   useLayoutEffect(() => {
@@ -334,7 +400,7 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
   };
 
   const onWall = index === N;
-  const ch = chapters[Math.min(index, N - 1)];
+  const ch = chapters[Math.min(cap, N - 1)];
 
   return (
     <div className={`${s.root} ${reduced ? s.reduced : ''}`} data-mode={mode ?? 'pending'}>
@@ -367,9 +433,10 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
       {/* Chapter type */}
       {phase === 'show' && !onWall && (
         <>
-          <div className={s.scrim} />
           <header className={s.bar}>
-            <Link href="/" className={s.brand}>Sheldon Roth</Link>
+            {/* Plain anchor: a full navigation, so "/" is served as the normal home page (the intro has been seen). */}
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+            <a href="/" className={s.brand} onClick={markExperienceSeen}>Sheldon Roth</a>
             <nav className={s.barNav}>
               <Link href="/shop">Shop</Link>
               <Link href="/collections">Galleries</Link>
@@ -379,7 +446,8 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
             </nav>
           </header>
 
-          <div key={ch.slug} className={s.caption}>
+          <div className={s.scrim} />
+          <div className={`${s.caption} ${capOn ? s.captionOn : ''}`} aria-live="polite">
             <p className={s.count}>
               {pad(index + 1)} <span>/</span> {pad(N)}
             </p>
@@ -390,7 +458,7 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
             <p className={s.meta}>
               {ch.tier} <span>·</span> Limited edition of {ch.edition}
             </p>
-            <Link href={`/shop/${ch.slug}`} className={s.view}>
+            <Link href={`/shop/${ch.slug}`} className={s.view} tabIndex={capOn ? 0 : -1}>
               View the print
             </Link>
           </div>
@@ -414,6 +482,9 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
           </div>
 
           <p className={`${s.hint} ${hint ? '' : s.hintGone}`}>Scroll, swipe or use ← → to move through the work</p>
+          <button type="button" className={s.skip} onClick={() => enterSite()}>
+            Skip intro
+          </button>
         </>
       )}
 
@@ -467,17 +538,38 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
         </div>
       </section>
 
+      {onWall && (
+        <div className={s.enterBar}>
+          <p className={s.enterNote}>
+            {countdown !== null ? `Continuing to the site in ${countdown}` : 'Take your time with the collection'}
+          </p>
+          <button type="button" className={s.enterBtn} onClick={() => enterSite()}>
+            Enter the site
+          </button>
+          {countdown !== null && (
+            <span className={s.enterLine} style={{ animationDuration: `${AUTO_ENTER_SECONDS}s` }} aria-hidden />
+          )}
+        </div>
+      )}
+
+      {/* Closing fade into the normal site */}
+      <div className={`${s.leave} ${leaving ? s.leaveOn : ''}`} aria-hidden />
+
       {/* The quiet opening */}
       {phase === 'intro' && (
         <div className={s.intro} aria-live="polite">
-          <p className={s.introName}>
-            {NAME.slice(0, typed)}
-            <span className={s.caret} />
+          <p className={s.introName} aria-label={NAME}>
+            <span aria-hidden>{NAME.slice(0, typed)}</span>
+            <span className={s.caret} aria-hidden />
+            <span className={s.introRest} aria-hidden>{NAME.slice(typed)}</span>
           </p>
           <div className={s.introBar}>
             <span style={{ transform: `scaleX(${progress})` }} />
           </div>
           <p className={s.introSub}>Fine Art Photography</p>
+          <button type="button" className={s.introSkip} onClick={() => enterSite()}>
+            Skip intro
+          </button>
         </div>
       )}
     </div>

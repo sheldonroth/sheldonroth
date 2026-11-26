@@ -12,11 +12,18 @@ const nextConfig: NextConfig = {
       'lodash',
     ],
   },
-  // Preview branch (preview-cinematic): the home page plays the cinematic experience, and nothing outside
-  // production is indexed so the preview never competes with sheldonroth.com in search.
+  // The cinematic intro (/experience). On preview and local builds, a first-time visitor (no `sr_seen` cookie)
+  // who opens "/" gets the intro; when it ends, or they skip it, the cookie is set and "/" is the normal home.
+  // Production serves the normal home unless EXPERIENCE_AT_HOME=1 is set. /experience itself always plays.
   async rewrites() {
-    return { beforeFiles: [{ source: '/', destination: '/experience' }], afterFiles: [], fallback: [] };
+    const gate = process.env.VERCEL_ENV !== 'production' || process.env.EXPERIENCE_AT_HOME === '1';
+    return {
+      beforeFiles: gate ? [{ source: '/', missing: [{ type: 'cookie' as const, key: 'sr_seen' }], destination: '/experience' }] : [],
+      afterFiles: [],
+      fallback: [],
+    };
   },
+  // Nothing outside production is indexed, so previews never compete with sheldonroth.com in search.
   async headers() {
     if (process.env.VERCEL_ENV === 'production') return [];
     return [{ source: '/:path*', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] }];

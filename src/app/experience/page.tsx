@@ -3,11 +3,13 @@ import CinematicExperience, { type Chapter } from '@/components/experience/Cinem
 import { fromPrice, formatPrice, getCollection, getImage, getWork } from '@/content/catalog';
 import { focalPoints } from '@/content/focal-points';
 
-// Preview only: kept out of search so it never competes with the live site.
+// Kept out of search everywhere except production, so previews never compete with the live site.
+const noindex = process.env.VERCEL_ENV !== 'production';
+
 export const metadata: Metadata = {
   title: 'The Experience',
   description: 'A cinematic walk through ten limited-edition landscape photographs by Sheldon Roth.',
-  robots: { index: false, follow: false, googleBot: { index: false, follow: false } },
+  ...(noindex ? { robots: { index: false, follow: false, googleBot: { index: false, follow: false } } } : {}),
 };
 
 export const viewport: Viewport = { themeColor: '#050505', colorScheme: 'dark' };
