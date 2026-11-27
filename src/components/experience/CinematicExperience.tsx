@@ -19,6 +19,8 @@ export interface Chapter {
   focal: { x: number; y: number };
 }
 
+const NAME = 'SHELDON ROTH';
+const INTRO_HOLD_MS = 2400; // the name fades in, then holds, before the cut to the first work
 const TRANSITIONS: TransitionKind[] = [1, 2, 3];
 const sized = (slug: string, w: number) => `/works/w${w}/${slug}.jpg`;
 
@@ -144,10 +146,10 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
     };
   }, [mode, chapters, N]);
 
-  // The opening is a near-black screen with a hairline progress bar, held long enough to read as a pause.
+  // The opening: the name on near-black (it fades in, it never types or morphs), held for a beat, plus a hairline loader.
   useEffect(() => {
     if (!mode) return;
-    const id = window.setTimeout(() => setMinTime(true), reduced ? 200 : 1500);
+    const id = window.setTimeout(() => setMinTime(true), reduced ? 1200 : INTRO_HOLD_MS);
     return () => window.clearTimeout(id);
   }, [mode, reduced]);
 
@@ -301,10 +303,11 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
         Skip
       </button>
 
-      {/* The opening: near-black with a hairline progress bar, and nothing to read */}
+      {/* The opening: the name, set once and completely still apart from a plain fade-in */}
       {phase === 'intro' && (
-        <div className={s.intro} aria-hidden>
-          <div className={s.introBar}>
+        <div className={s.intro}>
+          <p className={s.introName}>{NAME}</p>
+          <div className={s.introBar} aria-hidden>
             <span style={{ transform: `scaleX(${progress})` }} />
           </div>
         </div>

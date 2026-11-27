@@ -189,8 +189,28 @@
   z-index: 20;
   background: #070707;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: clamp(22px, 4vh, 34px);
+}
+/* The name is laid out in full from the first frame and only its opacity changes: no typing, blur, scale or
+   letter-spacing motion. The negative right margin cancels the trailing letter-space so it is truly centred. */
+.introName {
+  margin: 0 -0.6em 0 0;
+  font-size: clamp(17px, 2.5vw, 32px);
+  font-weight: 200;
+  letter-spacing: 0.6em;
+  line-height: 1;
+  white-space: nowrap;
+  color: #ece6dc;
+  opacity: 0;
+  animation: nameIn 1s ease-out 0.25s forwards;
+}
+@keyframes nameIn {
+  to {
+    opacity: 1;
+  }
 }
 .introBar {
   width: min(220px, 40vw);
@@ -222,6 +242,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .introName {
+    animation-duration: 0.01s;
+    animation-delay: 0s;
+  }
   .cueChevron {
     animation: none;
     opacity: 0.6;
