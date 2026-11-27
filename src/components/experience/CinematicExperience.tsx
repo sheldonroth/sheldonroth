@@ -1,8 +1,6 @@
 'use client';
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Cinema, type TransitionKind } from './cinema-gl';
 import { markExperienceSeen } from './seen';
 import s from './experience.module.css';
@@ -21,11 +19,7 @@ export interface Chapter {
   focal: { x: number; y: number };
 }
 
-const NAME = 'SHELDON ROTH';
-const CLOSING = 'collection';
-const AUTO_ENTER_SECONDS = 12;
 const TRANSITIONS: TransitionKind[] = [1, 2, 3];
-const pad = (n: number) => String(n).padStart(2, '0');
 const sized = (slug: string, w: number) => `/works/w${w}/${slug}.jpg`;
 
 function loadImage(src: string) {
@@ -38,63 +32,47 @@ function loadImage(src: string) {
   });
 }
 
+/**
+ * Wordless cinematic opening: full-screen photographs with WebGL transitions, moved through by scroll, swipe,
+ * keys or click. A faint scroll cue is the only type. Moving past the last photograph hands off to the normal
+ * home page ("/", served as the home once the sr_seen cookie is set).
+ */
 export default function CinematicExperience({ chapters }: { chapters: Chapter[] }) {
-  const N = chapters.length; // index N is the closing gallery wall
+  const N = chapters.length;
   const [mode, setMode] = useState<'gl' | 'css' | null>(null);
   const [reduced, setReduced] = useState(false);
+  const [touch, setTouch] = useState(false);
   const [phase, setPhase] = useState<'intro' | 'show'>('intro');
-  const [typed, setTyped] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [minTime, setMinTime] = useState(false);
   const [index, setIndex] = useState(0);
   const [prevIndex, setPrevIndex] = useState(-1);
-  const [lastWork, setLastWork] = useState(N - 1);
-  const [hint, setHint] = useState(true);
-  const [stageStyle, setStageStyle] = useState<CSSProperties>({});
-  // The caption is HTML above the canvas and changes only by fading out, swapping, and fading in.
-  const [cap, setCap] = useState(0);
-  const [capOn, setCapOn] = useState(false);
   const [leaving, setLeaving] = useState(false);
-  const [countdown, setCountdown] = useState<number | null>(null);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const cinemaRef = useRef<Cinema | null>(null);
-  const wallRef = useRef<HTMLDivElement>(null);
-  const frameRefs = useRef<(HTMLDivElement | null)[]>([]);
   const lockUntil = useRef(0);
   const indexRef = useRef(0);
   const startRef = useRef(0);
   indexRef.current = index;
 
-  /** Hand off to the normal home page (the live site). A hard navigation, so "/" is served as the home, not the intro. */
-  const enterSite = useCallback(
-    (to = '/') => {
-      markExperienceSeen();
-      setCountdown(null);
-      setLeaving(true);
-      window.setTimeout(() => window.location.assign(to), reduced ? 80 : 750);
-    },
-    [reduced],
-  );
+  /** Hand off to the normal home page: fade out, then a full navigation so "/" is served as the home. */
+  const enterSite = useCallback(() => {
+    if (leaving) return;
+    markExperienceSeen();
+    setLeaving(true);
+    window.setTimeout(() => window.location.assign('/'), reduced ? 80 : 1000);
+  }, [leaving, reduced]);
 
-  const slugToIndex = useCallback(
-    (hash: string) => {
-      const h = hash.replace(/^#/, '');
-      if (h === CLOSING) return N;
-      const i = chapters.findIndex((c) => c.slug === h);
-      return i;
-    },
-    [chapters, N],
-  );
-
-  // Decide the renderer once on the client: WebGL unless it is missing or the visitor prefers reduced motion.
+  // Pick the renderer once on the client: WebGL, unless it is missing or the visitor prefers reduced motion.
   useEffect(() => {
     const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     setReduced(rm);
-    const start = slugToIndex(window.location.hash);
+    setTouch(window.matchMedia('(pointer: coarse)').matches);
+    const start = chapters.findIndex((c) => c.slug === window.location.hash.replace(/^#/, ''));
     if (start >= 0) {
       startRef.current = start;
       setIndex(start);
-      if (start < N) setLastWork(start);
     }
     if (rm || !canvasRef.current) {
       setMode('css');
@@ -123,24 +101,23 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
       cinemaRef.current?.destroy();
       cinemaRef.current = null;
     };
-  }, [chapters, N, slugToIndex]);
+  }, [chapters]);
 
-  // Progressive loading: a light copy of every work first (the intro bar tracks this), then sharp copies nearest first.
+  // Progressive loading: a light copy of every work first (the hairline bar tracks this), then sharp copies nearest first.
   useEffect(() => {
     if (!mode) return;
     let cancelled = false;
     const big = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2) > 1300 ? 2048 : 1200;
-    const first = Math.min(startRef.current, N - 1);
+    const first = startRef.current;
     const order = chapters.map((_, i) => i).sort((a, b) => Math.abs(a - first) - Math.abs(b - first));
     (async () => {
       if (mode === 'css') {
-        // The browser loads the <img> srcsets itself; just warm the first two so the cut is clean.
         await Promise.allSettled(order.slice(0, 2).map((i) => loadImage(sized(chapters[i].slug, 1200))));
         if (!cancelled) setProgress(1);
         return;
       }
       let done = 0;
-      const total = N + 1;
+      const total = N;
       // The opening work in a sharp copy first, so the hard cut lands on a crisp frame.
       const hero = await loadImage(sized(chapters[first].slug, 1200)).catch(() => null);
       if (cancelled) return;
@@ -167,137 +144,68 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
     };
   }, [mode, chapters, N]);
 
-  // The quiet opening: the name typed out on near-black.
+  // The opening is a near-black screen with a hairline progress bar, held long enough to read as a pause.
   useEffect(() => {
     if (!mode) return;
-    let seen = false;
-    try {
-      seen = sessionStorage.getItem('sr-experience-seen') === '1';
-      sessionStorage.setItem('sr-experience-seen', '1');
-    } catch {}
-    if (reduced || seen || startRef.current > 0) {
-      setTyped(NAME.length);
-      return;
-    }
-    let i = 0;
-    const id = window.setInterval(() => {
-      i += 1;
-      setTyped(i);
-      if (i >= NAME.length) window.clearInterval(id);
-    }, 95);
-    return () => window.clearInterval(id);
+    const id = window.setTimeout(() => setMinTime(true), reduced ? 200 : 1500);
+    return () => window.clearTimeout(id);
   }, [mode, reduced]);
 
-  // Hard cut from the opening to the first work once the name is typed and the images are in.
+  // Hard cut from the opening to the first work once the images are in.
   useEffect(() => {
-    if (phase !== 'intro' || !mode || typed < NAME.length || progress < 1) return;
-    const id = window.setTimeout(
-      () => {
-        setPhase('show');
-        markExperienceSeen();
-        const start = Math.min(startRef.current, N - 1);
-        setCap(start);
-        cinemaRef.current?.show(start, 1, true);
-        lockUntil.current = performance.now() + 1200;
-      },
-      reduced ? 150 : 650,
-    );
-    return () => window.clearTimeout(id);
-  }, [phase, mode, typed, progress, reduced, N]);
+    if (phase !== 'intro' || !mode || !minTime || progress < 1) return;
+    setPhase('show');
+    markExperienceSeen();
+    cinemaRef.current?.show(startRef.current, 1, true);
+    lockUntil.current = performance.now() + 1200;
+  }, [phase, mode, minTime, progress]);
 
   const go = useCallback(
     (next: number, force = false) => {
+      if (phase !== 'show' || leaving) return;
       const cur = indexRef.current;
-      const n = Math.max(0, Math.min(N, next));
-      if (n === cur || phase !== 'show') return;
       const now = performance.now();
+      if (next >= N) {
+        // Past the last photograph: on to the normal site (never from a stray gesture right as it arrives).
+        if (cur === N - 1 && now >= lockUntil.current) enterSite();
+        return;
+      }
+      const n = Math.max(0, next);
+      if (n === cur) return;
       if (!force && now < lockUntil.current) return;
       lockUntil.current = now + (reduced ? 500 : 1150);
-      setHint(false);
       setPrevIndex(cur);
       setIndex(n);
-      if (n < N) {
-        setLastWork(n);
-        // Coming back from the wall the stage re-expands over the same work, so no transition is needed.
-        if (cur !== N || n !== lastWork) cinemaRef.current?.show(n, TRANSITIONS[n % TRANSITIONS.length]);
-      }
+      cinemaRef.current?.show(n, TRANSITIONS[n % TRANSITIONS.length]);
     },
-    [N, phase, reduced, lastWork],
+    [N, phase, leaving, reduced, enterSite],
   );
-
-  // Caption: fade the old text out, swap it while invisible, fade the new text in. No blur, scale or warp.
-  useEffect(() => {
-    if (phase !== 'show' || index >= N) return;
-    if (index === cap && capOn) return;
-    setCapOn(false);
-    const id = window.setTimeout(() => {
-      setCap(index);
-      setCapOn(true);
-    }, reduced ? 120 : 420);
-    return () => window.clearTimeout(id);
-  }, [index, phase, N, reduced]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // On the closing wall: count down to the site, unless the visitor does anything.
-  useEffect(() => {
-    if (index !== N || leaving) {
-      setCountdown(null);
-      return;
-    }
-    let left = AUTO_ENTER_SECONDS;
-    setCountdown(left);
-    const stop = () => setCountdown(null);
-    const evs = ['wheel', 'touchstart', 'keydown', 'pointerdown', 'scroll'];
-    const wall = wallRef.current;
-    evs.forEach((e) => window.addEventListener(e, stop, { passive: true, once: true }));
-    wall?.addEventListener('scroll', stop, { passive: true, once: true });
-    const id = window.setInterval(() => {
-      left -= 1;
-      if (left <= 0) {
-        window.clearInterval(id);
-        enterSite();
-      } else setCountdown(left);
-    }, 1000);
-    return () => {
-      window.clearInterval(id);
-      evs.forEach((e) => window.removeEventListener(e, stop));
-      wall?.removeEventListener('scroll', stop);
-    };
-  }, [index, N, leaving, enterSite]);
 
   // Hash per work, kept in step with the view (and followed when edited by hand).
   useEffect(() => {
     if (phase !== 'show') return;
-    const hash = index === N ? CLOSING : chapters[index].slug;
+    const hash = chapters[index].slug;
     if (window.location.hash !== `#${hash}`) window.history.replaceState(null, '', `#${hash}`);
-  }, [index, phase, chapters, N]);
+  }, [index, phase, chapters]);
 
   useEffect(() => {
     const onHash = () => {
-      const i = slugToIndex(window.location.hash);
+      const i = chapters.findIndex((c) => c.slug === window.location.hash.replace(/^#/, ''));
       if (i >= 0) go(i, true);
     };
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
-  }, [go, slugToIndex]);
+  }, [go, chapters]);
 
   // Keys, wheel and swipe.
   useEffect(() => {
-    const atWallTop = () => indexRef.current === N && (wallRef.current?.scrollTop ?? 0) <= 2;
     const onKey = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
       const cur = indexRef.current;
-      const onWall = cur === N;
-      if (['ArrowRight', 'PageDown', ' '].includes(e.key) || (e.key === 'ArrowDown' && !onWall)) {
-        if (onWall) {
-          if (e.key === 'ArrowRight') {
-            e.preventDefault();
-            enterSite();
-          }
-          return;
-        }
+      if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) {
         e.preventDefault();
         go(cur + 1, true);
-      } else if (e.key === 'ArrowLeft' || ((e.key === 'ArrowUp' || e.key === 'PageUp') && (!onWall || atWallTop()))) {
+      } else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) {
         e.preventDefault();
         go(cur - 1, true);
       } else if (e.key === 'Home') {
@@ -305,20 +213,18 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
         go(0, true);
       } else if (e.key === 'End') {
         e.preventDefault();
-        go(N, true);
+        go(N - 1, true);
       }
     };
     let acc = 0;
     let accTimer = 0;
     const onWheel = (e: WheelEvent) => {
-      const cur = indexRef.current;
-      if (cur === N && !(e.deltaY < 0 && atWallTop())) return; // the wall scrolls normally
       e.preventDefault();
       acc += Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
       window.clearTimeout(accTimer);
       accTimer = window.setTimeout(() => (acc = 0), 220);
       if (Math.abs(acc) > 60) {
-        go(cur + Math.sign(acc));
+        go(indexRef.current + Math.sign(acc));
         acc = 0;
       }
     };
@@ -332,21 +238,11 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
       const dx = e.changedTouches[0].clientX - tx;
       const dy = e.changedTouches[0].clientY - ty;
       if (performance.now() - tt > 900) return;
-      const cur = indexRef.current;
-      const horiz = Math.abs(dx) > Math.abs(dy);
-      const d = horiz ? dx : dy;
+      const d = Math.abs(dx) > Math.abs(dy) ? dx : dy;
       if (Math.abs(d) < 45) return;
-      if (cur === N) {
-        if (horiz && dx > 0) go(cur - 1, true);
-        else if (horiz && dx < -90) enterSite();
-        else if (!horiz && dy > 0 && atWallTop()) go(cur - 1, true);
-        return;
-      }
-      go(cur + (d < 0 ? 1 : -1), true);
+      go(indexRef.current + (d < 0 ? 1 : -1), true);
     };
-    const onMove = (e: TouchEvent) => {
-      if (indexRef.current !== N) e.preventDefault();
-    };
+    const onMove = (e: TouchEvent) => e.preventDefault();
     window.addEventListener('keydown', onKey);
     window.addEventListener('wheel', onWheel, { passive: false });
     window.addEventListener('touchstart', onStart, { passive: true });
@@ -359,219 +255,63 @@ export default function CinematicExperience({ chapters }: { chapters: Chapter[] 
       window.removeEventListener('touchend', onEnd);
       window.removeEventListener('touchmove', onMove);
     };
-  }, [go, N, enterSite]);
+  }, [go, N]);
 
-  // The close: the full-screen scene shrinks into its framed print on the wall, cropped to the print's shape.
-  useLayoutEffect(() => {
-    if (index !== N) {
-      setStageStyle({});
-      return;
-    }
-    const wall = wallRef.current;
-    if (wall) wall.scrollTop = 0;
-    const frame = frameRefs.current[lastWork];
-    if (!frame) return;
-    const vw = window.innerWidth;
-    const vh = window.innerHeight;
-    // Bring the print the scene lands in into view first (the wall opens scrolled to it).
-    let r = frame.getBoundingClientRect();
-    if (wall && r.bottom > vh - 48) {
-      wall.scrollTop += r.bottom - vh + Math.min(120, (vh - r.height) / 2);
-      r = frame.getBoundingClientRect();
-    }
-    const ta = r.width / r.height;
-    let visW = vw, visH = vh;
-    if (vw / vh > ta) visW = vh * ta;
-    else visH = vw / ta;
-    const ix = (vw - visW) / 2;
-    const iy = (vh - visH) / 2;
-    const scale = r.width / visW;
-    const tx = r.left + r.width / 2 - vw / 2;
-    const ty = r.top + r.height / 2 - vh / 2;
-    setStageStyle({
-      transform: `translate(${tx}px, ${ty}px) scale(${scale})`,
-      clipPath: `inset(${iy}px ${ix}px ${iy}px ${ix}px)`,
-    });
-  }, [index, N, lastWork]);
-
-  const onStageClick = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).closest('a,button')) return;
-    go(index + (e.clientX > window.innerWidth * 0.33 ? 1 : -1), true);
-  };
-
-  const onWall = index === N;
-  const ch = chapters[Math.min(cap, N - 1)];
+  const onStageClick = () => go(indexRef.current + 1, true);
 
   return (
     <div className={`${s.root} ${reduced ? s.reduced : ''}`} data-mode={mode ?? 'pending'}>
       {/* The scene */}
-      <div className={`${s.stage} ${onWall ? s.stageShrunk : ''}`} style={stageStyle} onClick={onStageClick} aria-hidden={onWall}>
+      <div className={`${s.stage} ${leaving ? s.stageLeaving : ''}`} onClick={onStageClick}>
         <canvas ref={canvasRef} className={s.canvas} style={{ display: mode === 'css' ? 'none' : undefined }} />
         {mode === 'css' && (
           <div className={s.layers}>
-            {chapters.map((c, i) => {
-              const state = i === (onWall ? lastWork : index) ? s.layerActive : i === prevIndex ? s.layerLeaving : '';
-              return (
-                <div key={c.slug} className={`${s.layer} ${state}`}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={sized(c.slug, 1200)}
-                    srcSet={`${sized(c.slug, 640)} 640w, ${sized(c.slug, 1200)} 1200w, ${sized(c.slug, 2048)} 2048w`}
-                    sizes="100vw"
-                    alt={c.title}
-                    loading={Math.abs(i - index) <= 1 ? 'eager' : 'lazy'}
-                    style={{ objectPosition: `${c.focal.x * 100}% ${c.focal.y * 100}%` }}
-                  />
-                </div>
-              );
-            })}
+            {chapters.map((c, i) => (
+              <div key={c.slug} className={`${s.layer} ${i === index ? s.layerActive : i === prevIndex ? s.layerLeaving : ''}`}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={sized(c.slug, 1200)}
+                  srcSet={`${sized(c.slug, 640)} 640w, ${sized(c.slug, 1200)} 1200w, ${sized(c.slug, 2048)} 2048w`}
+                  sizes="100vw"
+                  alt=""
+                  loading={Math.abs(i - index) <= 1 ? 'eager' : 'lazy'}
+                  style={{ objectPosition: `${c.focal.x * 100}% ${c.focal.y * 100}%` }}
+                />
+              </div>
+            ))}
             <div className={s.cssFinish} />
           </div>
         )}
       </div>
 
-      {/* Chapter type */}
-      {phase === 'show' && !onWall && (
+      {phase === 'show' && (
         <>
-          <header className={s.bar}>
-            {/* Plain anchor: a full navigation, so "/" is served as the normal home page (the intro has been seen). */}
-            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-            <a href="/" className={s.brand} onClick={markExperienceSeen}>Sheldon Roth</a>
-            <nav className={s.barNav}>
-              <Link href="/shop">Shop</Link>
-              <Link href="/collections">Galleries</Link>
-              <button type="button" onClick={() => go(N, true)}>
-                <span className={s.long}>The </span>Collection
-              </button>
-            </nav>
-          </header>
-
+          {/* No visible words; the work's name is available to screen readers only. */}
+          <h1 className={s.srOnly} aria-live="polite">{chapters[index].title}</h1>
           <div className={s.scrim} />
-          <div className={`${s.caption} ${capOn ? s.captionOn : ''}`} aria-live="polite">
-            <p className={s.count}>
-              {pad(index + 1)} <span>/</span> {pad(N)}
-            </p>
-            <h1 className={s.title}>{ch.title}</h1>
-            <p className={s.meta}>
-              {ch.gallery} <span>·</span> {ch.tagline}
-            </p>
-            <p className={s.meta}>
-              {ch.tier} <span>·</span> Limited edition of {ch.edition}
-            </p>
-            <Link href={`/shop/${ch.slug}`} className={s.view} tabIndex={capOn ? 0 : -1}>
-              View the print
-            </Link>
+          <div className={s.cue} aria-hidden>
+            <span className={s.cueWord}>{touch ? 'Swipe' : 'Scroll'}</span>
+            <span className={s.cueChevron} />
           </div>
-
-          <nav className={s.ticks} aria-label="Works">
-            {chapters.map((c, i) => (
-              <button
-                key={c.slug}
-                type="button"
-                className={i === index ? s.tickOn : ''}
-                aria-label={c.title}
-                aria-current={i === index}
-                onClick={() => go(i, true)}
-              />
-            ))}
-            <button type="button" className={s.tickWall} aria-label="The Collection" onClick={() => go(N, true)} />
-          </nav>
-
-          <div className={s.progress}>
-            <span style={{ transform: `scaleX(${(index + 1) / (N + 1)})` }} />
-          </div>
-
-          <p className={`${s.hint} ${hint ? '' : s.hintGone}`}>Scroll, swipe or use ← → to move through the work</p>
-          <button type="button" className={s.skip} onClick={() => enterSite()}>
-            Skip intro
-          </button>
         </>
       )}
 
-      {/* The close: framed prints on a warm wall, each opening its shop page */}
-      <section ref={wallRef} className={`${s.wall} ${onWall ? s.wallOn : ''}`} aria-hidden={!onWall}>
-        <div className={s.wallInner}>
-          <p className={s.wallEyebrow}>The Collection</p>
-          <h2 className={s.wallTitle}>Ten works, each a strictly limited edition</h2>
-          <p className={s.wallBody}>
-            Signed and numbered, face-mounted to museum acrylic and made to order. Choose a work to see its sizes and edition.
-          </p>
-          <div className={s.prints}>
-            {chapters.map((c, i) => (
-              <Link
-                key={c.slug}
-                href={`/shop/${c.slug}`}
-                className={s.print}
-                style={{ '--d': `${0.5 + i * 0.07}s`, '--ar': `${c.width / c.height}` } as CSSProperties}
-                tabIndex={onWall ? 0 : -1}
-              >
-                <div className={s.frame}>
-                  <div
-                    className={s.photo}
-                    ref={(el) => {
-                      frameRefs.current[i] = el;
-                    }}
-                  >
-                    <Image
-                      src={`/works/${c.slug}.jpg`}
-                      alt={c.title}
-                      fill
-                      sizes="(max-width: 700px) 86vw, (max-width: 1200px) 44vw, 30vw"
-                      style={{ objectFit: 'cover', objectPosition: `${c.focal.x * 100}% ${c.focal.y * 100}%` }}
-                    />
-                  </div>
-                </div>
-                <span className={s.printTitle}>{c.title}</span>
-                <span className={s.printMeta}>
-                  Edition of {c.edition}
-                  {c.from ? ` · From ${c.from}` : ''}
-                </span>
-              </Link>
-            ))}
-          </div>
-          <div className={s.wallActions}>
-            <Link href="/shop" className={s.btnDark}>Enter the shop</Link>
-            <Link href="/collections/signature" className={s.btnLine}>Signature Works</Link>
-            <button type="button" className={s.btnLine} onClick={() => go(0, true)}>Watch again</button>
-          </div>
-          <p className={s.wallFoot}>Sheldon Roth Fine Art · PO Box 283, Nathrop, CO 81236</p>
-        </div>
-      </section>
+      {/* Discreet skip, straight to the normal site */}
+      <button type="button" className={s.skip} onClick={enterSite}>
+        Skip
+      </button>
 
-      {onWall && (
-        <div className={s.enterBar}>
-          <p className={s.enterNote}>
-            {countdown !== null ? `Continuing to the site in ${countdown}` : 'Take your time with the collection'}
-          </p>
-          <button type="button" className={s.enterBtn} onClick={() => enterSite()}>
-            Enter the site
-          </button>
-          {countdown !== null && (
-            <span className={s.enterLine} style={{ animationDuration: `${AUTO_ENTER_SECONDS}s` }} aria-hidden />
-          )}
-        </div>
-      )}
-
-      {/* Closing fade into the normal site */}
-      <div className={`${s.leave} ${leaving ? s.leaveOn : ''}`} aria-hidden />
-
-      {/* The quiet opening */}
+      {/* The opening: near-black with a hairline progress bar, and nothing to read */}
       {phase === 'intro' && (
-        <div className={s.intro} aria-live="polite">
-          <p className={s.introName} aria-label={NAME}>
-            <span aria-hidden>{NAME.slice(0, typed)}</span>
-            <span className={s.caret} aria-hidden />
-            <span className={s.introRest} aria-hidden>{NAME.slice(typed)}</span>
-          </p>
+        <div className={s.intro} aria-hidden>
           <div className={s.introBar}>
             <span style={{ transform: `scaleX(${progress})` }} />
           </div>
-          <p className={s.introSub}>Fine Art Photography</p>
-          <button type="button" className={s.introSkip} onClick={() => enterSite()}>
-            Skip intro
-          </button>
         </div>
       )}
+
+      {/* The handoff: the last image settles into darkness, then the normal home page loads */}
+      <div className={`${s.leave} ${leaving ? s.leaveOn : ''}`} aria-hidden />
     </div>
   );
 }
